@@ -16,6 +16,7 @@
 - All work happens in a new `frontend/` directory at the repo root; `index.html` at the repo root is left in place only as an untouched reference copy until Task 6, at which point it is replaced.
 - Source-of-truth for every extraction task is the **current, untouched** `C:\Users\muhta\Documents\carbon-project\index.html` — because index.html is not modified until Task 6, line numbers quoted in every task below stay valid throughout Tasks 1–5.
 - Windows/PowerShell dev environment — verification commands use PowerShell.
+- **Do not count lines with `(Get-Content file).Count` or `Get-Content file | Measure-Object -Line`** — confirmed on this exact file to silently undercount (reports 2826 for a file that is actually 2981 lines by both `wc -l` and .NET file reads, apparently related to this file containing extremely long single lines, e.g. the ~74KB `HDATA` line). Always use `[System.IO.File]::ReadAllLines($path).Count` in PowerShell, or `wc -l` via the Bash tool — both agree with each other and with the Read tool's line numbers.
 
 ---
 
@@ -32,9 +33,9 @@
 
 Run:
 ```powershell
-Get-Content C:\Users\muhta\Documents\carbon-project\index.html | Measure-Object -Line
+[System.IO.File]::ReadAllLines("C:\Users\muhta\Documents\carbon-project\index.html").Count
 ```
-Expected: `Lines : 2981` (confirms we're working from the known-good file before touching anything).
+Expected: `2981` (confirms we're working from the known-good file before touching anything). Do not use `Get-Content | Measure-Object -Line` for this — confirmed unreliable on this file (undercounts, reporting 2826).
 
 - [ ] **Step 2: Open the current site in the browser and note what "correct" looks like**
 
@@ -109,13 +110,15 @@ Contains: the second `<style>` block — `.trust-strip`, `.flow4`, `.bench`, `.f
 Run:
 ```powershell
 cd C:\Users\muhta\Documents\carbon-project
-(Get-Content frontend\css\base.css).Count            # expect 194  (lines 8-201 inclusive)
-(Get-Content frontend\css\pbi-report.css).Count       # expect 67   (202-268)
-(Get-Content frontend\css\calculator.css).Count       # expect 35   (271-305)
-(Get-Content frontend\css\chooser.css).Count          # expect 24   (307-330)
-(Get-Content frontend\css\horticulture.css).Count     # expect 69   (332-400)
-(Get-Content frontend\css\marketing-extras.css).Count # expect 40   (404-443)
+$cnt = { param($p) [System.IO.File]::ReadAllLines((Resolve-Path $p)).Count }
+& $cnt frontend\css\base.css            # expect 194  (lines 8-201 inclusive)
+& $cnt frontend\css\pbi-report.css       # expect 67   (202-268)
+& $cnt frontend\css\calculator.css       # expect 35   (271-305)
+& $cnt frontend\css\chooser.css          # expect 24   (307-330)
+& $cnt frontend\css\horticulture.css     # expect 69   (332-400)
+& $cnt frontend\css\marketing-extras.css # expect 40   (404-443)
 ```
+(Do not use `(Get-Content file).Count` — confirmed unreliable on files extracted from this source, see Global Constraints.)
 Expected: each count matches the comment above. If any is off, re-copy that file — do not hand-edit to force the count to match.
 
 - [ ] **Step 8: Commit**
@@ -161,11 +164,13 @@ Contains: the `HFARMS` array (12 horticulture growers, annual summary), `INDUSTR
 Run:
 ```powershell
 cd C:\Users\muhta\Documents\carbon-project
-(Get-Content frontend\js\01-data-core.js).Count       # expect 140  (1291-1430)
-(Get-Content frontend\js\02-dashboard-farm.js).Count  # expect 226  (1431-1656)
-(Get-Content frontend\js\03-calculator-farm.js).Count # expect 154  (1657-1810)
-(Get-Content frontend\js\04-industry-router.js).Count # expect 47   (1811-1857)
+$cnt = { param($p) [System.IO.File]::ReadAllLines((Resolve-Path $p)).Count }
+& $cnt frontend\js\01-data-core.js       # expect 140  (1291-1430)
+& $cnt frontend\js\02-dashboard-farm.js  # expect 226  (1431-1656)
+& $cnt frontend\js\03-calculator-farm.js # expect 154  (1657-1810)
+& $cnt frontend\js\04-industry-router.js # expect 47   (1811-1857)
 ```
+(Do not use `(Get-Content file).Count` — confirmed unreliable on files extracted from this source, see Global Constraints.)
 
 - [ ] **Step 6: Commit**
 
@@ -205,12 +210,14 @@ Contains: `renderHMethods`, `renderHAIView`, `renderHAI`, `calcHort` (the hortic
 Run:
 ```powershell
 cd C:\Users\muhta\Documents\carbon-project
-(Get-Content frontend\js\05-hort-data-stats.js).Count  # expect 242  (1858-2099)
-(Get-Content frontend\js\06-hort-dashboard.js).Count    # expect 312  (2100-2411)
-(Get-Content frontend\js\07-hort-quick-calc.js).Count   # expect 99   (2412-2510)
+$cnt = { param($p) [System.IO.File]::ReadAllLines((Resolve-Path $p)).Count }
+& $cnt frontend\js\05-hort-data-stats.js  # expect 242  (1858-2099)
+& $cnt frontend\js\06-hort-dashboard.js   # expect 312  (2100-2411)
+& $cnt frontend\js\07-hort-quick-calc.js  # expect 99   (2412-2510)
 Select-String -Path frontend\js\07-hort-quick-calc.js -Pattern "^boot\(\);\s*$"
 Select-String -Path frontend\js\07-hort-quick-calc.js -Pattern "^buildNav\(\);\s*$"
 ```
+(Do not use `(Get-Content file).Count` — confirmed unreliable on files extracted from this source, see Global Constraints.)
 Expected: both `Select-String` calls return a match (confirms the two bootstrap calls are present and were not accidentally dropped).
 
 - [ ] **Step 5: Commit**
@@ -251,10 +258,12 @@ Contains: `aiTab`, `mountROI`, `RX_CATTLE`, `RX_HORT`, `rxFarm`, `window.renderR
 Run:
 ```powershell
 cd C:\Users\muhta\Documents\carbon-project
-(Get-Content frontend\js\08-pbi-charts.js).Count     # expect 156  (2513-2668)
-(Get-Content frontend\js\09-calculator-hort.js).Count # expect 117  (2670-2786)
-(Get-Content frontend\js\10-ai-roi.js).Count          # expect 192  (2787-2978)
+$cnt = { param($p) [System.IO.File]::ReadAllLines((Resolve-Path $p)).Count }
+& $cnt frontend\js\08-pbi-charts.js     # expect 156  (2513-2668)
+& $cnt frontend\js\09-calculator-hort.js # expect 117  (2670-2786)
+& $cnt frontend\js\10-ai-roi.js          # expect 192  (2787-2978)
 ```
+(Do not use `(Get-Content file).Count` — confirmed unreliable on files extracted from this source, see Global Constraints.)
 
 - [ ] **Step 5: Commit**
 

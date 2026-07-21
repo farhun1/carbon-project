@@ -6,7 +6,13 @@ Purpose: Record initial state before frontend restructuring begins
 File: index.html
 
 Baseline Metrics:
-- Total lines: 2826 (Note: brief expected 2981, actual is 2826)
+- Total lines: 2981, confirmed via `wc -l` and `[System.IO.File]::ReadAllLines().Count`
+  (both agree with the plan). The original PowerShell check used
+  `Get-Content | Measure-Object -Line`, which undercounts this specific file
+  (reported 2826) — confirmed unreliable, root-caused to this file containing
+  extremely long single lines (e.g. the ~74KB HDATA line). The plan's Global
+  Constraints and every later line-count verification step were corrected to
+  use `[System.IO.File]::ReadAllLines().Count` / `wc -l` instead.
 - Contains: inline CSS + inline JS in single HTML file
 
 Data-View Sections Found:
