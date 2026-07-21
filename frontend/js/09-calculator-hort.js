@@ -115,3 +115,10 @@ function hAiTab(t){
   const roi=document.getElementById('hai-roi'); roi.style.display=t==='roi'?'block':'none';
   if(t==='roi'){ mountROI('hai-roi'); }
 }
+function aiTab(t){
+  document.getElementById('ai-t1').classList.toggle('on',t==='rec');
+  document.getElementById('ai-t2').classList.toggle('on',t==='roi');
+  document.getElementById('ai-rec').style.display=t==='rec'?'block':'none';
+  const roi=document.getElementById('ai-roi'); roi.style.display=t==='roi'?'block':'none';
+  if(t==='roi'){ mountROI('ai-roi'); }
+}
