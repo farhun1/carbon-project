@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LCCIP · Sustain Pro — Carbon intelligence for every Australian cattle farm</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/pbi-report.css">
+<link rel="stylesheet" href="css/calculator.css">
+<link rel="stylesheet" href="css/chooser.css">
+<link rel="stylesheet" href="css/horticulture.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="css/marketing-extras.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<!-- ============ INDUSTRY CHOOSER ============ -->
+<div id="chooser">
+  <div class="ch-inner">
+    <div class="ch-brand">
+      <div class="leafmark"><svg viewBox="0 0 24 24" fill="#12301d"><path d="M12 2C7 4 4 8 4 13c0 4 3 8 8 9 0-6 2-9 7-12-4 0-7 1-9 4 1-5 1-8 2-12z"/></svg></div>
+      <div><b>Sustain Pro</b><span>LCCIP</span></div>
+    </div>
+    <h1>Which industry are you measuring?</h1>
+    <p class="s">LCCIP delivers life-cycle carbon intelligence across Australian agriculture. Choose a sector to begin.</p>
+    <div class="ch-cards">
+      <div class="ch-card" onclick="pickIndustry('farm')">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#12301d" stroke-width="2"><path d="M3 17h4l2-5 3 8 3-11 2 8h4"/><circle cx="6" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/></svg></div>
+        <h3>Farm — Cattle</h3>
+        <p>Dairy, beef, mixed and feedlot. Enteric methane, manure, feed and ACCU monetisation.</p>
+        <div class="st"><div><b>7</b><span>farms</span></div><div><b>27.0k</b><span>tCO₂-e/yr</span></div><div><b>3,090</b><span>ACCUs/yr</span></div></div>
+      </div>
+      <div class="ch-card" onclick="pickIndustry('hort')">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#12301d" stroke-width="2"><path d="M12 22V9"/><path d="M12 9c0-3 2-5 5-5 0 3-2 5-5 5z"/><path d="M12 12c0-3-2-5-5-5 0 3 2 5 5 5z"/><path d="M7 22h10"/></svg></div>
+        <h3>Horticulture</h3>
+        <p>Orchards, vineyards, protected cropping and open field. Packaging, soil N₂O, energy and water.</p>
+        <div class="st"><div><b>12</b><span>farms</span></div><div><b>3.9k</b><span>tCO₂-e/yr</span></div><div><b>111</b><span>factors</span></div></div>
+      </div>
+    </div>
+    <p style="font-size:11.5px;color:#8fae84;margin-top:24px">Demo prototype · figures are indicative. You can switch industry at any time.</p>
+  </div>
+</div>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand" onclick="go('home')" style="cursor:pointer">
+      <div class="leafmark"><svg viewBox="0 0 24 24" fill="#12301d"><path d="M12 2C7 4 4 8 4 13c0 4 3 8 8 9 0-6 2-9 7-12-4 0-7 1-9 4 1-5 1-8 2-12z"/></svg></div>
+      <div><b>Sustain Pro</b><span>LCCIP</span></div>
+    </div>
+    <nav class="navlinks" id="navlinks">
+      <button data-v="home" onclick="go('home')">Home</button>
+      <button data-v="how" onclick="go('how')">How It Works</button>
+      <button data-v="dashboard" onclick="go('dashboard')">Dashboard</button>
+      <button data-v="input" onclick="go('input')">Farm Data Input</button>
+      <button data-v="ai" onclick="go('ai')">AI Recommendations</button>
+      <button data-v="credit" onclick="go('credit')">Carbon Credits</button>
+      <button data-v="methods" onclick="go('methods')">Methods &amp; Standards</button>
+      <button data-v="about" onclick="go('about')">About / Impact</button>
+      <button data-v="contact" onclick="go('contact')">Contact</button>
+    </nav>
+    <button class="back-land" onclick="backToLanding()" title="Back to industry selection">← Industries</button>
+    <span class="ind-switch"><button id="sw-farm" class="on" onclick="pickIndustry('farm')">Farm</button><button id="sw-hort" onclick="pickIndustry('hort')">Horticulture</button></span>
+    <button class="cta" id="authbtn" onclick="openModal()">Subscribe</button>
+  </div>
+</header>
+
+<!-- ============ SUBSCRIBE MODAL ============ -->
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <button class="close-x" onclick="closeModal()">×</button>
+    <h2 id="modal-title">Create your account</h2>
+    <p class="m" id="modal-sub">Paid subscribers can view carbon-emission details for any farm in the Australian network.</p>
+    <div class="fld"><label>Work email</label><input id="m-email" type="email" placeholder="you@organisation.com.au" value="analyst@rabobank.com.au"></div>
+    <div class="fld"><label>Plan</label><select id="m-plan">
+      <option>Network — view any farm in Australia ($149/mo)</option>
+      <option>Producer — your own farm ($0, free)</option>
+      <option>Enterprise — supply chain & API (custom)</option>
+    </select></div>
+    <button class="cta" style="width:100%;padding:12px;margin-top:6px" onclick="subscribe()">Start subscription</button>
+    <p class="note">Demo prototype — no real payment or authentication. Riverdale uses your supplied pilot dataset; other farms are illustrative. Synthetic placeholders, not for formal reporting.</p>
+  </div>
+</div>
+
+<main class="wrap" id="main">
+
+<!-- ============ HOME ============ -->
+<section class="view show" data-view="home">
+  <div class="hero">
+    <div>
+      <span class="kicker">AI-enabled life-cycle carbon intelligence</span>
+      <h1>See the carbon position of <span class="accent">any Australian cattle farm</span> — live.</h1>
+      <p class="lead">LCCIP connects farm operational data, life-cycle assessment, AI forecasting and ACCU monetisation into one platform. Subscribe to monitor emissions, predict hotspots and turn reductions into carbon revenue across the national herd.</p>
+      <div class="hero-cta">
+        <button class="btn-lg btn-primary" onclick="openModal()">Subscribe to the network</button>
+        <button class="btn-lg btn-ghost" onclick="go('how')">See how it works</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hs"><b id="hs-farms">7</b><span>farms connected</span></div>
+        <div class="hs"><b id="hs-net">27.0k</b><span>tCO₂-e/yr monitored</span></div>
+        <div class="hs"><b id="hs-accu">3,090</b><span>ACCU potential/yr</span></div>
+      </div>
+    </div>
+    <div class="mapcard">
+      <div class="ml"><b>Live farm network · Australia</b><span class="live"><i></i>LIVE</span></div>
+      <div id="ausmap"></div>
+      <div class="cap">Each dot is a connected farm streaming carbon data · select one in the dashboard</div>
+    </div>
+  </div>
+
+  <div class="trust-strip">
+    <span class="ts">Aligned to NGER</span><span class="ts">IPCC Tier 2 factors</span><span class="ts">Clean Energy Regulator · ACCU pathway</span><span class="ts">Audit-ready data</span><span class="ts">Cradle-to-farm-gate LCA</span>
+  </div>
+  <div class="sec-head" style="margin-top:24px"><span class="kicker">The workflow</span><h2 class="h-lead">Baseline → Reduce → Verify → Earn</h2></div>
+  <div class="flow4">
+    <div class="fs"><div class="n">1</div><h4>Baseline</h4><p>Establish emissions with NGER / IPCC factors, cradle-to-farm-gate.</p></div>
+    <div class="fs"><div class="n">2</div><h4>Reduce</h4><p>AI-ranked interventions cut emissions against the baseline.</p></div>
+    <div class="fs"><div class="n">3</div><h4>Verify</h4><p>Audit-ready data supports independent verification.</p></div>
+    <div class="fs"><div class="n">4</div><h4>Earn</h4><p>Verified reductions become ACCUs under an approved method.</p></div>
+  </div>
+
+  <div class="sec-head" style="margin-top:34px"><span class="kicker">Why LCCIP</span><h2 class="h-lead">From carbon reporting to carbon revenue</h2></div>
+  <div class="cards c4">
+    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div><h3>Monitor</h3><p>Real-time Scope 1·2·3 emissions and product carbon intensity for every farm.</p></div>
+    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Predict</h3><p>AI forecasts emission risk 30–60 days out and flags hotspots before they grow.</p></div>
+    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12c1 1 1 2 1 3h6c0-1 0-2 1-3a7 7 0 00-4-12z"/></svg></div><h3>Reduce</h3><p>Farm-specific intervention plans, ranked by impact, cost and payback.</p></div>
+    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 113 4M12 7v2m0 6v2"/></svg></div><h3>Monetise</h3><p>Verified reductions become ACCUs — carbon revenue paid back to the farm.</p></div>
+  </div>
+
+  <div class="sec-head" style="margin-top:40px"><span class="kicker">Plans</span><h2 class="h-lead">Subscribe to see any farm</h2><p class="sub">Network access lets banks, processors and advisors open any connected farm in Australia and view its full carbon profile.</p></div>
+  <div class="pricing">
+    <div class="plan"><h3>Producer</h3><div class="price">$0<span>/mo</span></div><ul><li>Your own farm dashboard</li><li>Data input & LCA</li><li>AI recommendations</li><li>ACCU eligibility</li></ul><button class="btn-lg btn-ghost" onclick="openModal()">Start free</button></div>
+    <div class="plan feat"><div class="tag">MOST POPULAR</div><h3>Network</h3><div class="price">$149<span>/mo</span></div><ul><li>View any farm in Australia</li><li>Portfolio & region rollups</li><li>Scope 3 supply-chain data</li><li>Forecasts & hotspot alerts</li></ul><button class="btn-lg btn-primary" onclick="openModal()">Subscribe</button></div>
+    <div class="plan"><h3>Enterprise</h3><div class="price">Custom</div><ul><li>API & data export</li><li>White-label dashboards</li><li>ACCU project management</li><li>Dedicated support</li></ul><button class="btn-lg btn-ghost" onclick="go('contact')">Contact sales</button></div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="view" data-view="how">
+  <div class="sec-head"><span class="kicker">How it works</span><h2 class="h-lead">Nine steps — from farm data to carbon revenue and back</h2><p class="sub">The same pipeline runs behind every farm in the network, continuously.</p></div>
+  <div class="steps" id="stepgrid"></div>
+  <div class="sec-head" style="margin-top:40px"><span class="kicker">Under the hood</span><h2 class="h-lead">A 7-layer platform</h2></div>
+  <div id="layers"></div>
+</section>
+
+<!-- ============ DASHBOARD ============ -->
+<section class="view" data-view="dashboard">
+  <div class="sec-head"><span class="kicker">Sustain Pro · executive dashboard</span><h2 class="h-lead">Any farm's live carbon position</h2></div>
+  <div id="dash-gate"></div>
+  <div id="dash-body" style="display:none">
+    <div class="dash-tabs">
+      <button id="dt-live" class="on" onclick="dashTab('live')">Live summary</button>
+      <button id="dt-report" onclick="dashTab('report')">Power BI report</button>
+    </div>
+    <div id="dash-live">
+      <div class="toolbar">
+        <div class="grp"><label>Farm</label><select id="farmsel" onchange="renderDash()"></select></div>
+        <div class="grp"><label>Region</label><div class="chips" id="regionchips"></div></div>
+        <span class="live-pill"><i></i>Live · synced just now</span>
+      </div>
+      <div id="data-transparency"></div>
+      <div class="panel" style="margin-bottom:18px">
+        <h3>Farm network — GIS map</h3><div class="ph">Live farm &amp; paddock locations · click a marker (interactive online map)</div>
+        <div id="gismap" style="height:340px;border-radius:12px;overflow:hidden"></div>
+      </div>
+      <div id="dash-content"></div>
+    </div>
+    <div id="pbi-wrap" style="display:none">
+      <div class="pbi">
+<div class="report">
+  <div class="rhead">
+    <div class="lm"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2C7 4 4 8 4 13c0 4 3 8 8 9 0-6 2-9 7-12-4 0-7 1-9 4 1-5 1-8 2-12z"/></svg></div>
+    <h1>The Carbon Project<span>LCCIP · AI-Enabled Life-Cycle Carbon Intelligence — Riverdale Cattle Farm</span></h1>
+    <div class="meta"><b>Riverdale Cattle Farm</b> · RF-QLD-001<br>Refreshed 28 Jun 2026 · FY2026 · Demo data</div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="active" onclick="pbiJump('p1',this)">Executive Dashboard</button>
+    <button onclick="pbiJump('p2',this)">LCA &amp; Scope Breakdown</button>
+    <button onclick="pbiJump('p3',this)">AI Forecasting &amp; Hotspots</button>
+    <button onclick="pbiJump('p4',this)">Intervention &amp; ACCU</button>
+    <button onclick="pbiJump('p5',this)">Paddock &amp; Sensors</button>
+  </div>
+
+  <div class="slicers">
+    <div class="slicer"><label>Farm</label><div class="val">Riverdale Cattle Farm</div></div>
+    <div class="slicer"><label>Region</label><div class="val">Queensland</div></div>
+    <div class="slicer"><label>Year</label><div class="val">2026</div></div>
+    <div class="slicer"><label>Scope</label><div class="val">All scopes</div></div>
+    <div class="slicer"><label>Month</label><div class="val">Jan – Dec</div></div>
+  </div>
+
+  <!-- ===== PAGE 1: EXECUTIVE ===== -->
+  <div class="page" id="p1">
+    <div class="page-label"><span class="pn">1</span><h2>Executive Carbon Intelligence Dashboard</h2><span class="ln"></span></div>
+    <div class="grid" id="kpis" style="grid-template-columns:repeat(6,1fr)"></div>
+    <div class="grid" style="grid-template-columns:1fr 2fr;margin-top:12px">
+      <div class="pbtile"><div class="tile-h"><h3>Emissions by Scope (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-donut"></div>
+        <div class="pblegend"><span><i style="background:var(--c1)"></i>Scope 1 · 1,343</span><span><i style="background:var(--c2)"></i>Scope 2 · 234</span><span><i style="background:var(--c3)"></i>Scope 3 · 755</span></div></div>
+      <div class="pbtile"><div class="tile-h"><h3>Net Emissions vs Target by Month (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-line"></div>
+        <div class="pblegend"><span><i style="background:var(--c1)"></i>Actual net</span><span><i style="background:var(--c2)"></i>Target</span></div></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:12px">
+      <div class="pbtile"><div class="tile-h"><h3>Scope Mix by Month (100% stacked)</h3><span class="dots">⋯</span></div><div id="v-stack"></div>
+        <div class="pblegend"><span><i style="background:var(--c1)"></i>Scope 1</span><span><i style="background:var(--c2)"></i>Scope 2</span><span><i style="background:var(--c3)"></i>Scope 3</span></div></div>
+      <div class="pbtile"><div class="tile-h"><h3>Emissions by Sector (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 2: LCA ===== -->
+  <div class="page" id="p2">
+    <div class="page-label"><span class="pn">2</span><h2>Life Cycle Assessment &amp; Scope Breakdown</h2><span class="ln"></span></div>
+    <div class="grid" style="grid-template-columns:1fr 1.5fr">
+      <div class="pbtile"><div class="tile-h"><h3>Sector × Scope matrix (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-pivot"></div></div>
+      <div class="pbtile"><div class="tile-h"><h3>Cradle-to-Farm-Gate Carbon Waterfall (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-water"></div></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr;margin-top:12px">
+      <div class="pbtile"><div class="tile-h"><h3>Product Carbon Intensity by Month (kg CO₂-e / L milk)</h3><span class="dots">⋯</span></div><div id="v-ci"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 3: AI ===== -->
+  <div class="page" id="p3">
+    <div class="page-label"><span class="pn">3</span><h2>AI Forecasting &amp; Hotspot Detection</h2><span class="ln"></span></div>
+    <div class="grid" style="grid-template-columns:2fr 1fr">
+      <div class="pbtile"><div class="tile-h"><h3>Actual vs AI-Predicted Net Emissions (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-fc"></div>
+        <div class="pblegend"><span><i style="background:var(--c1)"></i>Actual</span><span><i style="background:var(--c3)"></i>AI predicted (Prophet/LSTM)</span></div></div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px;align-content:start">
+        <div class="pbtile pbkpi"><div class="v em">84%</div><div class="l">Avg Forecast Confidence</div></div>
+        <div class="pbtile pbkpi"><div class="v" style="color:var(--green)">0</div><div class="l">Anomaly Days</div><div class="d">all readings normal</div></div>
+        <div class="pbtile pbkpi"><div class="v">30–60</div><div class="l">Forecast Horizon (days)</div></div>
+        <div class="pbtile pbkpi"><div class="v gold">564 t</div><div class="l">Reduction Potential / yr</div></div>
+      </div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:12px">
+      <div class="pbtile"><div class="tile-h"><h3>Hotspot Detection by Sector (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-hot"></div>
+        <div class="pblegend"><span><i style="background:var(--red)"></i>Red</span><span><i style="background:var(--amber)"></i>Amber</span><span><i style="background:var(--green)"></i>Green</span></div></div>
+      <div class="pbtile"><div class="tile-h"><h3>Root-Cause &amp; Risk Summary</h3><span class="dots">⋯</span></div><div id="v-rc"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 4: INTERVENTION ===== -->
+  <div class="page" id="p4">
+    <div class="page-label"><span class="pn">4</span><h2>Intervention Planning &amp; ACCU Monetisation</h2><span class="ln"></span></div>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="pbtile pbkpi"><div class="v em">564 t</div><div class="l">Total Reduction Potential</div><div class="d">CO₂-e per year</div></div>
+      <div class="pbtile pbkpi"><div class="v gold">480</div><div class="l">Total Potential ACCUs</div><div class="d">1 ACCU = 1 t CO₂-e</div></div>
+      <div class="pbtile pbkpi"><div class="v gold">$18,244</div><div class="l">Potential ACCU Revenue</div><div class="d">at ~$38 / ACCU</div></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr;margin-top:12px">
+      <div class="pbtile"><div class="tile-h"><h3>Intervention Plan — ranked by impact</h3><span class="dots">⋯</span></div><div id="v-itable"></div></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:12px">
+      <div class="pbtile"><div class="tile-h"><h3>Reduction Potential by Intervention (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-ibar"></div></div>
+      <div class="pbtile"><div class="tile-h"><h3>Payback vs Reduction (bubble = ACCU revenue)</h3><span class="dots">⋯</span></div><div id="v-scatter"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== PAGE 5: PADDOCK ===== -->
+  <div class="page" id="p5">
+    <div class="page-label"><span class="pn">5</span><h2>Paddock, Weather &amp; Sensor Intelligence</h2><span class="ln"></span></div>
+    <div class="grid" style="grid-template-columns:1.35fr 1fr">
+      <div class="pbtile"><div class="tile-h"><h3>Paddock Carbon Hotspot Map (size = emission intensity)</h3><span class="dots">⋯</span></div><div id="v-map"></div>
+        <div class="pblegend"><span><i style="background:var(--amber)"></i>Medium hotspot</span><span><i style="background:var(--green)"></i>Low hotspot</span></div></div>
+      <div class="pbtile"><div class="tile-h"><h3>NDVI Pasture Health Trend</h3><span class="dots">⋯</span></div><div id="v-ndvi"></div>
+        <div class="pblegend"><span><i style="background:var(--leaf)"></i>Avg NDVI (0–1)</span></div></div>
+    </div>
+    <div class="grid" style="grid-template-columns:1fr;margin-top:12px">
+      <div class="pbtile"><div class="tile-h"><h3>Paddock Sensor Readings</h3><span class="dots">⋯</span></div><div id="v-ptable"></div></div>
+    </div>
+  </div>
+
+  <div class="foot">The Carbon Project · LCCIP demo dashboard — replicates the Power BI report (Executive, LCA, AI Forecasting, Intervention &amp; ACCU, Paddock pages). Riverdale figures are synthetic placeholders from the pilot dataset; not for formal carbon reporting.</div>
+</div>
+
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FARM DATA INPUT ============ -->
+<section class="view" data-view="input">
+  <div class="sec-head"><span class="kicker">Farm data input</span><h2 class="h-lead">Calculate your farm's carbon footprint</h2>
+    <p class="sub">Quick estimate for a fast answer, or a full property assessment structured like the national standard. Emissions are computed by a swappable engine — today NGER/IPCC-aligned factors, designed to run on the <b>AIA Environmental Accounting Platform</b> engine once connected.</p></div>
+
+  <div class="calc-tabs">
+    <button id="ct-quick" class="on" onclick="calcTab('quick')">Quick estimate</button>
+    <button id="ct-adv" onclick="calcTab('adv')">Full property assessment</button>
+  </div>
+
+  <!-- ---------- QUICK ---------- -->
+  <div id="calc-quick">
+    <div class="panel" style="margin-bottom:18px">
+      <div class="form-grid">
+        <div class="fld"><label>Farm name</label><input id="i-name" value="My Farm"></div>
+        <div class="fld"><label>State</label><select id="i-state"><option>QLD</option><option>NSW</option><option>VIC</option><option>WA</option><option>SA</option><option>TAS</option></select></div>
+        <div class="fld"><label>System</label><select id="i-type"><option>Dairy</option><option>Beef</option><option>Mixed</option><option>Feedlot</option></select></div>
+        <div class="fld"><label>Herd size (head)</label><input id="i-head" type="number" value="312"></div>
+        <div class="fld"><label>Diesel (L / year)</label><input id="i-diesel" type="number" value="67000"></div>
+        <div class="fld"><label>Electricity (kWh / year)</label><input id="i-elec" type="number" value="320000"></div>
+        <div class="fld"><label>Feed purchased (t / year)</label><input id="i-feed" type="number" value="850"></div>
+        <div class="fld"><label>Fertiliser N (kg / year)</label><input id="i-fert" type="number" value="12000"></div>
+        <div class="fld"><label>Milk output (L / year)</label><input id="i-milk" type="number" value="1572000"></div>
+        <div class="fld"><label>Trees / shelterbelt (ha)</label><input id="i-trees" type="number" value="18"></div>
+        <div class="fld"><label>Pasture area (ha)</label><input id="i-pasture" type="number" value="420"></div>
+        <div class="fld"><label>Land cleared this year (ha)</label><input id="i-cleared" type="number" value="0"></div>
+        <div class="fld"><label>Planned reduction (% → ACCUs)</label><input id="i-redpct" type="number" value="12"></div>
+      </div>
+      <button class="btn-lg btn-primary" style="margin-top:18px" onclick="calcInput()">Calculate emissions</button>
+    </div>
+    <div id="input-result"></div>
+  </div>
+
+  <!-- ---------- ADVANCED WIZARD ---------- -->
+  <div id="calc-adv" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+      <span class="eng-badge" id="eng-status"><i></i>Engine: LCCIP indicative (NGER/IPCC-aligned) — EAP-ready</span>
+      <span style="font-size:12px;color:var(--muted)">Structured to the national standard · property → enterprises → inventory → results</span>
+    </div>
+    <div class="wiz">
+      <div class="wiz-steps" id="wiz-steps"></div>
+      <div class="wiz-body">
+
+        <!-- 1 property -->
+        <div class="wiz-pane on" data-pane="0">
+          <h3>Property</h3><div class="wh">Define the property boundary and land use — the basis of the assessment.</div>
+          <div class="form-grid">
+            <div class="fld"><label>Property name</label><input id="a-name" value="Riverdale Cattle Farm"></div>
+            <div class="fld"><label>State</label><select id="a-state"><option>QLD</option><option>NSW</option><option>VIC</option><option>WA</option><option>SA</option><option>TAS</option><option>NT</option></select></div>
+            <div class="fld"><label>Reporting year</label><select id="a-year"><option>2026</option><option>2025</option></select></div>
+            <div class="fld"><label>Total area (ha)</label><input id="a-area" type="number" value="506"></div>
+            <div class="fld"><label>Grazing / pasture (ha)</label><input id="a-pasture" type="number" value="420"></div>
+            <div class="fld"><label>Cropping / fodder (ha)</label><input id="a-crop" type="number" value="50"></div>
+            <div class="fld"><label>Trees, shelterbelt, remnant veg (ha)</label><input id="a-trees" type="number" value="18"></div>
+            <div class="fld"><label>Land cleared this year (ha)</label><input id="a-cleared" type="number" value="0"></div>
+            <div class="fld"><label>Land revegetated this year (ha)</label><input id="a-reveg" type="number" value="2"></div>
+          </div>
+        </div>
+
+        <!-- 2 enterprises -->
+        <div class="wiz-pane" data-pane="1">
+          <h3>Enterprises &amp; livestock</h3><div class="wh">Add each enterprise on the property. Livestock are entered by class — the biggest driver of farm emissions.</div>
+          <div id="ent-list"></div>
+          <button class="btn-sm btn-nav" onclick="addEnt()">+ Add enterprise</button>
+        </div>
+
+        <!-- 3 feed & fertiliser -->
+        <div class="wiz-pane" data-pane="2">
+          <h3>Feed, fertiliser &amp; soil</h3><div class="wh">Purchased inputs carry embedded (Scope 3) emissions; nitrogen drives N₂O.</div>
+          <div class="form-grid">
+            <div class="fld"><label>Purchased feed — grain (t/yr)</label><input id="a-grain" type="number" value="500"></div>
+            <div class="fld"><label>Purchased feed — hay/silage (t/yr)</label><input id="a-hay" type="number" value="350"></div>
+            <div class="fld"><label>Feed additive (3-NOP / Asparagopsis)</label><select id="a-additive"><option value="0">None</option><option value="0.20">Yes — ~20% enteric reduction</option><option value="0.30">Yes — ~30% enteric reduction</option></select></div>
+            <div class="fld"><label>Urea / nitrogen fertiliser (kg N/yr)</label><input id="a-fertn" type="number" value="12000"></div>
+            <div class="fld"><label>Lime applied (t/yr)</label><input id="a-lime" type="number" value="20"></div>
+            <div class="fld"><label>Manure management</label><select id="a-manure"><option value="1">Uncovered / pasture deposit</option><option value="0.75">Solid storage</option><option value="0.55">Covered lagoon</option><option value="0.35">Anaerobic digester</option></select></div>
+          </div>
+        </div>
+
+        <!-- 4 energy & fuel -->
+        <div class="wiz-pane" data-pane="3">
+          <h3>Energy, fuel &amp; transport</h3><div class="wh">Scope 1 (fuel you burn) and Scope 2 (electricity you buy).</div>
+          <div class="form-grid">
+            <div class="fld"><label>Diesel (L/yr)</label><input id="a-diesel" type="number" value="67000"></div>
+            <div class="fld"><label>Petrol (L/yr)</label><input id="a-petrol" type="number" value="4000"></div>
+            <div class="fld"><label>LPG (L/yr)</label><input id="a-lpg" type="number" value="0"></div>
+            <div class="fld"><label>Grid electricity (kWh/yr)</label><input id="a-elec" type="number" value="320000"></div>
+            <div class="fld"><label>Renewable / solar generated (kWh/yr)</label><input id="a-solar" type="number" value="0"></div>
+            <div class="fld"><label>Freight / transport (km/yr)</label><input id="a-freight" type="number" value="42000"></div>
+          </div>
+        </div>
+
+        <!-- 5 production & credits -->
+        <div class="wiz-pane" data-pane="4">
+          <h3>Production &amp; credit scenario</h3><div class="wh">Production gives carbon intensity. The reduction scenario drives the ACCU calculation (baseline − project).</div>
+          <div class="form-grid">
+            <div class="fld"><label>Milk produced (L/yr)</label><input id="a-milk" type="number" value="1572000"></div>
+            <div class="fld"><label>Beef liveweight sold (kg/yr)</label><input id="a-lwg" type="number" value="0"></div>
+            <div class="fld"><label>Planned reduction vs baseline (%)</label><input id="a-redpct" type="number" value="12"></div>
+            <div class="fld"><label>ACCU price ($)</label><input id="a-price" type="number" value="38"></div>
+            <div class="fld"><label>Risk-of-reversal buffer (%)</label><input id="a-buffer" type="number" value="5"></div>
+          </div>
+        </div>
+
+        <!-- 6 results -->
+        <div class="wiz-pane" data-pane="5">
+          <h3>Results</h3><div class="wh">Full inventory · Scope 1·2·3 · carbon intensity · benchmarks · ACCU potential.</div>
+          <div id="adv-result"><p style="color:var(--muted);font-size:13px">Click <b>Calculate</b> to run the assessment.</p></div>
+        </div>
+
+      </div>
+      <div class="wiz-foot">
+        <button class="btn-sm btn-nav" id="wz-prev" onclick="wizGo(-1)">← Back</button>
+        <span class="prog" id="wz-prog">Step 1 of 6</span>
+        <button class="btn-sm btn-primary" id="wz-next" onclick="wizNext()">Next →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AI RECOMMENDATIONS ============ -->
+<section class="view" data-view="ai">
+  <div class="sec-head"><span class="kicker">AI forecasting & hotspot detection</span><h2 class="h-lead">What the AI engine sees</h2></div>
+  <div id="ai-gate"></div>
+  <div id="ai-body" style="display:none">
+    <div class="calc-tabs">
+      <button id="ai-t1" class="on" onclick="aiTab('rec')">Recommendations</button>
+      <button id="ai-t2" onclick="aiTab('roi')">Investment &amp; ROI</button>
+    </div>
+    <div id="ai-rec">
+      <div class="toolbar"><div class="grp"><label>Farm</label><select id="aifarmsel" onchange="renderAI()"></select></div><span class="live-pill"><i></i>Model live</span></div>
+      <div id="ai-content"></div>
+    </div>
+    <div id="ai-roi" style="display:none"></div>
+  </div>
+</section>
+
+<!-- ============ CARBON CREDIT ============ -->
+<section class="view" data-view="credit">
+  <div class="sec-head"><span class="kicker">Carbon credit opportunity</span><h2 class="h-lead">Turn reductions into ACCU revenue</h2><p class="sub">Every tonne of verified CO₂-e reduction can earn one Australian Carbon Credit Unit (ACCU), traded at roughly $38. Model the upside for any farm.</p></div>
+  <div id="credit-gate"></div>
+  <div id="credit-body" style="display:none">
+    <div class="toolbar"><div class="grp"><label>Farm</label><select id="crfarmsel" onchange="renderCredit()"></select></div></div>
+    <div id="credit-content"></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT / IMPACT ============ -->
+<section class="view" data-view="about">
+  <div class="sec-head"><span class="kicker">About / impact</span><h2 class="h-lead">The missing intelligence layer for farm carbon</h2>
+    <p class="sub">Ruminati helps farms <i>report</i> emissions. Pairtree helps <i>integrate</i> farm data. LCCIP is the layer neither has fully built — turning that data into live intelligence, AI-driven action and carbon revenue across the national herd.</p></div>
+  <div class="impact">
+    <div class="im"><b id="im-farms">7</b><span>farms connected</span></div>
+    <div class="im"><b id="im-net">27.0k</b><span>tCO₂-e/yr monitored</span></div>
+    <div class="im"><b id="im-cut">2.4k</b><span>tCO₂-e/yr reduction potential</span></div>
+    <div class="im"><b id="im-rev">$117k</b><span>carbon revenue potential/yr</span></div>
+  </div>
+  <div class="cards c3">
+    <div class="tile"><h3>Our mission</h3><p>Make every Australian cattle farm carbon-intelligent and carbon-profitable — measuring to recognised standards, predicting hotspots, prescribing action, and converting reductions to ACCU value.</p></div>
+    <div class="tile"><h3>The gap we fill</h3><p>No single platform connected operational data, LCA modelling, AI forecasting and ACCU monetisation for cattle farms. LCCIP unifies the full decision cycle.</p></div>
+    <div class="tile"><h3>Why it matters</h3><p>Cattle farming is one of Australia's largest emission sources. Farm-level intelligence unlocks Scope 3 supply-chain trust, net-zero progress and new farm income.</p></div>
+  </div>
+</section>
+
+<!-- ============ METHODS & STANDARDS ============ -->
+<section class="view" data-view="methods">
+  <div class="sec-head"><span class="kicker">Methods &amp; standards</span><h2 class="h-lead">How our carbon is calculated — and how it becomes ACCUs</h2>
+    <p class="sub">Transparent, NGER / IPCC-aligned, and built to plug into the real Australian carbon-credit scheme. This page is what we show to auditors, processors and the Clean Energy Regulator.</p></div>
+
+  <div class="sec-head" style="margin-top:8px"><span class="kicker">Mechanism</span><h2 class="h-lead" style="font-size:22px">The carbon emission mechanism</h2></div>
+  <div class="eqbox" style="margin-bottom:14px">Total emissions <span class="op">=</span> Σ (&nbsp;<b>activity</b> <span class="op">×</span> <b>emission factor</b>&nbsp;)</div>
+  <div class="cards c2" style="margin-bottom:8px">
+    <div class="tile"><h3>Three gases → one unit (CO₂-e)</h3>
+      <div style="margin-top:8px">
+        <span class="gaschip"><i style="background:#586b5e">CO₂</i> ×1 &nbsp;— diesel, electricity</span><br>
+        <span class="gaschip"><i style="background:#d14a3f">CH₄</i> ×28 — cattle &amp; manure</span><br>
+        <span class="gaschip"><i style="background:#df9b26">N₂O</i> ×265 — fertiliser &amp; manure</span>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:8px">Methane dominates cattle carbon — a little counts as a lot of CO₂-e.</p></div>
+    <div class="tile"><h3>Cradle-to-farm-gate LCA · Scopes 1·2·3</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin:6px 0 0">We count on-farm and <b>embedded</b> supply-chain emissions, then express them per unit of product (kg CO₂-e / L milk or / kg beef). Sorted into <b>Scope 1</b> (direct), <b>Scope 2</b> (energy) and <b>Scope 3</b> (feed &amp; transport) — the standard used by processors and lenders.</p></div>
+  </div>
+
+  <div class="sec-head" style="margin-top:26px"><span class="kicker">ACCU pathway</span><h2 class="h-lead" style="font-size:22px">From reduction to credit — the real process</h2></div>
+  <div class="factor-flow">
+    <div class="fx"><div class="n">1</div><b>Approved method</b><span>Register under a CER-approved method (e.g. beef herd, soil carbon)</span></div>
+    <div class="fx"><div class="n">2</div><b>Baseline</b><span>Establish an approved baseline with NGER factors</span></div>
+    <div class="fx"><div class="n">3</div><b>Reduce &amp; measure</b><span>Apply interventions · measure project emissions</span></div>
+    <div class="fx"><div class="n">4</div><b>Independent audit</b><span>Third-party verification of the reduction</span></div>
+    <div class="fx gold"><div class="n">5</div><b>CER issues ACCUs</b><span>1 ACCU per verified tonne · sell or inset</span></div>
+  </div>
+  <div class="accueq" style="margin-top:14px">
+    <span class="b">ACCUs</span><span class="op">=</span>
+    <span class="b">( Baseline − Project )</span><span class="op">×</span>
+    <span class="b">(1 − risk buffer)</span><span class="op">·</span>
+    <span class="g">Revenue = ACCUs × ~$38</span>
+  </div>
+
+  <div class="sec-head" style="margin-top:26px"><span class="kicker">Transparency</span><h2 class="h-lead" style="font-size:22px">Emission factors we use</h2></div>
+  <div class="panel">
+    <table class="factbl"><tr><th>Source</th><th>Factor</th><th>Basis / standard</th></tr>
+      <tr><td>Enteric methane</td><td>2.0–3.1 t CO₂-e / head</td><td>IPCC Tier 2 (by system)</td></tr>
+      <tr><td>Manure</td><td>0.55 t CO₂-e / head</td><td>IPCC / NGER</td></tr>
+      <tr><td>Diesel</td><td>2.68 kg CO₂-e / L</td><td>NGER (National Greenhouse Accounts)</td></tr>
+      <tr><td>Electricity</td><td>0.66 kg CO₂-e / kWh</td><td>NGER grid factor</td></tr>
+      <tr><td>Feed (embedded)</td><td>0.6 t CO₂-e / t</td><td>Life-cycle inventory (indicative)</td></tr>
+      <tr><td>Fertiliser (N₂O)</td><td>5.5 kg CO₂-e / kg N</td><td>IPCC N₂O</td></tr>
+      <tr><td>Land — trees / shelterbelt</td><td>−6.0 t CO₂-e / ha / yr</td><td>Sequestration (indicative)</td></tr>
+      <tr><td>Land — pasture / soil</td><td>−0.5 t CO₂-e / ha / yr</td><td>Soil carbon (indicative)</td></tr>
+      <tr><td>Land-use change (clearing)</td><td>+120 t CO₂-e / ha</td><td>LULUCF (indicative)</td></tr>
+    </table>
+    <p style="font-size:11.5px;color:var(--muted);margin-top:10px"><b>Note:</b> factors shown are NGER/IPCC-aligned and indicative for demonstration. Production uses the current published NGER edition and method-specific equations, verified before any credit is issued.</p>
+  </div>
+
+  <div class="sec-head" style="margin-top:26px"><span class="kicker">Why it's more than a calculator</span><h2 class="h-lead" style="font-size:22px">Normal calculator vs LCCIP (LCA)</h2></div>
+  <div class="compare">
+    <div class="col bad"><h4>A normal footprint calculator</h4><ul>
+      <li>On-farm emissions only — stops at the fence</li>
+      <li>Ignores embedded feed &amp; fertiliser emissions</li>
+      <li>Gives one lump total</li>
+      <li>No land / vegetation carbon</li>
+      <li>No credit pathway</li></ul></div>
+    <div class="col good"><h4>LCCIP — life-cycle assessment</h4><ul>
+      <li>Cradle-to-farm-gate boundary (stated)</li>
+      <li>Counts embedded Scope 3 (feed, transport)</li>
+      <li>Reports intensity per litre / per kg</li>
+      <li>Includes land sequestration &amp; land-use change</li>
+      <li>Shapes reductions into ACCUs (baseline − project)</li></ul></div>
+  </div>
+
+  <div class="note-banner" style="margin-top:24px"><b>Honest status.</b> LCCIP produces audit-ready, NGER/IPCC-aligned data to support carbon projects. It does not itself issue ACCUs — certification requires an approved CER method, baseline and independent verification.</div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="view" data-view="contact">
+  <div class="sec-head"><span class="kicker">Contact</span><h2 class="h-lead">Talk to us about a pilot</h2></div>
+  <div class="contact-grid">
+    <div class="panel">
+      <div class="form-grid" style="grid-template-columns:1fr 1fr">
+        <div class="fld"><label>Name</label><input placeholder="Your name"></div>
+        <div class="fld"><label>Organisation</label><input placeholder="Farm / company"></div>
+        <div class="fld"><label>Email</label><input type="email" placeholder="you@org.com.au"></div>
+        <div class="fld"><label>Role</label><select><option>Producer</option><option>Processor</option><option>Bank / lender</option><option>Advisor</option><option>Researcher</option></select></div>
+      </div>
+      <div class="fld" style="margin-top:16px"><label>Message</label><input style="height:90px" placeholder="Tell us about your farm or network…"></div>
+      <button class="btn-lg btn-primary" style="margin-top:16px" onclick="alert('Thanks — this is a demo form. We will be in touch.')">Send message</button>
+    </div>
+    <div class="contact-info">
+      <p><b>Pilot program</b><br>Now onboarding cattle farms in QLD, NSW, VIC, WA, TAS &amp; SA.</p>
+      <p><b>Email</b><br>hello@lccip.au</p>
+      <p><b>Partnerships</b><br>Processors, banks and advisors needing Scope 3 data.</p>
+      <p><b>Research</b><br>Academic collaboration to publish and strengthen the framework.</p>
+      <p style="font-size:12px;margin-top:18px">Demo prototype · contact details illustrative.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================== HORTICULTURE VIEWS ================== -->
+<section class="view" data-view="h-home">
+  <div class="hero">
+    <div>
+      <span class="kicker">Horticulture · life-cycle carbon intelligence</span>
+      <h1>The carbon in <span class="accent">every crop you grow</span> — measured.</h1>
+      <p class="lead">Orchards, vineyards, protected cropping and open field. LCCIP tracks emissions from soil to shelf — packaging, energy, soil N₂O, freight and water — and turns them into a defensible carbon intensity per kilogram sold.</p>
+      <div class="hero-cta">
+        <button class="btn-lg btn-primary" onclick="openModal()">Subscribe to the network</button>
+        <button class="btn-lg btn-ghost" onclick="go('h-how')">See how it works</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hs"><b id="hh-farms">12</b><span>growers connected</span></div>
+        <div class="hs"><b id="hh-net">3.2k</b><span>tCO₂-e/yr net</span></div>
+        <div class="hs"><b id="hh-ci">0.48</b><span>avg kg CO₂-e / kg</span></div>
+      </div>
+    </div>
+    <div class="mapcard">
+      <div class="ml"><b>Grower network · Australia</b><span class="live"><i></i>LIVE</span></div>
+      <div id="hausmap"></div>
+      <div class="cap">12 growers · 6 states · tomatoes to almonds</div>
+    </div>
+  </div>
+
+  <div class="trust-strip">
+    <span class="ts">NGER · IPCC factors</span><span class="ts">111-factor library</span><span class="ts">Scope 1·2·3</span><span class="ts">Cradle-to-farm-gate LCA</span><span class="ts">Data-confidence rated</span>
+  </div>
+
+  <div class="sec-head" style="margin-top:26px"><span class="kicker">The workflow</span><h2 class="h-lead">Baseline → Reduce → Verify → Report</h2></div>
+  <div class="flow4">
+    <div class="fs"><div class="n">1</div><h4>Baseline</h4><p>Cradle-to-farm-gate LCA with NGER / IPCC factors — 12 sources, Scope 1·2·3.</p></div>
+    <div class="fs"><div class="n">2</div><h4>Reduce</h4><p>Abatement levers ranked by tonnes saved — packaging, nitrogen, energy, freight.</p></div>
+    <div class="fs"><div class="n">3</div><h4>Verify</h4><p>Every factor graded by provenance, so you know exactly what you can defend.</p></div>
+    <div class="fs"><div class="n">4</div><h4>Report</h4><p>Retailer- and auditor-ready Scope 3 disclosure per kilogram sold.</p></div>
+  </div>
+
+  <div class="sec-head" style="margin-top:34px"><span class="kicker">Why LCCIP</span><h2 class="h-lead">A life-cycle assessment — not just a footprint</h2>
+    <p class="sub">A normal calculator counts what happens on your block. LCCIP measures the carbon in your <b>product</b>, across a stated cradle-to-farm-gate boundary, per kilogram sold.</p></div>
+  <div class="compare" style="margin-bottom:8px">
+    <div class="col bad"><h4>A normal footprint calculator</h4><ul>
+      <li>On-farm emissions only — stops at the gate</li>
+      <li>Ignores embedded packaging, fertiliser &amp; freight</li>
+      <li>One lump total for the whole business</li>
+      <li>No removals, no yield context</li>
+      <li>No honesty about factor quality</li></ul></div>
+    <div class="col good"><h4>LCCIP — cradle-to-farm-gate LCA</h4><ul>
+      <li>Stated boundary · 12 life-cycle sources</li>
+      <li>Scope 3 = 60% of the footprint, counted</li>
+      <li><b>kg CO₂-e per kg sold</b> — the functional unit</li>
+      <li>Soil &amp; biomass removals reported separately</li>
+      <li>Every factor graded: official vs proxy</li></ul></div>
+  </div>
+
+  <div class="cards c3" style="margin-top:18px">
+    <div class="tile"><h3>Functional unit</h3><p>Emissions ÷ marketable yield. That single number — kg CO₂-e per kg — is what retailers, exporters and auditors actually ask for.</p></div>
+    <div class="tile"><h3>System boundary</h3><p>Cradle-to-farm-gate: from fertiliser manufacture and seedling propagation through to the packed pallet leaving your shed.</p></div>
+    <div class="tile"><h3>Data confidence</h3><p>Only 10 of our 111 factors are Australian official. We show you which tonnes rest on proxies — so you know what you can defend.</p></div>
+  </div>
+
+  <div class="sec-head" style="margin-top:34px"><span class="kicker">Why horticulture is different</span><h2 class="h-lead">Your footprint is mostly <i>upstream</i></h2>
+    <p class="sub">Unlike livestock, horticulture's biggest emissions aren't from the paddock — they're in packaging, fertiliser and freight. Scope 3 is <b>60%</b> of the network total.</p></div>
+  <div class="cards c4">
+    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></div><h3>Packaging</h3><p>The single largest source — 22% of network emissions. Plastic and cardboard, per kg sold.</p></div>
+    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M12 22V12"/><path d="M5 12h14"/><path d="M7 12a5 5 0 0110 0"/></svg></div><h3>Soil N₂O</h3><p>17% — nitrogen fertiliser releases a gas 265× more potent than CO₂.</p></div>
+    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><h3>Energy &amp; fuel</h3><p>23% combined — protected cropping is electricity-hungry; orchards burn diesel.</p></div>
+    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M3 17h13v-6H3z"/><path d="M16 13h3l2 3v1h-5z"/><circle cx="6.5" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg></div><h3>Freight &amp; water</h3><p>Cold chain, road freight and irrigation — the hidden cost of getting produce to market.</p></div>
+  </div>
+
+  <div class="sec-head" style="margin-top:40px"><span class="kicker">Plans</span><h2 class="h-lead">Subscribe to see any grower</h2></div>
+  <div class="pricing">
+    <div class="plan"><h3>Grower</h3><div class="price">$0<span>/mo</span></div><ul><li>Your own crop dashboard</li><li>Data input &amp; LCA</li><li>Intensity vs target</li><li>AI recommendations</li></ul><button class="btn-lg btn-ghost" onclick="openModal()">Start free</button></div>
+    <div class="plan feat"><div class="tag">MOST POPULAR</div><h3>Network</h3><div class="price">$149<span>/mo</span></div><ul><li>View any grower in Australia</li><li>Crop &amp; state benchmarking</li><li>Scope 3 supply-chain data</li><li>Abatement modelling</li></ul><button class="btn-lg btn-primary" onclick="openModal()">Subscribe</button></div>
+    <div class="plan"><h3>Enterprise</h3><div class="price">Custom</div><ul><li>API &amp; data export</li><li>Retailer Scope 3 reporting</li><li>Packaging optimisation</li><li>Dedicated support</li></ul><button class="btn-lg btn-ghost" onclick="go('h-contact')">Contact sales</button></div>
+  </div>
+</section>
+
+<section class="view" data-view="h-how">
+  <div class="sec-head"><span class="kicker">How it works</span><h2 class="h-lead">From crop inputs to a defensible carbon number</h2>
+    <p class="sub">The same LCCIP pipeline, tuned for horticulture — with a 111-factor library and honest data-confidence grading.</p></div>
+  <div class="steps" id="h-stepgrid"></div>
+  <div class="sec-head" style="margin-top:40px"><span class="kicker">Under the hood</span><h2 class="h-lead">The horticulture emission model</h2></div>
+  <div class="eqbox" style="margin-bottom:14px">Net emissions <span class="op">=</span> Σ (&nbsp;<b>activity</b> <span class="op">×</span> <b>emission factor</b>&nbsp;) <span class="op">−</span> <b>soil &amp; biomass removals</b></div>
+  <div class="cards c2">
+    <div class="tile"><h3>12 emission sources tracked</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:6px">Fuel · electricity · soil N₂O · fertiliser (upstream) · lime &amp; urea · chemicals · packaging · transport · waste · refrigeration · water · planting materials — each mapped to Scope 1, 2 or 3.</p></div>
+    <div class="tile"><h3>Carbon intensity is the output</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin-top:6px">Emissions ÷ marketable yield = <b>kg CO₂-e per kg sold</b> — compared against a crop-specific target so growers know if they're over or under.</p></div>
+  </div>
+</section>
+
+<section class="view" data-view="h-dash">
+  <div class="sec-head"><span class="kicker">Sustain Pro · horticulture</span><h2 class="h-lead">Farm-gate carbon ledger</h2></div>
+  <div id="h-gate"></div>
+  <div id="h-body" style="display:none">
+    <div class="hz">
+      <div class="boundary">Scopes <b>1 · 2 · 3</b> reported gross &nbsp;·&nbsp; Removals <b>reported separately</b>, not netted into scopes &nbsp;·&nbsp; Factors: <b>NGA 2025</b> · <b>IPCC 2019</b> · proxies flagged</div>
+      <div class="hnav" id="hnav"></div>
+      <div class="hfilters" id="hfilters">
+        <label>Month from<select id="fFrom" onchange="renderHDash()"></select></label>
+        <label>Month to<select id="fTo" onchange="renderHDash()"></select></label>
+        <label>State<select id="fState" onchange="renderHDash()"></select></label>
+        <label>Crop<select id="fCrop" onchange="renderHDash()"></select></label>
+        <label>System<select id="fSys" onchange="renderHDash()"></select></label>
+        <label>Priority<select id="fPri" onchange="renderHDash()"></select></label>
+        <label>Grower<select id="hfarmsel" onchange="renderHDash()"></select></label>
+        <button class="rst" onclick="hResetFilters()">Clear filters</button>
+        <div class="cover" id="hcover"></div>
+      </div>
+    </div>
+    <div class="panel" style="margin-bottom:16px">
+      <h3>Grower network — GIS map</h3><div class="ph">Interactive map · marker colour = over / under intensity target · click for detail</div>
+      <div id="hgismap" style="height:330px;border-radius:12px;overflow:hidden;background:#eef3ea"></div>
+    </div>
+    <div class="hz"><div id="h-dash-content"></div></div>
+  </div>
+</section>
+
+<section class="view" data-view="h-input">
+  <div class="sec-head"><span class="kicker">Grower data input</span><h2 class="h-lead">Calculate your crop's carbon footprint</h2>
+    <p class="sub">Quick estimate for a fast answer, or a full property assessment structured like the national standard — with per-block enterprises. Twelve sources, NGER/IPCC-aligned. Indicative demonstration.</p></div>
+  <div class="calc-tabs">
+    <button id="hct-quick" class="on" onclick="hCalcTab('quick')">Quick estimate</button>
+    <button id="hct-adv" onclick="hCalcTab('adv')">Full property assessment</button>
+  </div>
+  <div id="hcalc-quick">
+  <div class="panel" style="margin-bottom:18px">
+    <div class="form-grid">
+      <div class="fld"><label>Grower name</label><input id="hi-name" value="My Orchard"></div>
+      <div class="fld"><label>State</label><select id="hi-state"><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option><option>TAS</option></select></div>
+      <div class="fld"><label>Crop</label><select id="hi-crop"><option>Apples</option><option>Tomatoes</option><option>Strawberries</option><option>Avocados</option><option>Mangoes</option><option>Wine Grapes</option><option>Potatoes</option><option>Cherries</option><option>Lettuce</option><option>Blueberries</option><option>Almonds</option><option>Carrots</option></select></div>
+      <div class="fld"><label>Production system</label><select id="hi-sys"><option>Orchard</option><option>Protected Cropping</option><option>Open Field</option><option>Vineyard</option></select></div>
+      <div class="fld"><label>Area (ha)</label><input id="hi-area" type="number" value="65"></div>
+      <div class="fld"><label>Marketable yield (kg/yr)</label><input id="hi-yield" type="number" value="640000"></div>
+      <div class="fld"><label>Diesel (L/yr)</label><input id="hi-diesel" type="number" value="22000"></div>
+      <div class="fld"><label>Grid electricity (kWh/yr)</label><input id="hi-elec" type="number" value="95000"></div>
+      <div class="fld"><label>Synthetic N (kg N/yr)</label><input id="hi-n" type="number" value="7800"></div>
+      <div class="fld"><label>Plastic packaging (kg/yr)</label><input id="hi-plastic" type="number" value="9500"></div>
+      <div class="fld"><label>Cardboard packaging (kg/yr)</label><input id="hi-card" type="number" value="42000"></div>
+      <div class="fld"><label>Road freight (t·km/yr)</label><input id="hi-freight" type="number" value="185000"></div>
+      <div class="fld"><label>Water supplied (kL/yr)</label><input id="hi-water" type="number" value="310000"></div>
+      <div class="fld"><label>Pesticide active ingredient (kg/yr)</label><input id="hi-chem" type="number" value="850"></div>
+      <div class="fld"><label>Soil + biomass removals (t CO₂-e/yr)</label><input id="hi-rem" type="number" value="86"></div>
+    </div>
+    <button class="btn-lg btn-primary" style="margin-top:18px" onclick="calcHort()">Calculate emissions</button>
+  </div>
+  <div id="h-input-result"></div>
+  </div>
+
+  <div id="hcalc-adv" style="display:none">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+      <span class="eng-badge" id="heng-status"><i></i>Engine: LCCIP indicative (NGER/IPCC-aligned) — EAP-ready</span>
+      <span style="font-size:12px;color:var(--muted)">Structured to the national standard · property → enterprises → inventory → results</span>
+    </div>
+    <div class="wiz">
+      <div class="wiz-steps" id="hwiz-steps"></div>
+      <div class="wiz-body">
+        <div class="wiz-pane on" data-pane="0">
+          <h3>Property</h3><div class="wh">Define the property boundary and land use.</div>
+          <div class="form-grid">
+            <div class="fld"><label>Property name</label><input id="ha-name" value="Riverina Tomatoes"></div>
+            <div class="fld"><label>State</label><select id="ha-state"><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option><option>TAS</option></select></div>
+            <div class="fld"><label>Reporting year</label><select id="ha-year"><option>2026</option><option>2025</option></select></div>
+            <div class="fld"><label>Total area (ha)</label><input id="ha-area" type="number" value="65"></div>
+            <div class="fld"><label>Trees / shelterbelt / remnant (ha)</label><input id="ha-trees" type="number" value="4"></div>
+            <div class="fld"><label>Cover crop / mulched (ha)</label><input id="ha-cover" type="number" value="10"></div>
+          </div>
+        </div>
+        <div class="wiz-pane" data-pane="1">
+          <h3>Crop enterprises</h3><div class="wh">Add each block. Yield and system drive intensity and packaging load.</div>
+          <div id="hent-list"></div>
+          <button class="btn-sm btn-nav" onclick="hAddEnt()">+ Add crop block</button>
+        </div>
+        <div class="wiz-pane" data-pane="2">
+          <h3>Inputs, packaging &amp; soil</h3><div class="wh">Upstream (Scope 3) inputs and the nitrogen that drives soil N₂O.</div>
+          <div class="form-grid">
+            <div class="fld"><label>Synthetic nitrogen (kg N/yr)</label><input id="ha-n" type="number" value="7800"></div>
+            <div class="fld"><label>Lime applied (t/yr)</label><input id="ha-lime" type="number" value="12"></div>
+            <div class="fld"><label>Pesticide active ingredient (kg/yr)</label><input id="ha-chem" type="number" value="850"></div>
+            <div class="fld"><label>Plastic packaging (kg/yr)</label><input id="ha-plastic" type="number" value="9500"></div>
+            <div class="fld"><label>Cardboard packaging (kg/yr)</label><input id="ha-card" type="number" value="42000"></div>
+            <div class="fld"><label>Organic waste to landfill (t/yr)</label><input id="ha-waste" type="number" value="35"></div>
+          </div>
+        </div>
+        <div class="wiz-pane" data-pane="3">
+          <h3>Energy, fuel, water &amp; freight</h3><div class="wh">Scope 1 fuel, Scope 2 electricity, plus irrigation and road freight.</div>
+          <div class="form-grid">
+            <div class="fld"><label>Diesel (L/yr)</label><input id="ha-diesel" type="number" value="22000"></div>
+            <div class="fld"><label>Grid electricity (kWh/yr)</label><input id="ha-elec" type="number" value="95000"></div>
+            <div class="fld"><label>Solar generated (kWh/yr)</label><input id="ha-solar" type="number" value="0"></div>
+            <div class="fld"><label>Water supplied (kL/yr)</label><input id="ha-water" type="number" value="310000"></div>
+            <div class="fld"><label>Road freight (t·km/yr)</label><input id="ha-freight" type="number" value="185000"></div>
+            <div class="fld"><label>Refrigerant top-up (kg/yr)</label><input id="ha-refrig" type="number" value="12"></div>
+          </div>
+        </div>
+        <div class="wiz-pane" data-pane="4">
+          <h3>Removals &amp; credit scenario</h3><div class="wh">Soil/biomass removals, and the reduction scenario that drives ACCUs.</div>
+          <div class="form-grid">
+            <div class="fld"><label>Soil + biomass removals (t CO₂-e/yr)</label><input id="ha-rem" type="number" value="86"></div>
+            <div class="fld"><label>Planned reduction vs baseline (%)</label><input id="ha-redpct" type="number" value="15"></div>
+            <div class="fld"><label>ACCU price ($)</label><input id="ha-price" type="number" value="38"></div>
+            <div class="fld"><label>Risk-of-reversal buffer (%)</label><input id="ha-buffer" type="number" value="5"></div>
+          </div>
+        </div>
+        <div class="wiz-pane" data-pane="5">
+          <h3>Results</h3><div class="wh">Full inventory · Scope 1·2·3 · intensity per kg · benchmarks · ACCU potential.</div>
+          <div id="hadv-result"><p style="color:var(--muted);font-size:13px">Click <b>Calculate</b> to run the assessment.</p></div>
+        </div>
+      </div>
+      <div class="wiz-foot">
+        <button class="btn-sm btn-nav" id="hwz-prev" onclick="hWizGo(-1)">← Back</button>
+        <span class="prog" id="hwz-prog">Step 1 of 6</span>
+        <button class="btn-sm btn-primary" id="hwz-next" onclick="hWizNext()">Next →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="view" data-view="h-ai">
+  <div class="sec-head"><span class="kicker">AI recommendations</span><h2 class="h-lead">Abatement and investment intelligence</h2>
+    <p class="sub">What is driving emissions, what to do about it, and — if you invest — the ROI, payback and carbon credits you can expect.</p></div>
+  <div id="h-ai-gate"></div>
+  <div id="h-ai-body" style="display:none">
+    <div class="calc-tabs">
+      <button id="hai-t1" class="on" onclick="hAiTab('rec')">Recommendations</button>
+      <button id="hai-t2" onclick="hAiTab('roi')">Investment &amp; ROI</button>
+    </div>
+    <div id="hai-rec">
+      <div class="toolbar"><div class="grp"><label>Grower</label><select id="haifarmsel" onchange="renderHAI()"></select></div><span class="live-pill"><i></i>Model live</span></div>
+      <div id="h-ai-content"></div>
+    </div>
+    <div id="hai-roi" style="display:none"></div>
+  </div>
+</section>
+
+<section class="view" data-view="h-methods">
+  <div class="sec-head"><span class="kicker">Methods &amp; standards</span><h2 class="h-lead">How horticulture carbon is calculated</h2>
+    <p class="sub">Transparent, NGER / IPCC-aligned, cradle-to-farm-gate. This is the page we show to retailers, exporters and auditors.</p></div>
+
+  <div class="sec-head" style="margin-top:8px"><span class="kicker">Mechanism</span><h2 class="h-lead" style="font-size:22px">The emission mechanism</h2></div>
+  <div class="eqbox" style="margin-bottom:14px">Net emissions <span class="op">=</span> Σ (&nbsp;<b>activity</b> <span class="op">×</span> <b>emission factor</b>&nbsp;) <span class="op">−</span> <b>soil &amp; biomass removals</b></div>
+  <div class="cards c2" style="margin-bottom:8px">
+    <div class="tile"><h3>Three gases → one unit</h3>
+      <div style="margin-top:8px">
+        <span class="gaschip"><i style="background:#586b5e">CO₂</i> ×1 — diesel, electricity, lime &amp; urea</span><br>
+        <span class="gaschip"><i style="background:#d14a3f">CH₄</i> ×28 — organic waste breakdown</span><br>
+        <span class="gaschip"><i style="background:#df9b26">N₂O</i> ×265 — nitrogen fertiliser in soil</span>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:8px">Soil N₂O is horticulture's hidden giant — 17% of network emissions from a gas 265× stronger than CO₂.</p></div>
+    <div class="tile"><h3>Boundary &amp; functional unit</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin:6px 0 0"><b>Cradle-to-farm-gate.</b> 12 sources across Scope 1 (fuel, soil N₂O, refrigerant), Scope 2 (grid electricity) and Scope 3 (packaging, fertiliser upstream, freight, water, chemicals, planting materials, waste). Removals are reported <b>separately</b>, not netted into scopes. Output: <b>kg CO₂-e per kg marketable yield</b>.</p></div>
+  </div>
+
+  <div class="sec-head" style="margin-top:26px"><span class="kicker">Transparency</span><h2 class="h-lead" style="font-size:22px">Factor provenance — what you can defend</h2></div>
+  <div class="panel">
+    <div id="h-meth-factors"></div>
+    <p style="font-size:11.5px;color:var(--muted);margin-top:10px"><b>Honest status.</b> 111 factors: NGA 2025 and IPCC 2019 where available, proxies flagged. 67 are proxies requiring replacement before formal reporting. Removals require site-specific measurement (soil sampling or biomass modelling) to be creditable.</p>
+  </div>
+
+  <div class="sec-head" style="margin-top:26px"><span class="kicker">Standards</span><h2 class="h-lead" style="font-size:22px">What we align to</h2></div>
+  <div class="factor-flow">
+    <div class="fx"><div class="n">1</div><b>NGA 2025</b><span>Australian National Greenhouse Accounts factors</span></div>
+    <div class="fx"><div class="n">2</div><b>IPCC 2019</b><span>Refinement — soil N₂O, GWP values</span></div>
+    <div class="fx"><div class="n">3</div><b>GHG Protocol</b><span>Scope 1 · 2 · 3 boundary rules</span></div>
+    <div class="fx"><div class="n">4</div><b>ISO 14067</b><span>Product carbon footprint / LCA</span></div>
+    <div class="fx gold"><div class="n">5</div><b>Retailer Scope 3</b><span>Disclosure-ready per kg sold</span></div>
+  </div>
+  <div class="note-banner" style="margin-top:20px"><b>Indicative demonstration.</b> Figures use NGER/IPCC-aligned factors with proxies flagged. Production replaces proxy factors with published values and requires site-specific measurement for removals.</div>
+</section>
+
+<section class="view" data-view="h-about">
+  <div class="sec-head"><span class="kicker">About / impact</span><h2 class="h-lead">Carbon intelligence for Australian horticulture</h2>
+    <p class="sub">Retailers and exporters now demand farm-level Scope 3 data. LCCIP gives growers a defensible number — and a plan to lower it.</p></div>
+  <div class="impact">
+    <div class="im"><b>12</b><span>growers connected</span></div>
+    <div class="im"><b>3.9k</b><span>tCO₂-e/yr gross</span></div>
+    <div class="im"><b>677 t</b><span>removals captured</span></div>
+    <div class="im"><b>111</b><span>emission factors</span></div>
+  </div>
+  <div class="cards c3">
+    <div class="tile"><h3>Our mission</h3><p>Give every Australian grower a carbon number they can defend to a retailer, an auditor or an export market — and the intelligence to reduce it.</p></div>
+    <div class="tile"><h3>Honest by design</h3><p>We grade every factor by confidence. Of 111 factors, only 10 are Australian official — we show you exactly which numbers are solid and which are proxies to replace.</p></div>
+    <div class="tile"><h3>Why it matters</h3><p>Horticulture's footprint is 60% Scope 3 — packaging, fertiliser and freight. That's where the reductions (and the supply-chain pressure) actually are.</p></div>
+  </div>
+</section>
+
+<section class="view" data-view="h-contact">
+  <div class="sec-head"><span class="kicker">Contact</span><h2 class="h-lead">Talk to us about a horticulture pilot</h2></div>
+  <div class="contact-grid">
+    <div class="panel">
+      <div class="form-grid" style="grid-template-columns:1fr 1fr">
+        <div class="fld"><label>Name</label><input placeholder="Your name"></div>
+        <div class="fld"><label>Organisation</label><input placeholder="Farm / packer / retailer"></div>
+        <div class="fld"><label>Email</label><input type="email" placeholder="you@org.com.au"></div>
+        <div class="fld"><label>Crop</label><input placeholder="e.g. apples, table grapes"></div>
+      </div>
+      <div class="fld" style="margin-top:16px"><label>Message</label><input style="height:90px" placeholder="Tell us about your operation…"></div>
+      <button class="btn-lg btn-primary" style="margin-top:16px" onclick="alert('Thanks — this is a demo form. We will be in touch.')">Send message</button>
+    </div>
+    <div class="contact-info">
+      <p><b>Pilot program</b><br>Onboarding growers across NSW, VIC, QLD, SA, WA &amp; TAS.</p>
+      <p><b>Email</b><br>hort@lccip.au</p>
+      <p><b>Retail &amp; export</b><br>Scope 3 reporting for packers, retailers and exporters.</p>
+      <p style="font-size:12px;margin-top:18px">Demo prototype · contact details illustrative.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fcols">
+      <div><div class="fbrand">LCCIP · Sustain Pro</div><p style="font-size:13px;max-width:260px;margin-top:8px">AI-enabled life-cycle carbon intelligence for Australian cattle farms.</p></div>
+      <div><b>Product</b><a onclick="go('dashboard')">Dashboard</a><a onclick="go('input')">Farm data input</a><a onclick="go('ai')">AI recommendations</a><a onclick="go('credit')">Carbon credits</a></div>
+      <div><b>Company</b><a onclick="go('how')">How it works</a><a onclick="go('about')">About / impact</a><a onclick="go('contact')">Contact</a></div>
+      <div><b>Get started</b><a onclick="openModal()">Subscribe</a><a onclick="go('contact')">Book a pilot</a></div>
+    </div>
+    <div class="legal">© 2026 LCCIP — demo prototype. Riverdale uses the supplied pilot dataset (synthetic placeholders); other farms are illustrative. Not for formal carbon reporting.</div>
+  </div>
+</footer>
+
+<script src="js/01-data-core.js"></script>
+<script src="js/02-dashboard-farm.js"></script>
+<script src="js/03-calculator-farm.js"></script>
+<script src="js/04-industry-router.js"></script>
+<script src="js/05-hort-data-stats.js"></script>
+<script src="js/06-hort-dashboard.js"></script>
+<script src="js/07-hort-quick-calc.js"></script>
+<script src="js/08-pbi-charts.js"></script>
+<script src="js/09-calculator-hort.js"></script>
+<script src="js/10-ai-roi.js"></script>
+</body>
+</html>
