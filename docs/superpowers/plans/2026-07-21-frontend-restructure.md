@@ -97,7 +97,7 @@ Contains: the "EAP-style advanced calculator" styles — `.calc-tabs`, `.wiz` wi
 
 Contains: `#chooser` full-screen industry picker overlay and `.ind-switch` header toggle.
 
-- [ ] **Step 5: `frontend/css/horticulture.css` ← index.html lines 332–400**
+- [ ] **Step 5: `frontend/css/horticulture.css` ← index.html lines 332–399**
 
 Contains: the `.hz` "ledger aesthetic" theme used by every horticulture (`h-*`) dashboard view.
 
@@ -115,7 +115,7 @@ $cnt = { param($p) [System.IO.File]::ReadAllLines((Resolve-Path $p)).Count }
 & $cnt frontend\css\pbi-report.css       # expect 67   (202-268)
 & $cnt frontend\css\calculator.css       # expect 35   (271-305)
 & $cnt frontend\css\chooser.css          # expect 24   (307-330)
-& $cnt frontend\css\horticulture.css     # expect 69   (332-400)
+& $cnt frontend\css\horticulture.css     # expect 68   (332-399)
 & $cnt frontend\css\marketing-extras.css # expect 40   (404-443)
 ```
 (Do not use `(Get-Content file).Count` — confirmed unreliable on files extracted from this source, see Global Constraints.)
