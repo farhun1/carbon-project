@@ -241,9 +241,9 @@ git commit -m "refactor: extract horticulture dashboard JS from index.html into 
 - Consumes: globals from all earlier files (`FARMS`, `HDATA`, `INDUSTRY`, `hents`, chart helpers).
 - Produces: the Power BI report page's chart renderers, the horticulture full-assessment wizard (`hRunAdvanced`), and the cross-industry "Investment & ROI" tab (`renderROI`).
 
-- [ ] **Step 1: `frontend/js/08-pbi-charts.js` ← index.html lines 2513–2668**
+- [ ] **Step 1: `frontend/js/08-pbi-charts.js` ← index.html lines 2513–2666**
 
-This was originally its own `<script>...</script>` block (an IIFE) — copy everything **between** the second `<script>` and `</script>` tags (i.e. start at the line right after `<script>` at 2512, through the line right before `</script>` at 2669). Contains: the `C`/`M`/`HC`/`KPI` local consts, `SVG`, `axisY`, `donut`, `lineChart`, `barsH`, `stacked100`, `waterfall`, `scatter`, `paddockMap` — the chart renderers used only by the Dashboard → "Power BI report" tab pages.
+This was originally its own `<script>...</script>` block (an IIFE) — copy everything **between** the second `<script>` and `</script>` tags. The `<script>` tag itself is at line 2512 (start copying at 2513, the line right after it: `(function(){`). The block's closing `})();` is at line 2666 — copy through that line and **stop there**; line 2667 is the `</script>` closing tag and line 2668 is a blank line before the third `<script>` tag at 2669, neither of which belongs in this file. (A line-count-only check would not have caught either boundary tag being pulled in by mistake — verify the *last* line of the file is literally `})();`, not `</script>` or blank.) Contains: the `C`/`M`/`HC`/`KPI` local consts, `SVG`, `axisY`, `donut`, `lineChart`, `barsH`, `stacked100`, `waterfall`, `scatter`, `paddockMap` — the chart renderers used only by the Dashboard → "Power BI report" tab pages.
 
 - [ ] **Step 2: `frontend/js/09-calculator-hort.js` ← index.html lines 2670–2786**
 
@@ -259,7 +259,7 @@ Run:
 ```powershell
 cd C:\Users\muhta\Documents\carbon-project
 $cnt = { param($p) [System.IO.File]::ReadAllLines((Resolve-Path $p)).Count }
-& $cnt frontend\js\08-pbi-charts.js     # expect 156  (2513-2668)
+& $cnt frontend\js\08-pbi-charts.js     # expect 154  (2513-2666)
 & $cnt frontend\js\09-calculator-hort.js # expect 117  (2670-2786)
 & $cnt frontend\js\10-ai-roi.js          # expect 192  (2787-2978)
 ```
