@@ -66,4 +66,3 @@
 .hz th.srt:hover{color:var(--hink)}
 .hz .grpbtn{border:1px solid var(--hrule);background:#fff;border-radius:3px;padding:3px 9px;font-size:10px;font-weight:700;cursor:pointer;margin-left:3px;font-family:var(--sans);color:var(--hmuted)}
 .hz .grpbtn.on{background:var(--hs3);color:#fff;border-color:var(--hs3)}
-</style>
