@@ -1,0 +1,37 @@
+BASELINE SNAPSHOT - Task 1
+==========================
+
+Date: 2026-07-21
+Purpose: Record initial state before frontend restructuring begins
+File: index.html
+
+Baseline Metrics:
+- Total lines: 2826 (Note: brief expected 2981, actual is 2826)
+- Contains: inline CSS + inline JS in single HTML file
+
+Data-View Sections Found:
+1. home
+2. how
+3. dashboard
+4. input
+5. ai
+6. credit
+7. about
+8. methods
+9. contact
+10. h-home
+11. h-how
+12. h-dash
+13. h-input
+14. h-ai
+15. h-methods
+16. h-about
+17. h-contact
+
+Total views: 17 (9 agriculture views + 8 horticulture views)
+
+Expected Directory Structure After Task 1:
+- frontend/css/ (created)
+- frontend/js/ (created)
+
+Note: This file will be deleted at end of Task 6 per requirements.
