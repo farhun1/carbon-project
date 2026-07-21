@@ -245,13 +245,13 @@ git commit -m "refactor: extract horticulture dashboard JS from index.html into 
 
 This was originally its own `<script>...</script>` block (an IIFE) — copy everything **between** the second `<script>` and `</script>` tags. The `<script>` tag itself is at line 2512 (start copying at 2513, the line right after it: `(function(){`). The block's closing `})();` is at line 2666 — copy through that line and **stop there**; line 2667 is the `</script>` closing tag and line 2668 is a blank line before the third `<script>` tag at 2669, neither of which belongs in this file. (A line-count-only check would not have caught either boundary tag being pulled in by mistake — verify the *last* line of the file is literally `})();`, not `</script>` or blank.) Contains: the `C`/`M`/`HC`/`KPI` local consts, `SVG`, `axisY`, `donut`, `lineChart`, `barsH`, `stacked100`, `waterfall`, `scatter`, `paddockMap` — the chart renderers used only by the Dashboard → "Power BI report" tab pages.
 
-- [ ] **Step 2: `frontend/js/09-calculator-hort.js` ← index.html lines 2670–2786**
+- [ ] **Step 2: `frontend/js/09-calculator-hort.js` ← index.html lines 2670–2793**
 
-This is the start of the third (and last) `<script>` block. Copy everything between the `<script>` tag at 2669 and the line before `hAiTab`'s closing brace at 2786 inclusive. Contains: `HWSTEPS`, `hwzi`/`hents`, `HCROPS`, `HSYS`, `hCalcTab`, `renderHWizSteps`, `hWizJump`/`hWizGo`/`hWizNext`, `hSeedEnts`/`hAddEnt`/`hRmEnt`/`hUpdEnt`, `renderHEnts`, `hGetEmissions`, `hCalcLocal` (the horticulture emissions engine), `hRunAdvanced` (renders the full wizard result), `hAiTab`.
+**Correction (found during Task 5 review):** the source actually has FOUR `<script>...</script>` blocks, not three — a second `</script>`/`<script>` pair sits at lines 2794/2795, in the middle of what this task originally treated as one continuous "third block." The `<script>` tag opening this block is at 2669; its own closing `</script>` is at line 2794, not at the end of the file. Copy everything from 2670 (the line right after `<script>`) through 2793 inclusive — through `aiTab`'s closing brace at 2793, which is the true end of this script block. Do not stop at 2786 as an earlier draft said. Contains: `HWSTEPS`, `hwzi`/`hents`, `HCROPS`, `HSYS`, `hCalcTab`, `renderHWizSteps`, `hWizJump`/`hWizGo`/`hWizNext`, `hSeedEnts`/`hAddEnt`/`hRmEnt`/`hUpdEnt`, `renderHEnts`, `hGetEmissions`, `hCalcLocal` (the horticulture emissions engine), `hRunAdvanced` (renders the full wizard result), `hAiTab`, and now also `aiTab` (a same-named-pattern sibling function for the farm industry's AI tab, which sits in this same script block right before the block closes).
 
-- [ ] **Step 3: `frontend/js/10-ai-roi.js` ← index.html lines 2787–2978**
+- [ ] **Step 3: `frontend/js/10-ai-roi.js` ← index.html lines 2796–2978**
 
-Contains: `aiTab`, `mountROI`, `RX_CATTLE`, `RX_HORT`, `rxFarm`, `window.renderROIView`, `window.renderROI`, and the closing `})();` of the IIFE that this whole third `<script>` block is wrapped in. This is the last JS file loaded.
+**Correction (found during Task 5 review):** this file is the FOURTH script block, not a continuation of the third. Its own `<script>` tag is at line 2795 (not 2669) — copy starting at 2796 (the line right after it: `(function(){`), not 2787. Lines 2787–2793 (`aiTab`) belong to file 09 above, and lines 2794–2795 (`</script>` then `<script>`) are boundary tags excluded from both files. Contains: `mountROI`, `RX_CATTLE`, `RX_HORT`, `rxFarm`, `window.renderROIView`, `window.renderROI`, and the closing `})();` of the IIFE that this fourth (and truly last) `<script>` block is wrapped in. This is the last JS file loaded.
 
 - [ ] **Step 4: Verify line counts**
 
@@ -260,10 +260,11 @@ Run:
 cd C:\Users\muhta\Documents\carbon-project
 $cnt = { param($p) [System.IO.File]::ReadAllLines((Resolve-Path $p)).Count }
 & $cnt frontend\js\08-pbi-charts.js     # expect 154  (2513-2666)
-& $cnt frontend\js\09-calculator-hort.js # expect 117  (2670-2786)
-& $cnt frontend\js\10-ai-roi.js          # expect 192  (2787-2978)
+& $cnt frontend\js\09-calculator-hort.js # expect 124  (2670-2793)
+& $cnt frontend\js\10-ai-roi.js          # expect 183  (2796-2978)
+Select-String -Path frontend\js\09-calculator-hort.js,frontend\js\10-ai-roi.js -Pattern "<script|</script"
 ```
-(Do not use `(Get-Content file).Count` — confirmed unreliable on files extracted from this source, see Global Constraints.)
+(Do not use `(Get-Content file).Count` — confirmed unreliable on files extracted from this source, see Global Constraints. The `Select-String` check must return NOTHING — any match means a stray script tag was pulled in, the exact bug class found in this task.)
 
 - [ ] **Step 5: Commit**
 
@@ -315,7 +316,7 @@ Start from a full copy of the current root `index.html`, then:
    <script src="js/09-calculator-hort.js"></script>
    <script src="js/10-ai-roi.js"></script>
    ```
-   This is the same order the code ran in originally (the first `<script>` block's contents = files 01–07, second block = file 08, third block = files 09–10), so global-scope execution order is identical to before.
+   This is the same order the code ran in originally. The source actually has four separate `<script>...</script>` blocks (found during Task 5's review, not three as earlier steps assumed): block 1 = files 01–07, block 2 = file 08, block 3 = file 09, block 4 = file 10. Loading four separate `<script src>` tags in this order is behaviorally identical to the original four inline blocks — global `var`/`function` declarations and top-level `let`/`const` are all visible across script tags in the same document in original source order, exactly as they were across the original four inline blocks.
 6. Save as `frontend/index.html`.
 
 - [ ] **Step 2: Serve the new frontend locally and smoke-test with a browser console check**
