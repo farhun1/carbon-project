@@ -1,0 +1,69 @@
+/* ===== HORTICULTURE (ledger aesthetic) ===== */
+.hz{--hpaper:#E7EAE3;--hpanel:#F5F6F1;--hink:#1C221C;--hmuted:#6E7569;--hrule:#C9CDC1;--hsoft:#DDE0D6;
+    --hs1:#8C3B1E;--hs2:#2E6F7E;--hs3:#B08429;--hrem:#3C6140;--hover:#A8352B;--hunder:#4C7A4A;--hmid:#C08A2E;
+    --hmono:ui-monospace,Menlo,Consolas,monospace}
+.hz .hpanel{background:var(--hpanel);border:1px solid var(--hrule);border-radius:4px;padding:14px 16px;margin-bottom:14px}
+.hz .hpanel h3{font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--hmuted);font-weight:700;margin:0 0 10px;padding-bottom:7px;border-bottom:1px solid var(--hsoft)}
+.hz .hkpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px}
+.hz .hkpi{background:var(--hpanel);border:1px solid var(--hrule);border-radius:4px;padding:12px}
+.hz .hkpi .l{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--hmuted);font-weight:700}
+.hz .hkpi .v{font-family:var(--hmono);font-size:22px;color:var(--hink);margin-top:5px;line-height:1}
+.hz .hkpi .d{font-size:10px;color:var(--hmuted);margin-top:4px}
+.hz .hkpi.accent .v{color:var(--hs3)}
+.hz table.hl{width:100%;border-collapse:collapse;font-size:11.5px}
+.hz table.hl th{text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--hmuted);border-bottom:1px solid var(--hrule);padding:7px 8px;font-weight:700}
+.hz table.hl td{padding:7px 8px;border-bottom:1px solid var(--hsoft);font-family:var(--hmono);font-size:11px}
+.hz table.hl td.t{font-family:var(--sans);font-size:12px}
+.hz table.hl tr:hover td{background:#EDEFE8}
+.hz .htabs{display:flex;gap:2px;border-bottom:2px solid var(--hrule);margin-bottom:16px;overflow-x:auto}
+.hz .htabs button{border:none;background:none;padding:10px 14px;font-family:inherit;font-size:12px;font-weight:700;color:var(--hmuted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;margin-bottom:-2px}
+.hz .htabs button.on{color:var(--hink);border-bottom-color:var(--hs3)}
+.hz .hgrid2{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+.hz .hgrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.hz .hbar{display:flex;align-items:center;gap:8px;margin:6px 0}
+.hz .hbar .n{width:130px;font-size:11.5px;font-family:var(--sans)}
+.hz .hbar .tr{flex:1;height:14px;background:#E4E7DD;border-radius:2px;overflow:hidden}
+.hz .hbar .tr i{display:block;height:100%}
+.hz .hbar .v{width:74px;text-align:right;font-family:var(--hmono);font-size:11px}
+.hz .flag{display:inline-block;font-size:9px;font-weight:700;padding:1px 6px;border-radius:2px;color:#fff;font-family:var(--sans)}
+.hz .hnote{background:#F1EDE1;border:1px solid #DDD3B8;border-radius:4px;padding:11px 13px;font-size:11.5px;color:#6b5a2e;margin-bottom:14px}
+.hz .lever{display:flex;align-items:center;gap:10px;margin:10px 0}
+.hz .lever .ln{width:190px;font-size:12px}
+.hz .lever input[type=range]{flex:1;accent-color:#3C6140}
+.hz .lever .lv{width:86px;text-align:right;font-family:var(--hmono);font-size:11.5px}
+@media(max-width:900px){.hz .hkpis{grid-template-columns:repeat(3,1fr)}.hz .hgrid2,.hz .hgrid3{grid-template-columns:1fr}}
+
+.hz .hfilters{display:flex;flex-wrap:wrap;gap:8px;align-items:end;background:var(--hpanel);border:1px solid var(--hrule);border-radius:4px;padding:10px 12px;margin-bottom:12px}
+.hz .hfilters label{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--hmuted);font-weight:700;display:flex;flex-direction:column;gap:3px}
+.hz .hfilters select{font-family:var(--sans);font-size:12px;padding:5px 7px;border:1px solid var(--hrule);border-radius:3px;background:#fff;min-width:112px}
+.hz .hfilters .rst{align-self:end;background:#fff;border:1px solid var(--hrule);border-radius:3px;padding:6px 11px;font-size:11px;font-weight:700;color:var(--hink);cursor:pointer}
+.hz .cover{margin-left:auto;font-size:10.5px;color:var(--hmuted);max-width:260px;text-align:right}
+.hz .hnav{display:flex;gap:2px;border-bottom:2px solid var(--hrule);margin-bottom:14px;overflow-x:auto}
+.hz .hnav button{border:none;background:none;padding:9px 13px;font-family:inherit;font-size:11.5px;font-weight:700;color:var(--hmuted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;margin-bottom:-2px;display:flex;align-items:center;gap:6px}
+.hz .hnav button i{font-style:normal;font-family:var(--hmono);font-size:9.5px;opacity:.6}
+.hz .hnav button.on{color:var(--hink);border-bottom-color:var(--hs3)}
+.hz .matrix{width:100%;border-collapse:collapse;font-family:var(--hmono);font-size:10px}
+.hz .matrix th{font-family:var(--sans);font-size:9px;text-transform:uppercase;color:var(--hmuted);padding:5px 4px;text-align:right;border-bottom:1px solid var(--hrule);font-weight:700}
+.hz .matrix th:first-child{text-align:left}
+.hz .matrix td{padding:4px;text-align:right;border-bottom:1px solid var(--hsoft)}
+.hz .matrix td:first-child{text-align:left;font-family:var(--sans);font-size:11px}
+.hz .sl{margin:12px 0}
+.hz .sl-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.hz .sl-v{font-family:var(--hmono);color:var(--hs3);font-weight:700}
+.hz .sl input[type=range]{width:100%;accent-color:#3C6140}
+.hz .sl-d{font-size:10.5px;color:var(--hmuted);margin-top:3px;line-height:1.35}
+.hz .rst2{background:#fff;border:1px solid var(--hrule);border-radius:3px;padding:6px 11px;font-size:11px;font-weight:700;cursor:pointer;margin-top:6px}
+.hz .boundary{background:#F1EDE1;border:1px solid #DDD3B8;border-radius:4px;padding:9px 11px;font-size:10.5px;color:#6b5a2e;line-height:1.6;margin-bottom:12px}
+.back-land{background:none;border:none;color:var(--muted);font-size:11.5px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:7px;display:flex;align-items:center;gap:5px}
+.back-land:hover{background:var(--mint);color:var(--forest)}
+
+.hz .mixbar{display:flex;height:12px;border-radius:2px;overflow:hidden;min-width:90px}
+.hz .mixbar span{display:block;height:100%}
+.hz .lgauge{position:relative;height:12px;background:#E4E7DD;border-radius:2px;min-width:90px}
+.hz .lg-f{height:100%;border-radius:2px}
+.hz .lg-t{position:absolute;top:-2px;width:2px;height:16px;background:#1C221C}
+.hz th.srt{cursor:pointer;user-select:none}
+.hz th.srt:hover{color:var(--hink)}
+.hz .grpbtn{border:1px solid var(--hrule);background:#fff;border-radius:3px;padding:3px 9px;font-size:10px;font-weight:700;cursor:pointer;margin-left:3px;font-family:var(--sans);color:var(--hmuted)}
+.hz .grpbtn.on{background:var(--hs3);color:#fff;border-color:var(--hs3)}
+</style>

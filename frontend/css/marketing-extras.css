@@ -1,0 +1,40 @@
+.trust-strip{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:20px 0 4px}
+.trust-strip .ts{background:#fff;border:1px solid var(--hair);border-radius:24px;padding:7px 15px;font-size:12.5px;font-weight:600;color:var(--forest)}
+.flow4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.flow4 .fs{background:#fff;border:1px solid var(--hair);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.flow4 .fs .n{width:30px;height:30px;border-radius:50%;background:var(--forest);color:#fff;display:grid;place-items:center;font-family:var(--serif);font-weight:700;margin-bottom:8px}
+.flow4 .fs h4{margin:0 0 4px;font-family:var(--serif);font-size:15px}
+.flow4 .fs p{margin:0;font-size:12px;color:var(--muted)}
+.bench{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.bench .bc{background:#fff;border:1px solid var(--hair);border-radius:12px;padding:14px;text-align:center;box-shadow:var(--shadow)}
+.bench .bc .bv{font-family:var(--serif);font-size:24px;color:var(--forest)}
+.bench .bc .bl{font-size:11.5px;color:var(--muted);margin-top:3px}
+.bench .bc .bref{font-size:10.5px;color:var(--gold);margin-top:4px}
+.factbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+.factbl th{text-align:left;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--hair)}
+.factbl td{padding:6px 8px;border-bottom:1px solid #eef3ea}
+.factbl td.n{text-align:right;font-variant-numeric:tabular-nums}
+.accueq{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--pasture);color:#fff;border-radius:12px;padding:16px 18px;margin-top:6px}
+.accueq .b{font-family:var(--serif);font-size:18px}.accueq .g{color:#e9c768;font-family:var(--serif);font-size:22px}
+.accueq .op{color:#9cc18c}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.compare .col{border-radius:12px;padding:16px;border:1px solid var(--hair)}
+.compare .col.bad{background:#fbf1ef;border-color:#f0d9d5}
+.compare .col.good{background:#eef6ec;border-color:#cfe3c6}
+.compare .col h4{margin:0 0 8px;font-family:var(--serif);font-size:15px}
+.compare .col ul{margin:0;padding:0}
+.compare .col li{font-size:12.5px;margin:6px 0;list-style:none;padding-left:22px;position:relative;color:var(--ink)}
+.compare .col.bad li:before{content:"✕";position:absolute;left:0;color:var(--red);font-weight:700}
+.compare .col.good li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
+#gismap{background:#eef3ea}
+.gis-fallback{height:340px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;text-align:center;padding:24px}
+.leaflet-container{font-family:var(--sans)}
+.factor-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.factor-flow .fx{background:var(--wash,#f4f7f1);border:1px solid var(--hair);border-radius:12px;padding:14px 10px;text-align:center}
+.factor-flow .fx .n{width:26px;height:26px;border-radius:50%;background:var(--forest);color:#fff;font-family:var(--serif);font-weight:700;display:grid;place-items:center;margin:0 auto 7px}
+.factor-flow .fx.gold .n{background:var(--gold)}
+.factor-flow .fx b{font-size:12.5px;display:block}.factor-flow .fx span{font-size:10.5px;color:var(--muted)}
+.eqbox{background:#f4f7f1;border:1px solid var(--hair);border-radius:12px;padding:16px;text-align:center;font-family:var(--serif);font-size:17px}
+.eqbox b{color:var(--forest)}.eqbox .op{color:var(--muted);margin:0 6px}
+.gaschip{display:inline-flex;align-items:center;gap:8px;margin:6px 12px 6px 0;font-size:13px}
+.gaschip i{width:34px;height:34px;border-radius:8px;color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700}
