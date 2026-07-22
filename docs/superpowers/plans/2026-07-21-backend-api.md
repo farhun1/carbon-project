@@ -4,14 +4,16 @@
 
 **Goal:** Build a real Node.js/Express/SQLite backend for LCCIP — user accounts (signup/login), persisted contact leads, persisted calculation history, and the two carbon-emission calculation engines (farm and horticulture, quick and advanced) moved server-side — then wire the `frontend/` app (built in `docs/superpowers/plans/2026-07-21-frontend-restructure.md`) to call it instead of computing everything client-side.
 
-**Architecture:** A single Express app (`backend/server.js`) exposes a JSON REST API under `/api/*` and also serves `frontend/` as static files, so the browser talks to the same origin (no CORS needed). SQLite (via `better-sqlite3`, synchronous — no async ceremony for a single-process app) stores everything that gets *created* (users, leads, assessment history). The pre-seeded demo network (the 7 cattle farms and 12 horticulture growers + their monthly time series) is read-only reference data extracted once from the frontend's existing JS constants into JSON files on disk — it never changes, so it doesn't need database tables, just a `GET` route reading a file.
+**Architecture:** A single Express app (`backend/server.js`) exposes a JSON REST API under `/api/*` and also serves `frontend/` as static files, so the browser talks to the same origin (no CORS needed). SQLite (via Node's built-in `node:sqlite` module, synchronous — no async ceremony for a single-process app) stores everything that gets *created* (users, leads, assessment history). The pre-seeded demo network (the 7 cattle farms and 12 horticulture growers + their monthly time series) is read-only reference data extracted once from the frontend's existing JS constants into JSON files on disk — it never changes, so it doesn't need database tables, just a `GET` route reading a file.
 
-**Tech Stack:** Node.js, Express 4, `better-sqlite3`, `bcryptjs` (pure-JS password hashing — no native build tooling needed on Windows), `express-session` (cookie-based sessions, `MemoryStore` — acceptable for a single-process student project; sessions reset on server restart, which is a known, accepted trade-off, not a bug).
+**Tech Stack:** Node.js (22.5+ required — see below), Express 4, `node:sqlite` (built into Node itself, no install/native compile needed), `bcryptjs` (pure-JS password hashing — no native build tooling needed on Windows), `express-session` (cookie-based sessions, `MemoryStore` — acceptable for a single-process student project; sessions reset on server restart, which is a known, accepted trade-off, not a bug).
+
+**Revision note (found during Task 1 execution):** this plan originally specified `better-sqlite3`, a third-party package requiring a native addon (compiled via node-gyp + Python + a C++ toolchain, or a prebuilt binary matching the exact Node version). On this machine, Node v24.18.0 was too new for `better-sqlite3@11.x`'s prebuilt binaries, and the native build toolchain (Python/Visual Studio Build Tools) wasn't properly configured — `npm install` failed outright. Switched to `node:sqlite` (Node's built-in SQLite module, stable/available since Node 22.5), which requires zero installation and zero native compilation, and whose synchronous API (`new DatabaseSync(path)`, `db.exec(sql)`, `db.prepare(sql).run()/.get()/.all()`, `.run()` returning `{changes, lastInsertRowid}`) is a near-exact match for `better-sqlite3`'s — confirmed directly on this machine before revising the plan. Every task below already reflects this change.
 
 ## Global Constraints
 
-- Runs on Node.js (any LTS version already on the machine — this plan doesn't pin a version).
-- No ORM — raw SQL via `better-sqlite3`'s prepared statements. The schema is small enough that an ORM would be pure overhead.
+- Runs on Node.js **22.5 or later** (required for `node:sqlite`) — this machine has v24.18.0, confirmed working.
+- No ORM — raw SQL via `node:sqlite`'s prepared statements (`DatabaseSync`, `StatementSync`). The schema is small enough that an ORM would be pure overhead.
 - Every calculation endpoint must reproduce the **exact same formulas** currently in `frontend/js/03-calculator-farm.js` (`calcLocal`), `frontend/js/02-dashboard-farm.js` (`calcInput`), `frontend/js/07-hort-quick-calc.js` (`calcHort`), and `frontend/js/09-calculator-hort.js` (`hCalcLocal`) — this plan ports them, it does not "improve" or "fix" them (the known issues in `LCCIP_Code_Review_Documentation.md` §6 are out of scope here).
 - Session cookies: `httpOnly`, `sameSite: 'lax'`. No plaintext password ever touches the database — `bcryptjs` hash only.
 - This plan assumes Plan 1 (frontend restructure) is already complete — every task below references files created there (`frontend/js/01-data-core.js` through `frontend/js/10-ai-roi.js`, `frontend/index.html`).
@@ -42,14 +44,17 @@
     "start": "node server.js",
     "seed": "node data/extract-seed-data.js"
   },
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "better-sqlite3": "^11.3.0",
     "express": "^4.19.2",
     "express-session": "^1.18.0"
   }
 }
 ```
+(No `better-sqlite3` — this plan uses Node's built-in `node:sqlite` module instead, see the Architecture note above. No native dependency to install.)
 
 - [ ] **Step 2: Create `backend/.gitignore`**
 
@@ -62,12 +67,13 @@ db/lccip.sqlite-wal
 
 - [ ] **Step 3: Install dependencies**
 
-Run:
+Run (Node isn't necessarily on PATH yet in every shell — verify first; if `node --version` fails, find the install directory, e.g. `C:\Program Files\nodejs`, and prefix commands with `$env:Path += ';C:\Program Files\nodejs'; ` for PowerShell or `export PATH="$PATH:/c/Program Files/nodejs" && ` for Bash):
 ```powershell
+node --version
 cd C:\Users\muhta\Documents\carbon-project\backend
 npm install
 ```
-Expected: `node_modules/` created, no errors. `better-sqlite3` compiles a small native addon on install — if this fails because build tools are missing, re-run with `npm install --build-from-source=false` (it ships prebuilt binaries for common platforms, so a plain `npm install` should normally succeed without Visual Studio Build Tools).
+Expected: `node --version` reports 22.5.0 or later; `node_modules/` created, no errors, no native compilation step (there is no native dependency in this package.json).
 
 - [ ] **Step 4: Commit**
 
@@ -85,7 +91,7 @@ git commit -m "chore: scaffold backend Node project"
 - Create: `backend/db/db.js`
 
 **Interfaces:**
-- Produces: `module.exports` from `db.js` — a ready-to-query `better-sqlite3` `Database` instance, imported by every route file in later tasks.
+- Produces: `module.exports` from `db.js` — a ready-to-query `node:sqlite` `DatabaseSync` instance, imported by every route file in later tasks. Its `.prepare(sql)` returns a `StatementSync` with `.run(...)` (returns `{changes, lastInsertRowid}`), `.get(...)` (returns one row or `undefined`), and `.all(...)` (returns an array of rows) — the same shapes every later task's code already assumes.
 
 - [ ] **Step 1: Write `backend/db/schema.sql`**
 
@@ -126,11 +132,11 @@ CREATE TABLE IF NOT EXISTS assessments (
 ```js
 const path = require('path');
 const fs = require('fs');
-const Database = require('better-sqlite3');
+const { DatabaseSync } = require('node:sqlite');
 
 const DB_PATH = path.join(__dirname, 'lccip.sqlite');
-const db = new Database(DB_PATH);
-db.pragma('journal_mode = WAL');
+const db = new DatabaseSync(DB_PATH);
+db.exec('PRAGMA journal_mode = WAL');
 db.exec(fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8'));
 
 module.exports = db;
@@ -1260,7 +1266,7 @@ Run `node backend/server.js`, open `http://localhost:3000/`, and repeat the enti
 ```markdown
 # LCCIP Backend
 
-Node.js + Express + SQLite (`better-sqlite3`). No ORM, no build step.
+Node.js (22.5+) + Express + SQLite (via the built-in `node:sqlite` module — no install, no native compilation). No ORM, no build step.
 
 ## Run it
 
