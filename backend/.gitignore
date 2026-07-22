@@ -1,0 +1,4 @@
+node_modules/
+db/lccip.sqlite
+db/lccip.sqlite-shm
+db/lccip.sqlite-wal
