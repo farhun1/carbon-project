@@ -194,6 +194,11 @@ const FILES = [
 ];
 
 const source = FILES.map(f => fs.readFileSync(path.join(FRONTEND_JS, f), 'utf8')).join('\n');
+// 05-hort-data-stats.js has one top-level browser-only statement (`window.hSetGroup=...`) that
+// wires a click handler for the live page — irrelevant to the FARMS/HFARMS/HDATA seed data, but
+// it throws ReferenceError in plain Node since `window` doesn't exist there. Stub it as a no-op
+// object so the concatenated source evaluates to completion; nothing ever reads this stub back.
+global.window = global.window || {};
 const extract = new Function(`${source}\nreturn { FARMS, HFARMS, HDATA };`);
 const { FARMS, HFARMS, HDATA } = extract();
 
