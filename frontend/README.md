@@ -6,8 +6,8 @@ middleware set up in the backend plan).
 
 ## Structure
 
-- `index.html` — page shell: industry chooser overlay, header/nav, subscribe modal, all 16
-  `<section class="view" data-view="...">` blocks (9 for the cattle-farm industry, 7 for
+- `index.html` — page shell: industry chooser overlay, header/nav, subscribe modal, all 17
+  `<section class="view" data-view="...">` blocks (9 for the cattle-farm industry, 8 for
   horticulture), footer. View switching is done by `go(viewName)` toggling a `.show` class —
   there is no router library.
 - `css/base.css` — design tokens (`:root` variables), reset, nav, page-section layout, forms,
@@ -31,11 +31,9 @@ middleware set up in the backend plan).
 
 ## Data
 
-`FARMS` (7 cattle farms) and `HFARMS`/`HDATA` (12 horticulture growers + their monthly time
-series) are currently hardcoded JS constants in `js/01-data-core.js` and
-`js/05-hort-data-stats.js`. The backend plan
-(`docs/superpowers/plans/2026-07-21-backend-api.md`) replaces these with `fetch()` calls to a
-real API — see that plan before editing this data in place.
+`FARMS` (7 cattle farms) is in `js/01-data-core.js`; `HFARMS` (12 horticulture growers) is in
+`js/04-industry-router.js`; and `HDATA` (monthly time series) is in `js/05-hort-data-stats.js`.
+These are currently hardcoded JS constants. The backend plan (`docs/superpowers/plans/2026-07-21-backend-api.md`) replaces these with `fetch()` calls to a real API — see that plan before editing this data in place.
 
 ## Known non-goals of this restructure
 
