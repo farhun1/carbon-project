@@ -71,15 +71,18 @@
   <div class="modal-card">
     <button class="close-x" onclick="closeModal()">×</button>
     <h2 id="modal-title">Create your account</h2>
-    <p class="m" id="modal-sub">Paid subscribers can view carbon-emission details for any farm in the Australian network.</p>
-    <div class="fld"><label>Work email</label><input id="m-email" type="email" placeholder="you@organisation.com.au" value="analyst@rabobank.com.au"></div>
-    <div class="fld"><label>Plan</label><select id="m-plan">
+    <p class="m" id="modal-sub">Subscribers can view carbon-emission details for any farm in the Australian network.</p>
+    <div id="modal-error" style="display:none;color:var(--red);font-size:12.5px;margin-bottom:10px"></div>
+    <div class="fld"><label>Work email</label><input id="m-email" type="email" placeholder="you@organisation.com.au"></div>
+    <div class="fld"><label>Password</label><input id="m-password" type="password" placeholder="At least 8 characters"></div>
+    <div class="fld" id="m-plan-fld"><label>Plan</label><select id="m-plan">
       <option>Network — view any farm in Australia ($149/mo)</option>
       <option>Producer — your own farm ($0, free)</option>
       <option>Enterprise — supply chain & API (custom)</option>
     </select></div>
-    <button class="cta" style="width:100%;padding:12px;margin-top:6px" onclick="subscribe()">Start subscription</button>
-    <p class="note">Demo prototype — no real payment or authentication. Riverdale uses your supplied pilot dataset; other farms are illustrative. Synthetic placeholders, not for formal reporting.</p>
+    <button class="cta" style="width:100%;padding:12px;margin-top:6px" id="modal-submit" onclick="subscribe()">Start subscription</button>
+    <p class="note" id="modal-toggle" style="cursor:pointer;text-decoration:underline" onclick="toggleModalMode()">Already have an account? Log in instead.</p>
+    <p class="note">No real payment. Data is stored so you can return to your assessments — not for formal carbon reporting.</p>
   </div>
 </div>
 

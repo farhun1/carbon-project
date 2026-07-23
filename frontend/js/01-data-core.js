@@ -56,10 +56,38 @@ function go(v){
 }
 function openModal(){document.getElementById('modal').classList.add('show');}
 function closeModal(){document.getElementById('modal').classList.remove('show');}
-function subscribe(){
-  subscribed=true; closeModal();
-  document.getElementById('authbtn').textContent='Subscribed ✓';
-  refreshLocks(); go(INDUSTRY==='hort'?'h-dash':'dashboard');
+
+let modalMode = 'signup'; // 'signup' | 'login'
+function toggleModalMode(){
+  modalMode = modalMode === 'signup' ? 'login' : 'signup';
+  document.getElementById('modal-title').textContent = modalMode === 'signup' ? 'Create your account' : 'Log in';
+  document.getElementById('modal-submit').textContent = modalMode === 'signup' ? 'Start subscription' : 'Log in';
+  document.getElementById('m-plan-fld').style.display = modalMode === 'signup' ? '' : 'none';
+  document.getElementById('modal-toggle').textContent = modalMode === 'signup' ? 'Already have an account? Log in instead.' : "Don't have an account? Sign up instead.";
+  document.getElementById('modal-error').style.display = 'none';
+}
+
+async function subscribe(){
+  const email = document.getElementById('m-email').value.trim();
+  const password = document.getElementById('m-password').value;
+  const plan = document.getElementById('m-plan').value;
+  const errBox = document.getElementById('modal-error');
+  errBox.style.display = 'none';
+  const endpoint = modalMode === 'signup' ? '/api/auth/signup' : '/api/auth/login';
+  const body = modalMode === 'signup' ? { email, password, plan } : { email, password };
+  try{
+    const r = await fetch(endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    const data = await r.json();
+    if(!r.ok){ errBox.textContent = data.error || 'Something went wrong.'; errBox.style.display = 'block'; return; }
+    subscribed = true;
+    closeModal();
+    document.getElementById('authbtn').textContent = 'Subscribed ✓';
+    refreshLocks();
+    go(INDUSTRY === 'hort' ? 'h-dash' : 'dashboard');
+  } catch(e){
+    errBox.textContent = 'Could not reach the server — is the backend running?';
+    errBox.style.display = 'block';
+  }
 }
 function refreshLocks(){
   document.querySelectorAll('#navlinks button').forEach(b=>{
