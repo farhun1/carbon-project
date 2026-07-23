@@ -147,27 +147,20 @@ function updCredit(){
 }
 
 /* =================== FARM DATA INPUT =================== */
-function calcInput(){
+async function calcInput(){
   const $=id=>document.getElementById(id);
   const head=+$('i-head').value||0, diesel=+$('i-diesel').value||0, elec=+$('i-elec').value||0,
         feed=+$('i-feed').value||0, fert=+$('i-fert').value||0, milk=+$('i-milk').value||0,
         trees=+$('i-trees').value||0, pasture=+$('i-pasture').value||0, cleared=+$('i-cleared').value||0,
         redpct=+$('i-redpct').value||0, type=$('i-type').value;
-  // --- NGER/IPCC-aligned emission factors (indicative) ---
+  const r = await fetch('/api/calc/farm/quick', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({head,diesel,elec,feed,fert,milk,trees,pasture,cleared,redpct,type})
+  }).then(res=>res.json());
   const EF={enteric:{Dairy:3.1,Beef:2.0,Mixed:2.6,Feedlot:2.2}[type], manure:0.55, diesel:2.68, elec:0.66,
             feed:0.6, fert:5.5, treeSeq:6.0, pastSeq:0.5, clearing:120};
-  const enteric=head*EF.enteric, manure=head*EF.manure, fuel=diesel*EF.diesel/1000, energy=elec*EF.elec/1000,
-        feedE=feed*EF.feed, fertE=fert*EF.fert/1000, transport=(feed*0.05)+(head*0.02);
-  const landUse=cleared*EF.clearing, seq=trees*EF.treeSeq+pasture*EF.pastSeq;
-  const grossAct=enteric+manure+fuel+energy+feedE+fertE+transport;
-  const gross=grossAct+landUse, net=Math.max(0,gross-seq);
-  const intensity=milk>0?(gross*1000/milk):0;
-  const s1=enteric+manure+fuel+fertE+landUse, s2=energy, s3=feedE+transport;
-  // benchmarks (all reference figures)
-  const perHead=head>0?(net/head):0, perLitre=intensity, perPerson=Math.round(net/15);
-  // ACCU: baseline − project
-  const baseline=net, project=net*(1-redpct/100), reduction=baseline-project, buffer=0.05;
-  const accus=Math.max(0,Math.round(reduction*(1-buffer))), revenue=accus*38;
+  const {enteric,manure,fuel,energy,feedE,fertE,transport,landUse,seq,gross,net,intensity,s1,s2,s3,perHead,perPerson,baseline,project,reduction,accus,revenue}=r;
+  const perLitre=intensity;
   const rows=[
     ['Enteric CH₄', head+' head', EF.enteric+' t/head · IPCC T2', enteric],
     ['Manure CH₄/N₂O', head+' head', EF.manure+' t/head · IPCC', manure],

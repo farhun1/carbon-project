@@ -50,34 +50,13 @@ function renderEnts(){
    </div>`).join('') || '<p style="color:var(--muted);font-size:13px">No enterprises yet — add one.</p>';
 }
 
-/* ---- SWAPPABLE ENGINE: today = local NGER/IPCC-aligned; tomorrow = AIA EAP API ---- */
+/* ---- ENGINE: the AIA-EAP-shaped calculation now runs on our own backend ---- */
 async function getEmissions(inp){
-  // When AIA EAP API access is granted, call it here (via a serverless function that holds the key):
-  //   const r = await fetch('/.netlify/functions/eap', {method:'POST', body:JSON.stringify(inp)});
-  //   if(r.ok) return {...await r.json(), engine:'AIA EAP'};
-  return {...calcLocal(inp), engine:'LCCIP indicative'};
-}
-function calcLocal(i){
-  const F={diesel:2.68,petrol:2.30,lpg:1.62,elec:0.66,grain:0.65,hay:0.45,fertN:5.5,lime:0.44,
-           freight:0.12,treeSeq:6.0,pastSeq:0.5,cropSeq:0.1,clearing:120,revegSeq:8.0,manureBase:0.55};
-  let enteric=0, headTot=0;
-  i.ents.forEach(e=>{ const ef=CLASSES[e.cls][1]*(e.wt/450); enteric+=e.head*ef; headTot+=e.head; });
-  enteric*= (1 - i.additive);
-  const manure   = headTot*F.manureBase*i.manureFactor;
-  const feed     = i.grain*F.grain + i.hay*F.hay;
-  const fertiliser = i.fertN*F.fertN/1000 + i.lime*F.lime;
-  const fuel     = (i.diesel*F.diesel + i.petrol*F.petrol + i.lpg*F.lpg)/1000;
-  const netElec  = Math.max(0, i.elec - i.solar);
-  const energy   = netElec*F.elec/1000;
-  const transport= i.freight*F.freight/1000;
-  const landUse  = i.cleared*F.clearing;
-  const seq      = i.trees*F.treeSeq + i.pasture*F.pastSeq + i.crop*F.cropSeq + i.reveg*F.revegSeq;
-  const gross    = enteric+manure+feed+fertiliser+fuel+energy+transport+landUse;
-  const net      = Math.max(0, gross - seq);
-  const s1 = enteric+manure+fuel+fertiliser+landUse;
-  const s2 = energy;
-  const s3 = feed+transport;
-  return {enteric,manure,feed,fertiliser,fuel,energy,transport,landUse,seq,gross,net,s1,s2,s3,headTot};
+  const r = await fetch('/api/calc/farm/advanced', {
+    method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(inp)
+  });
+  if(!r.ok) throw new Error('Calculation failed');
+  return await r.json();
 }
 
 async function runAdvanced(){

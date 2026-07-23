@@ -37,30 +37,13 @@ function renderHEnts(){
      </div>
    </div>`).join('') || '<p style="color:var(--muted);font-size:13px">No blocks yet — add one.</p>';
 }
-/* swappable engine — same pattern as farm; EAP stub commented */
+/* engine: the AIA-EAP-shaped calculation now runs on our own backend */
 async function hGetEmissions(inp){
-  // when AIA EAP API is connected: const r=await fetch('/.netlify/functions/eap-hort',{...}); if(r.ok) return {...await r.json(),engine:'AIA EAP'};
-  return {...hCalcLocal(inp), engine:'LCCIP indicative'};
-}
-function hCalcLocal(i){
-  const F={diesel:2.71783,elec:0.66,soilN2O:7.82243,fertUp:1.35,lime:440,plastic:2.6,card:0.94,
-           freight:0.12,water:0.15,chem:9.1,waste:520,refrig:1430,treeSeq:6.0,coverSeq:0.4};
-  const yld=i.ents.reduce((a,e)=>a+e.yld,0);
-  const diesel=i.diesel*F.diesel/1000, netE=Math.max(0,i.elec-i.solar), elec=netE*F.elec/1000,
-        soilN=i.n*F.soilN2O/1000, fertUp=i.n*F.fertUp/1000, lime=i.lime*F.lime/1000,
-        plastic=i.plastic*F.plastic/1000, card=i.card*F.card/1000, pack=plastic+card,
-        freight=i.freight*F.freight/1000, water=i.water*F.water/1000, chem=i.chem*F.chem/1000,
-        waste=i.waste*F.waste/1000, refrig=i.refrig*F.refrig/1000;
-  const seq=i.trees*F.treeSeq + i.cover*F.coverSeq + i.rem;
-  const gross=diesel+elec+soilN+fertUp+lime+pack+freight+water+chem+waste+refrig;
-  const net=Math.max(0,gross-seq);
-  const s1=diesel+soilN+lime+refrig, s2=elec, s3=fertUp+pack+freight+water+chem+waste;
-  return {diesel,elec,soilN,fertUp,lime,pack,plastic,card,freight,water,chem,waste,refrig,seq,gross,net,s1,s2,s3,yld,
-    rows:[['Fuel — diesel','Scope 1',diesel],['Soil N₂O','Scope 1',soilN],['Lime & urea','Scope 1',lime],
-      ['Refrigerant','Scope 1',refrig],['Electricity (net of solar)','Scope 2',elec],
-      ['Fertiliser (upstream)','Scope 3',fertUp],['Packaging','Scope 3',pack],['Freight','Scope 3',freight],
-      ['Water','Scope 3',water],['Chemicals','Scope 3',chem],['Organic waste','Scope 3',waste],
-      ['Removals (soil + biomass + veg)','Removal',-seq]]};
+  const r = await fetch('/api/calc/hort/advanced', {
+    method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(inp)
+  });
+  if(!r.ok) throw new Error('Calculation failed');
+  return await r.json();
 }
 async function hRunAdvanced(){
   const $=id=>document.getElementById(id), n=id=>+($(id).value)||0;

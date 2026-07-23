@@ -50,20 +50,16 @@ function renderHAI(){
 }
 
 /* ---- horticulture calculator ---- */
-function calcHort(){
+async function calcHort(){
   const $=id=>document.getElementById(id), n=id=>+($(id).value)||0;
-  const F={diesel:2.718+0.668, elec:0.66, soilN2O:(4.42), fertUp:1.35, plastic:2.6, card:0.94, freight:0.12, water:0.15, chem:9.1};
-  const diesel=n('hi-diesel')*F.diesel/1000, elec=n('hi-elec')*F.elec/1000,
-        soilN=n('hi-n')*F.soilN2O/1000, fertUp=n('hi-n')*F.fertUp/1000,
-        plastic=n('hi-plastic')*F.plastic/1000, card=n('hi-card')*F.card/1000,
-        freight=n('hi-freight')*F.freight/1000, water=n('hi-water')*F.water/1000,
-        chem=n('hi-chem')*F.chem/1000;
-  const pack=plastic+card;
-  const gross=diesel+elec+soilN+fertUp+pack+freight+water+chem;
-  const rem=n('hi-rem'), net=Math.max(0,gross-rem);
-  const y=n('hi-yield'), ci=y>0?net*1000/y:0;
-  const s1=diesel+soilN, s2=elec, s3=fertUp+pack+freight+water+chem;
-  const area=n('hi-area')||1;
+  const diesel_i=n('hi-diesel'), elec_i=n('hi-elec'), n_i=n('hi-n'), plastic_i=n('hi-plastic'), card_i=n('hi-card'),
+        freight_i=n('hi-freight'), water_i=n('hi-water'), chem_i=n('hi-chem'), rem_i=n('hi-rem'), yield_i=n('hi-yield'), area_i=n('hi-area');
+  const r = await fetch('/api/calc/hort/quick', {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({diesel:diesel_i, elec:elec_i, n:n_i, plastic:plastic_i, card:card_i, freight:freight_i, water:water_i, chem:chem_i, rem:rem_i, yield:yield_i, area:area_i})
+  }).then(res=>res.json());
+  const {diesel, elec, soilN, fertUp, pack, freight, water, chem, rem, gross, net, ci, s1, s2, s3, area} = r;
+  const y = yield_i;
   const rows=[['Fuel (diesel)','Scope 1/3',diesel],['Soil N₂O','Scope 1',soilN],['Electricity','Scope 2',elec],
     ['Fertiliser (upstream)','Scope 3',fertUp],['Packaging','Scope 3',pack],['Transport / freight','Scope 3',freight],
     ['Water supply','Scope 3',water],['Chemicals','Scope 3',chem],['Removals (soil + biomass)','Removal',-rem]];
