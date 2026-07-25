@@ -521,13 +521,13 @@
   <div class="contact-grid">
     <div class="panel">
       <div class="form-grid" style="grid-template-columns:1fr 1fr">
-        <div class="fld"><label>Name</label><input placeholder="Your name"></div>
-        <div class="fld"><label>Organisation</label><input placeholder="Farm / company"></div>
-        <div class="fld"><label>Email</label><input type="email" placeholder="you@org.com.au"></div>
-        <div class="fld"><label>Role</label><select><option>Producer</option><option>Processor</option><option>Bank / lender</option><option>Advisor</option><option>Researcher</option></select></div>
+        <div class="fld"><label>Name</label><input id="c-name" placeholder="Your name"></div>
+        <div class="fld"><label>Organisation</label><input id="c-org" placeholder="Farm / company"></div>
+        <div class="fld"><label>Email</label><input id="c-email" type="email" placeholder="you@org.com.au"></div>
+        <div class="fld"><label>Role</label><select id="c-role"><option>Producer</option><option>Processor</option><option>Bank / lender</option><option>Advisor</option><option>Researcher</option></select></div>
       </div>
-      <div class="fld" style="margin-top:16px"><label>Message</label><input style="height:90px" placeholder="Tell us about your farm or network…"></div>
-      <button class="btn-lg btn-primary" style="margin-top:16px" onclick="alert('Thanks — this is a demo form. We will be in touch.')">Send message</button>
+      <div class="fld" style="margin-top:16px"><label>Message</label><input id="c-message" style="height:90px" placeholder="Tell us about your farm or network…"></div>
+      <button class="btn-lg btn-primary" style="margin-top:16px" onclick="submitLead('farm')">Send message</button>
     </div>
     <div class="contact-info">
       <p><b>Pilot program</b><br>Now onboarding cattle farms in QLD, NSW, VIC, WA, TAS &amp; SA.</p>
@@ -830,13 +830,13 @@
   <div class="contact-grid">
     <div class="panel">
       <div class="form-grid" style="grid-template-columns:1fr 1fr">
-        <div class="fld"><label>Name</label><input placeholder="Your name"></div>
-        <div class="fld"><label>Organisation</label><input placeholder="Farm / packer / retailer"></div>
-        <div class="fld"><label>Email</label><input type="email" placeholder="you@org.com.au"></div>
-        <div class="fld"><label>Crop</label><input placeholder="e.g. apples, table grapes"></div>
+        <div class="fld"><label>Name</label><input id="hc-name" placeholder="Your name"></div>
+        <div class="fld"><label>Organisation</label><input id="hc-org" placeholder="Farm / packer / retailer"></div>
+        <div class="fld"><label>Email</label><input id="hc-email" type="email" placeholder="you@org.com.au"></div>
+        <div class="fld"><label>Crop</label><input id="hc-crop" placeholder="e.g. apples, table grapes"></div>
       </div>
-      <div class="fld" style="margin-top:16px"><label>Message</label><input style="height:90px" placeholder="Tell us about your operation…"></div>
-      <button class="btn-lg btn-primary" style="margin-top:16px" onclick="alert('Thanks — this is a demo form. We will be in touch.')">Send message</button>
+      <div class="fld" style="margin-top:16px"><label>Message</label><input id="hc-message" style="height:90px" placeholder="Tell us about your operation…"></div>
+      <button class="btn-lg btn-primary" style="margin-top:16px" onclick="submitLead('hort')">Send message</button>
     </div>
     <div class="contact-info">
       <p><b>Pilot program</b><br>Onboarding growers across NSW, VIC, QLD, SA, WA &amp; TAS.</p>

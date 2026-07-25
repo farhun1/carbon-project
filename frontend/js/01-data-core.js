@@ -83,6 +83,20 @@ function refreshLocks(){
 function gateHTML(title){return `<div class="gate"><h3>🔒 ${title} is for subscribers</h3>
   <p>Subscribe to the Network plan to open any farm in Australia and view its full carbon profile, forecasts and credit opportunity.</p>
   <button class="btn-lg btn-primary" onclick="openModal()">Subscribe to view</button></div>`;}
+async function submitLead(industry){
+  const $=id=>document.getElementById(id);
+  const isFarm = industry === 'farm';
+  const body = {
+    industry,
+    name: $(isFarm?'c-name':'hc-name').value,
+    organisation: $(isFarm?'c-org':'hc-org').value,
+    email: $(isFarm?'c-email':'hc-email').value,
+    roleOrCrop: $(isFarm?'c-role':'hc-crop').value,
+    message: $(isFarm?'c-message':'hc-message').value,
+  };
+  const r = await fetch('/api/leads', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  alert(r.ok ? 'Thanks — we\'ll be in touch.' : 'Something went wrong sending your message — please try again.');
+}
 
 /* =================== CHART HELPERS =================== */
 function lineChart(series,opt={}){
