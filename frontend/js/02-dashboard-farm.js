@@ -153,10 +153,18 @@ async function calcInput(){
         feed=+$('i-feed').value||0, fert=+$('i-fert').value||0, milk=+$('i-milk').value||0,
         trees=+$('i-trees').value||0, pasture=+$('i-pasture').value||0, cleared=+$('i-cleared').value||0,
         redpct=+$('i-redpct').value||0, type=$('i-type').value;
-  const r = await fetch('/api/calc/farm/quick', {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({head,diesel,elec,feed,fert,milk,trees,pasture,cleared,redpct,type})
-  }).then(res=>res.json());
+  let r;
+  try{
+    const res = await fetch('/api/calc/farm/quick', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({head,diesel,elec,feed,fert,milk,trees,pasture,cleared,redpct,type})
+    });
+    if(!res.ok) throw new Error('Calculation failed');
+    r = await res.json();
+  }catch(e){
+    $('input-result').innerHTML='<p style="color:var(--muted);font-size:13px">Could not reach the calculation service — please try again.</p>';
+    return;
+  }
   const EF={enteric:{Dairy:3.1,Beef:2.0,Mixed:2.6,Feedlot:2.2}[type], manure:0.55, diesel:2.68, elec:0.66,
             feed:0.6, fert:5.5, treeSeq:6.0, pastSeq:0.5, clearing:120};
   const {enteric,manure,fuel,energy,feedE,fertE,transport,landUse,seq,gross,net,intensity,s1,s2,s3,perHead,perPerson,baseline,project,reduction,accus,revenue}=r;

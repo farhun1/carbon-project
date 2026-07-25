@@ -50,7 +50,13 @@ async function hRunAdvanced(){
   const inp={ents:hents.slice(),n:n('ha-n'),lime:n('ha-lime'),chem:n('ha-chem'),plastic:n('ha-plastic'),card:n('ha-card'),
     waste:n('ha-waste'),diesel:n('ha-diesel'),elec:n('ha-elec'),solar:n('ha-solar'),water:n('ha-water'),
     freight:n('ha-freight'),refrig:n('ha-refrig'),trees:n('ha-trees'),cover:n('ha-cover'),rem:n('ha-rem')};
-  const r=await hGetEmissions(inp);
+  let r;
+  try{
+    r=await hGetEmissions(inp);
+  }catch(e){
+    $('hadv-result').innerHTML='<p style="color:var(--muted);font-size:13px">Could not reach the calculation service — please try again.</p>';
+    return;
+  }
   const redpct=n('ha-redpct'),price=n('ha-price')||38,buf=(n('ha-buffer')||0)/100;
   const ci=r.yld?r.gross*1000/r.yld:0;
   const baseline=r.net,project=r.net*(1-redpct/100),reduction=baseline-project;

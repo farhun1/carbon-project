@@ -67,7 +67,13 @@ async function runAdvanced(){
     diesel:n('a-diesel'), petrol:n('a-petrol'), lpg:n('a-lpg'), elec:n('a-elec'), solar:n('a-solar'), freight:n('a-freight'),
     pasture:n('a-pasture'), crop:n('a-crop'), trees:n('a-trees'), cleared:n('a-cleared'), reveg:n('a-reveg')
   };
-  const r=await getEmissions(inp);
+  let r;
+  try{
+    r=await getEmissions(inp);
+  }catch(e){
+    $('adv-result').innerHTML='<p style="color:var(--muted);font-size:13px">Could not reach the calculation service — please try again.</p>';
+    return;
+  }
   const milk=n('a-milk'), lwg=n('a-lwg'), redpct=n('a-redpct'), price=n('a-price')||38, buf=(n('a-buffer')||0)/100;
   const intensity = milk>0 ? r.gross*1000/milk : (lwg>0 ? r.gross*1000/lwg : 0);
   const iUnit = milk>0 ? 'kg CO₂-e / L milk' : (lwg>0?'kg CO₂-e / kg LWG':'—');

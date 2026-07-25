@@ -54,10 +54,18 @@ async function calcHort(){
   const $=id=>document.getElementById(id), n=id=>+($(id).value)||0;
   const diesel_i=n('hi-diesel'), elec_i=n('hi-elec'), n_i=n('hi-n'), plastic_i=n('hi-plastic'), card_i=n('hi-card'),
         freight_i=n('hi-freight'), water_i=n('hi-water'), chem_i=n('hi-chem'), rem_i=n('hi-rem'), yield_i=n('hi-yield'), area_i=n('hi-area');
-  const r = await fetch('/api/calc/hort/quick', {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({diesel:diesel_i, elec:elec_i, n:n_i, plastic:plastic_i, card:card_i, freight:freight_i, water:water_i, chem:chem_i, rem:rem_i, yield:yield_i, area:area_i})
-  }).then(res=>res.json());
+  let r;
+  try{
+    const res = await fetch('/api/calc/hort/quick', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({diesel:diesel_i, elec:elec_i, n:n_i, plastic:plastic_i, card:card_i, freight:freight_i, water:water_i, chem:chem_i, rem:rem_i, yield:yield_i, area:area_i})
+    });
+    if(!res.ok) throw new Error('Calculation failed');
+    r = await res.json();
+  }catch(e){
+    $('h-input-result').innerHTML='<p style="color:var(--muted);font-size:13px">Could not reach the calculation service — please try again.</p>';
+    return;
+  }
   const {diesel, elec, soilN, fertUp, pack, freight, water, chem, rem, gross, net, ci, s1, s2, s3, area} = r;
   const y = yield_i;
   const rows=[['Fuel (diesel)','Scope 1/3',diesel],['Soil N₂O','Scope 1',soilN],['Electricity','Scope 2',elec],
