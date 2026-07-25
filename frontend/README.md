@@ -31,9 +31,13 @@ middleware set up in the backend plan).
 
 ## Data
 
-`FARMS` (7 cattle farms) is in `js/01-data-core.js`; `HFARMS` (12 horticulture growers) is in
-`js/04-industry-router.js`; and `HDATA` (monthly time series) is in `js/05-hort-data-stats.js`.
-These are currently hardcoded JS constants. The backend plan (`docs/superpowers/plans/2026-07-21-backend-api.md`) replaces these with `fetch()` calls to a real API — see that plan before editing this data in place.
+`FARMS`, `HFARMS`, and `HDATA` are `let` bindings (in `js/01-data-core.js`, `js/04-industry-router.js`,
+and `js/05-hort-data-stats.js` respectively) populated by `fetch()` calls inside `boot()` against the
+backend's `/api/network/*` routes — see `docs/superpowers/plans/2026-07-21-backend-api.md`. The
+frontend cannot render real data without the backend running; opening `frontend/index.html` directly
+via `file://` will fail (fetch calls need an HTTP origin) — always serve it via `node backend/server.js`
+(or `python -m http.server` from `frontend/` if you only need to check static styling, in which case
+the network-backed views will stay empty).
 
 ## Known non-goals of this restructure
 
