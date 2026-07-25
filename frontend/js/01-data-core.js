@@ -8,22 +8,7 @@ const BEEF=[["Enteric CH₄",52,"r"],["Feed",14,"a"],["Fuel",12,"a"],["Transport
 const LOT=[["Feed",38,"r"],["Enteric CH₄",30,"r"],["Manure",14,"a"],["Transport",10,"a"],["Energy",5,"g"],["Fuel",3,"g"]];
 const COL={r:"#d14a3f",a:"#df9b26",g:"#4e9d52"}, SCOL=["#2c5f2d","#6ba644","#b8881e"];
 
-const FARMS=[
- {id:"RF-QLD-001",name:"Riverdale Cattle Farm",region:"QLD",mx:[-27.16,152.66],type:"Mixed dairy-beef",head:312,area:506,unit:"kg CO₂-e / L milk",intensity:1.38,gross:2332,net:2167,nz:9,accu:480,ndvi:0.60,paddocks:12,conf:84,scopeR:[.576,.100,.324],hot:MIX,real:[189,169.5,190.6,186.8,187.8,181,178.4,183.5,174,175.9,173.6,176.5],pred:[188.6,171.9,190.8,188.3,189.3,183,176,183.1,174.6,172.2,172.1,171.2],
-  intv:[["Product carbon-intensity root-cause",238,"0.9 yr","High","r"],["Ration optimisation + 3-NOP additive",99,"2.2 yr","High","r"],["Better feed storage, diet & supplier",59,"1.2 yr","High","r"],["Covered manure storage / digester",52,"4.4 yr","Medium","a"],["Route optimisation + telematics",42,"1.2 yr","High","r"],["Solar pumps + pump efficiency",35,"3.6 yr","Medium","a"]],pilot:true},
- {id:"RF-VIC-004",name:"Greenvale Dairy",region:"VIC",mx:[-37.8,144.9],type:"Dairy",head:420,area:380,unit:"kg CO₂-e / L milk",intensity:1.16,gross:2580,net:2440,nz:15,accu:360,ndvi:0.68,paddocks:14,conf:86,scopeR:[.55,.13,.32],hot:MIX,
-  intv:[["Methane-reducing feed additive",118,"2.4 yr","High","r"],["Solar + dairy-shed efficiency",62,"3.1 yr","High","r"],["Effluent pond covering",44,"4.0 yr","Medium","a"],["Nitrogen-use optimisation",21,"1.8 yr","Medium","a"]]},
- {id:"RF-TAS-007",name:"Meander Valley Dairy",region:"TAS",mx:[-41.7,146.6],type:"Dairy",head:350,area:410,unit:"kg CO₂-e / L milk",intensity:1.04,gross:1760,net:1580,nz:19,accu:280,ndvi:0.74,paddocks:13,conf:88,scopeR:[.54,.11,.35],hot:MIX,
-  intv:[["Pasture & grazing optimisation",70,"2.0 yr","High","r"],["Renewable energy supply",48,"3.4 yr","High","r"],["Feed-conversion improvement",33,"1.5 yr","Medium","a"]]},
- {id:"RF-QLD-005",name:"Burnett Mixed Farms",region:"QLD",mx:[-25.6,151.6],type:"Mixed",head:280,area:640,unit:"kg CO₂-e / L milk",intensity:1.41,gross:1980,net:1840,nz:10,accu:300,ndvi:0.58,paddocks:11,conf:82,scopeR:[.58,.09,.33],hot:MIX,
-  intv:[["Herd productivity & FCR review",96,"1.1 yr","High","r"],["Feed additive trial (3-NOP)",54,"2.3 yr","High","r"],["Diesel route optimisation",31,"1.2 yr","Medium","a"]]},
- {id:"RF-NSW-002",name:"Tablelands Beef Co",region:"NSW",mx:[-31.1,151.0],type:"Beef · grass-fed",head:540,area:1120,unit:"kg CO₂-e / kg LWG",intensity:11.8,gross:3850,net:3520,nz:12,accu:410,ndvi:0.55,paddocks:18,conf:81,scopeR:[.70,.05,.25],hot:BEEF,
-  intv:[["Enteric methane feed strategy",182,"2.6 yr","High","r"],["Rotational grazing + NDVI monitoring",96,"2.1 yr","High","r"],["Machinery & fuel efficiency",48,"1.3 yr","Medium","a"],["Soil-carbon sequestration project",60,"4.5 yr","Medium","a"]]},
- {id:"RF-WA-003",name:"Gascoyne Station",region:"WA",mx:[-25.0,115.0],type:"Beef · rangeland",head:1250,area:8400,unit:"kg CO₂-e / kg LWG",intensity:13.2,gross:6900,net:6450,nz:7,accu:720,ndvi:0.32,paddocks:9,conf:79,scopeR:[.72,.04,.24],hot:BEEF,
-  intv:[["Supplement & lick-block methane plan",340,"3.0 yr","High","r"],["Water-point solar pumping",120,"3.8 yr","High","r"],["Vegetation / sequestration project",180,"5.0 yr","Medium","a"]]},
- {id:"RF-NSW-006",name:"Riverina Feedlot",region:"NSW",mx:[-34.7,146.4],type:"Feedlot",head:2000,area:220,unit:"kg CO₂-e / kg LWG",intensity:9.4,gross:9200,net:9050,nz:5,accu:540,ndvi:0.41,paddocks:6,conf:80,scopeR:[.55,.08,.37],hot:LOT,
-  intv:[["Ration reformulation + additive",430,"2.0 yr","High","r"],["Manure-to-energy (anaerobic digester)",260,"4.6 yr","High","r"],["Feed-supply transport optimisation",150,"1.4 yr","Medium","a"],["Solar array + shed efficiency",90,"3.5 yr","Medium","a"]]},
-];
+let FARMS = [];
 const STEPS=[["Farm data capture","Herd, feed, manure, fuel, energy, fertiliser, transport, weather & pasture."],
 ["Data integration layer","IoT sensors, FMS, invoices, API feeds and manual entry into one pipeline."],
 ["LCA modelling engine","Cradle-to-farm-gate · IPCC/NGER factors · CH₄, N₂O, CO₂ → CO₂-eq."],
@@ -150,7 +135,13 @@ function ausMap(){
 
 /* =================== HOME / mount =================== */
 function fillSelect(sel){sel.innerHTML=FARMS.map(f=>`<option value="${f.id}">${f.name} · ${f.region}</option>`).join("");}
-function boot(){
+async function boot(){
+  const [farms, hfarms, hdata] = await Promise.all([
+    fetch('/api/network/farms?industry=farm').then(r=>r.json()),
+    fetch('/api/network/farms?industry=hort').then(r=>r.json()),
+    fetch('/api/network/hort-monthly').then(r=>r.json()),
+  ]);
+  FARMS = farms; HFARMS = hfarms; HDATA = hdata; SN = HDATA.srcNames;
   const $=id=>document.getElementById(id);
   document.getElementById('ausmap').innerHTML=ausMap();
   const net=FARMS.reduce((a,f)=>a+f.net,0), accu=FARMS.reduce((a,f)=>a+f.accu,0), cut=FARMS.reduce((a,f)=>a+f.intv.reduce((b,r)=>b+r[1],0),0);

@@ -1148,6 +1148,8 @@ Find: `const HDATA={` … through its closing `};` (the single long line).
 
 Replace with: `let HDATA = { srcNames: [], rows: [] };` (an empty-but-correctly-shaped placeholder so any code that runs before the fetch resolves — there shouldn't be any, but this is defensive — doesn't throw on `HDATA.rows.filter`).
 
+**Correction (found during Task 12 execution):** a few lines below this, `frontend/js/05-hort-data-stats.js` also has `const SN=HDATA.srcNames;` at module top level (right after the `HPAGES`/`hPage` declarations). Since `HDATA` gets **reassigned** (not mutated) inside `boot()`, a `const SN` bound at load time keeps pointing at the original placeholder's empty `srcNames: []` forever — `SN` never reflects the fetched data, silently breaking the ~11 call sites across `05-hort-data-stats.js` and `06-hort-dashboard.js` that read `SN` (source-name tables, matrices, legends on the horticulture dashboard). Fix: change `const SN=HDATA.srcNames;` to `let SN=HDATA.srcNames;` here, and reassign it inside `boot()` (Step 4 below) right after `HDATA = hdata;`.
+
 - [ ] **Step 4: Make `boot()` fetch all three before rendering, in `frontend/js/01-data-core.js`**
 
 Find:
@@ -1164,9 +1166,9 @@ async function boot(){
     fetch('/api/network/farms?industry=hort').then(r=>r.json()),
     fetch('/api/network/hort-monthly').then(r=>r.json()),
   ]);
-  FARMS = farms; HFARMS = hfarms; HDATA = hdata;
+  FARMS = farms; HFARMS = hfarms; HDATA = hdata; SN = HDATA.srcNames;
 ```
-Leave every existing line inside `boot()` below that point completely unchanged — they already reference `FARMS` by name, and by the time they run, `FARMS` has been reassigned to the fetched array.
+Leave every existing line inside `boot()` below that point completely unchanged — they already reference `FARMS` by name, and by the time they run, `FARMS` has been reassigned to the fetched array. The `SN = HDATA.srcNames;` addition is the fix for the Step 3 correction above.
 
 - [ ] **Step 5: Confirm the trailing bootstrap calls in `frontend/js/07-hort-quick-calc.js` still work**
 
