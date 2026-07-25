@@ -94,8 +94,12 @@ async function submitLead(industry){
     roleOrCrop: $(isFarm?'c-role':'hc-crop').value,
     message: $(isFarm?'c-message':'hc-message').value,
   };
-  const r = await fetch('/api/leads', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
-  alert(r.ok ? 'Thanks — we\'ll be in touch.' : 'Something went wrong sending your message — please try again.');
+  try{
+    const r = await fetch('/api/leads', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+    alert(r.ok ? 'Thanks — we\'ll be in touch.' : 'Something went wrong sending your message — please try again.');
+  } catch(e){
+    alert('Could not reach the server — please try again.');
+  }
 }
 
 /* =================== CHART HELPERS =================== */
