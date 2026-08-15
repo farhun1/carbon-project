@@ -27,3 +27,9 @@ CREATE TABLE IF NOT EXISTS assessments (
   result_json TEXT NOT NULL,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+CREATE TABLE IF NOT EXISTS sessions (
+  sid TEXT PRIMARY KEY,
+  session_json TEXT NOT NULL,
+  expires_at INTEGER NOT NULL
+);
