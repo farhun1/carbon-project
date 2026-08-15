@@ -9,11 +9,11 @@ router.post('/signup', async (req, res) => {
   if (!email || !password) {
     return res.status(400).json({ error: 'email and password are required' });
   }
-  const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
-  if (existing) {
-    return res.status(409).json({ error: 'an account with that email already exists — try logging in' });
-  }
   try {
+    const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
+    if (existing) {
+      return res.status(409).json({ error: 'an account with that email already exists — try logging in' });
+    }
     const passwordHash = await bcrypt.hash(password, 10);
     const info = db
       .prepare("INSERT INTO users (email, password_hash, plan, subscribed_at) VALUES (?, ?, ?, datetime('now'))")
@@ -27,8 +27,8 @@ router.post('/signup', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
   try {
+    const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
     const ok = user && (await bcrypt.compare(password || '', user.password_hash));
     if (!ok) {
       return res.status(401).json({ error: 'invalid email or password' });
