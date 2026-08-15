@@ -21,6 +21,10 @@ router.post('/signup', async (req, res) => {
     req.session.userId = info.lastInsertRowid;
     res.status(201).json({ user: { id: info.lastInsertRowid, email, plan: plan || 'producer' } });
   } catch (err) {
+    if (String(err && err.message).includes('UNIQUE constraint failed')) {
+      return res.status(409).json({ error: 'an account with that email already exists — try logging in' });
+    }
+    console.error('signup failed:', err);
     res.status(500).json({ error: 'something went wrong' });
   }
 });
@@ -36,12 +40,16 @@ router.post('/login', async (req, res) => {
     req.session.userId = user.id;
     res.json({ user: { id: user.id, email: user.email, plan: user.plan } });
   } catch (err) {
+    console.error('login failed:', err);
     res.status(500).json({ error: 'something went wrong' });
   }
 });
 
 router.post('/logout', (req, res) => {
-  req.session.destroy(() => res.status(204).end());
+  req.session.destroy((err) => {
+    if (err) return res.status(500).json({ error: 'something went wrong' });
+    res.status(204).end();
+  });
 });
 
 router.get('/me', (req, res) => {

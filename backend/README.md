@@ -21,9 +21,15 @@ Node.js (22.5+) + Express + SQLite (via the built-in `node:sqlite` module — no
 - `POST /api/calc/hort/quick`, `POST /api/calc/hort/advanced` — see `calc/hort.js` (ported from `calcHort`/`hCalcLocal`).
 - `GET /api/assessments` (requires login) — the logged-in user's calculation history.
 
+## Environment variables
+
+- `SESSION_SECRET` — secret used to sign the session cookie. **Required** when `NODE_ENV=production`
+  (the server refuses to start without it); otherwise falls back to a hardcoded dev secret.
+
 ## Data model
 
-`db/schema.sql` — three tables: `users`, `leads`, `assessments`. The demo network (7 cattle farms,
+`db/schema.sql` — four tables: `users`, `leads`, `assessments`, `sessions` (server-side session
+state, replacing an in-memory store). The demo network (7 cattle farms,
 12 horticulture growers + monthly time series) is **not** in the database — it's static, read-only
 reference data extracted once from the frontend's original hardcoded JS into `data/*.json` by
 `data/extract-seed-data.js` (see `docs/superpowers/plans/2026-07-21-backend-api.md`, Task 3).

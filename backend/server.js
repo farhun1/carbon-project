@@ -12,6 +12,9 @@ if (process.env.NODE_ENV === 'production' && !process.env.SESSION_SECRET) {
 
 const app = express();
 app.use(express.json());
+if (!process.env.SESSION_SECRET) {
+  console.warn('WARNING: SESSION_SECRET is not set - falling back to the default dev secret. Do not run this in production without setting a real SESSION_SECRET.');
+}
 app.use(
   session({
     store: new SqliteSessionStore(),

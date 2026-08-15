@@ -15,7 +15,14 @@ class SqliteSessionStore extends session.Store {
   get(sid, callback) {
     try {
       const row = db.prepare('SELECT session_json FROM sessions WHERE sid = ? AND expires_at > ?').get(sid, Date.now());
-      callback(null, row ? JSON.parse(row.session_json) : null);
+      if (!row) return callback(null, null);
+      let sess = null;
+      try {
+        sess = JSON.parse(row.session_json);
+      } catch {
+        sess = null;
+      }
+      callback(null, sess);
     } catch (err) {
       callback(err);
     }
