@@ -9,8 +9,9 @@
 .ch-inner h1{font-family:var(--serif);font-size:36px;margin:0 0 8px}
 .ch-inner p.s{color:#cfe3c6;font-size:15px;margin:0 0 30px}
 .ch-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.ch-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:28px 24px;cursor:pointer;transition:all .18s;text-align:left}
+.ch-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:28px 24px;cursor:pointer;transition:background-color var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out),transform var(--dur-base) var(--ease-out);text-align:left}
 .ch-card:hover{background:rgba(107,166,68,.18);border-color:var(--moss);transform:translateY(-3px)}
+.ch-card:active{transform:translateY(-1px) scale(.98);transition-duration:var(--dur-fast)}
 .ch-card .ic{width:56px;height:56px;border-radius:14px;background:var(--moss);display:grid;place-items:center;margin-bottom:16px}
 .ch-card .ic svg{width:30px;height:30px}
 .ch-card h3{font-family:var(--serif);font-size:23px;color:#fff;margin:0 0 6px}

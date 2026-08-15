@@ -49,21 +49,17 @@
       <div class="leafmark"><svg viewBox="0 0 24 24" fill="#12301d"><path d="M12 2C7 4 4 8 4 13c0 4 3 8 8 9 0-6 2-9 7-12-4 0-7 1-9 4 1-5 1-8 2-12z"/></svg></div>
       <div><b>Sustain Pro</b><span>LCCIP</span></div>
     </div>
-    <nav class="navlinks" id="navlinks">
-      <button data-v="home" onclick="go('home')">Home</button>
-      <button data-v="how" onclick="go('how')">How It Works</button>
-      <button data-v="dashboard" onclick="go('dashboard')">Dashboard</button>
-      <button data-v="input" onclick="go('input')">Farm Data Input</button>
-      <button data-v="ai" onclick="go('ai')">AI Recommendations</button>
-      <button data-v="credit" onclick="go('credit')">Carbon Credits</button>
-      <button data-v="methods" onclick="go('methods')">Methods &amp; Standards</button>
-      <button data-v="about" onclick="go('about')">About / Impact</button>
-      <button data-v="contact" onclick="go('contact')">Contact</button>
-    </nav>
+    <!-- populated by buildNav() in js/04-industry-router.js: flat site links + a Workspace dropdown for the app-flow items -->
+    <nav class="navlinks" id="navlinks"></nav>
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-haspopup="true" aria-expanded="false" aria-controls="mobileMenu" onclick="toggleMobileMenu(event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
     <button class="back-land" onclick="backToLanding()" title="Back to industry selection">← Industries</button>
     <span class="ind-switch"><button id="sw-farm" class="on" onclick="pickIndustry('farm')">Farm</button><button id="sw-hort" onclick="pickIndustry('hort')">Horticulture</button></span>
     <button class="cta" id="authbtn" onclick="openModal()">Subscribe</button>
   </div>
+  <!-- populated by buildMobileMenu() alongside buildNav() -->
+  <div class="mobile-menu" id="mobileMenu" role="menu"></div>
 </header>
 
 <!-- ============ SUBSCRIBE MODAL ============ -->

@@ -1,0 +1,16 @@
+# Claude Code
+.claude/
+
+# graphify output
+graphify-out/
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db

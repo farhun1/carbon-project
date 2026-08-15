@@ -30,9 +30,15 @@ let subscribed=false;
 
 /* =================== ROUTER =================== */
 const GATED=["dashboard","ai","credit"];
+// NOTE: redefined in js/04-industry-router.js once it loads (adds the Workspace
+// dropdown + mobile-menu handling); this copy only runs if called before that script
+// executes, which the current boot sequence never does.
 function go(v){
   document.querySelectorAll('.view').forEach(s=>s.classList.toggle('show',s.dataset.view===v));
-  document.querySelectorAll('#navlinks button').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
+  document.querySelectorAll(NAV_LEAF_SEL).forEach(b=>b.classList.toggle('active',b.dataset.v===v));
+  const wsTrigger=document.querySelector('#nav-workspace .nav-drop-trigger');
+  if(wsTrigger) wsTrigger.classList.toggle('active',!!document.querySelector(`#nav-workspace [data-v="${v}"]`));
+  closeWorkspaceMenu(); closeMobileMenu();
   window.scrollTo({top:0,behavior:'smooth'});
   if(v==='dashboard') renderDashView();
   if(v==='ai') renderAIView();
@@ -74,8 +80,9 @@ async function subscribe(){
     errBox.style.display = 'block';
   }
 }
+// NOTE: also redefined in js/04-industry-router.js - see the comment on go() above.
 function refreshLocks(){
-  document.querySelectorAll('#navlinks button').forEach(b=>{
+  document.querySelectorAll(NAV_LEAF_SEL).forEach(b=>{
     const g=GATED.includes(b.dataset.v);
     b.innerHTML=b.textContent.replace(' 🔒','')+(g&&!subscribed?' <span class="lock">🔒</span>':'');
   });

@@ -7,7 +7,7 @@
 .flow4 .fs p{margin:0;font-size:12px;color:var(--muted)}
 .bench{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
 .bench .bc{background:#fff;border:1px solid var(--hair);border-radius:12px;padding:14px;text-align:center;box-shadow:var(--shadow)}
-.bench .bc .bv{font-family:var(--serif);font-size:24px;color:var(--forest)}
+.bench .bc .bv{font-family:var(--serif);font-size:24px;color:var(--forest);letter-spacing:-.015em}
 .bench .bc .bl{font-size:11.5px;color:var(--muted);margin-top:3px}
 .bench .bc .bref{font-size:10.5px;color:var(--gold);margin-top:4px}
 .factbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
@@ -15,7 +15,7 @@
 .factbl td{padding:6px 8px;border-bottom:1px solid #eef3ea}
 .factbl td.n{text-align:right;font-variant-numeric:tabular-nums}
 .accueq{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--pasture);color:#fff;border-radius:12px;padding:16px 18px;margin-top:6px}
-.accueq .b{font-family:var(--serif);font-size:18px}.accueq .g{color:#e9c768;font-family:var(--serif);font-size:22px}
+.accueq .b{font-family:var(--serif);font-size:18px}.accueq .g{color:#e9c768;font-family:var(--serif);font-size:22px;letter-spacing:-.015em}
 .accueq .op{color:#9cc18c}
 .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .compare .col{border-radius:12px;padding:16px;border:1px solid var(--hair)}

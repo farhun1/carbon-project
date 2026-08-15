@@ -7,7 +7,7 @@
 .hz .hkpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px}
 .hz .hkpi{background:var(--hpanel);border:1px solid var(--hrule);border-radius:4px;padding:12px}
 .hz .hkpi .l{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--hmuted);font-weight:700}
-.hz .hkpi .v{font-family:var(--hmono);font-size:22px;color:var(--hink);margin-top:5px;line-height:1}
+.hz .hkpi .v{font-family:var(--hmono);font-size:22px;color:var(--hink);margin-top:5px;line-height:1;letter-spacing:-.01em}
 .hz .hkpi .d{font-size:10px;color:var(--hmuted);margin-top:4px}
 .hz .hkpi.accent .v{color:var(--hs3)}
 .hz table.hl{width:100%;border-collapse:collapse;font-size:11.5px}
@@ -62,7 +62,7 @@
 .hz .lgauge{position:relative;height:12px;background:#E4E7DD;border-radius:2px;min-width:90px}
 .hz .lg-f{height:100%;border-radius:2px}
 .hz .lg-t{position:absolute;top:-2px;width:2px;height:16px;background:#1C221C}
-.hz th.srt{cursor:pointer;user-select:none}
+.hz th.srt{cursor:pointer;user-select:none;transition:color var(--dur-base) var(--ease-out)}
 .hz th.srt:hover{color:var(--hink)}
 .hz .grpbtn{border:1px solid var(--hrule);background:#fff;border-radius:3px;padding:3px 9px;font-size:10px;font-weight:700;cursor:pointer;margin-left:3px;font-family:var(--sans);color:var(--hmuted)}
 .hz .grpbtn.on{background:var(--hs3);color:#fff;border-color:var(--hs3)}
