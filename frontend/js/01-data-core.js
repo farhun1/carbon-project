@@ -58,12 +58,23 @@ function toggleModalMode(){
   document.getElementById('modal-error').style.display = 'none';
 }
 
+// Mirrors the server-side check in backend/routes/auth.js - keep the two in sync.
+function passwordPolicyError(password){
+  if (password.length < 8) return 'Password must be at least 8 characters long.';
+  if (!/[^A-Za-z0-9]/.test(password)) return 'Password must contain at least one special character.';
+  return null;
+}
+
 async function subscribe(){
   const email = document.getElementById('m-email').value.trim();
   const password = document.getElementById('m-password').value;
   const plan = document.getElementById('m-plan').value;
   const errBox = document.getElementById('modal-error');
   errBox.style.display = 'none';
+  if (modalMode === 'signup') {
+    const policyError = passwordPolicyError(password);
+    if (policyError) { errBox.textContent = policyError; errBox.style.display = 'block'; return; }
+  }
   const endpoint = modalMode === 'signup' ? '/api/auth/signup' : '/api/auth/login';
   const body = modalMode === 'signup' ? { email, password, plan } : { email, password };
   try{

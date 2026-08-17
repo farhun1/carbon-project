@@ -4,10 +4,22 @@ const db = require('../db/db');
 
 const router = express.Router();
 
+// Minimum 8 characters, at least one non-alphanumeric ("special") character.
+const SPECIAL_CHAR_RE = /[^A-Za-z0-9]/;
+function passwordPolicyError(password) {
+  if (password.length < 8) return 'password must be at least 8 characters long';
+  if (!SPECIAL_CHAR_RE.test(password)) return 'password must contain at least one special character';
+  return null;
+}
+
 router.post('/signup', async (req, res) => {
   const { email, password, plan } = req.body;
   if (!email || !password) {
     return res.status(400).json({ error: 'email and password are required' });
+  }
+  const policyError = passwordPolicyError(password);
+  if (policyError) {
+    return res.status(400).json({ error: policyError });
   }
   try {
     const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
