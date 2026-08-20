@@ -23,12 +23,12 @@
 .enterprise .eh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .enterprise .eh b{font-family:var(--serif);font-size:15px}
 .enterprise .rm{background:none;border:none;color:var(--red);font-size:12px;cursor:pointer;font-weight:600}
-.eng-badge{display:inline-flex;align-items:center;gap:7px;background:#eef6ec;border:1px solid #cfe3c6;border-radius:20px;padding:5px 12px;font-size:11.5px;color:var(--forest);font-weight:600}
+.eng-badge{display:inline-flex;align-items:center;gap:7px;background:var(--mint);border:1px solid rgba(92,138,74,.35);border-radius:20px;padding:5px 12px;font-size:11.5px;color:var(--forest);font-weight:600}
 .eng-badge i{width:7px;height:7px;border-radius:50%;background:var(--gold)}
 .eng-badge.live i{background:var(--green)}
 .res-hero{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;background:var(--pasture);color:#fff;border-radius:14px;padding:20px 24px}
 .res-hero .rv{font-family:var(--serif);font-size:42px;color:#e9c768;line-height:1;letter-spacing:-.02em}
-.res-hero .rl{font-size:12.5px;color:#cfe3c6}
+.res-hero .rl{font-size:12.5px;color:#D9E4CE}
 .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}
 .res-grid .rc{background:#fff;border:1px solid var(--hair);border-radius:12px;padding:14px;text-align:center}
 .res-grid .rc .v{font-family:var(--serif);font-size:22px;color:var(--forest);letter-spacing:-.015em}

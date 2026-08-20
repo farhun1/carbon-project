@@ -1,5 +1,5 @@
 /* ===== INDUSTRY CHOOSER ===== */
-#chooser{position:fixed;inset:0;z-index:80;background:radial-gradient(900px 500px at 75% -10%,#244e30 0%,transparent 60%),linear-gradient(160deg,#13311e,#0f271a);display:flex;align-items:center;justify-content:center;padding:24px}
+#chooser{position:fixed;inset:0;z-index:80;background:radial-gradient(900px 500px at 75% -10%,#1B4A30 0%,transparent 60%),linear-gradient(160deg,#123A26,#0B2417);display:flex;align-items:center;justify-content:center;padding:24px}
 #chooser.hide{display:none}
 .ch-inner{max-width:900px;width:100%;text-align:center;color:#fff}
 .ch-brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:22px}
@@ -7,10 +7,10 @@
 .ch-brand b{font-family:var(--serif);font-size:22px;color:#fff}
 .ch-brand span{display:block;font-size:10px;letter-spacing:.18em;color:var(--moss);font-weight:700;text-transform:uppercase;text-align:left}
 .ch-inner h1{font-family:var(--serif);font-size:36px;margin:0 0 8px}
-.ch-inner p.s{color:#cfe3c6;font-size:15px;margin:0 0 30px}
+.ch-inner p.s{color:#D9E4CE;font-size:15px;margin:0 0 30px}
 .ch-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .ch-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:28px 24px;cursor:pointer;transition:background-color var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out),transform var(--dur-base) var(--ease-out);text-align:left}
-.ch-card:hover{background:rgba(107,166,68,.18);border-color:var(--moss);transform:translateY(-3px)}
+.ch-card:hover{background:rgba(92,138,74,.18);border-color:var(--moss);transform:translateY(-3px)}
 .ch-card:active{transform:translateY(-1px) scale(.98);transition-duration:var(--dur-fast)}
 .ch-card .ic{width:56px;height:56px;border-radius:14px;background:var(--moss);display:grid;place-items:center;margin-bottom:16px}
 .ch-card .ic svg{width:30px;height:30px}
