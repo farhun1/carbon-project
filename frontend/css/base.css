@@ -1,11 +1,13 @@
 :root{
-  --pasture:#12301d; --pasture2:#1b4228; --forest:#2c5f2d; --leaf:#4e8b3a; --moss:#6ba644; --mint:#eaf3e7;
-  --paper:#f4f7f1; --card:#fff; --ink:#16201a; --muted:#5d6c61; --hair:#e2e9dd;
-  --gold:#b8881e; --red:#d14a3f; --amber:#df9b26; --green:#4e9d52;
+  /* warm-ledger palette — spec 2026-08-20-frontend-redesign-design.md §4 */
+  --pasture:#0B2417; --pasture2:#142E1E; --forest:#123A26; --leaf:#4B7F3E; --moss:#5C8A4A; --mint:#E9EEE1;
+  --paper:#F5F2EA; --card:#fff; --ink:#1B211C; --muted:#6B655D; --hair:#DCD5C4;
+  --gold:#A87A2A; --gold-bright:#D9A857; --red:#C23333; --amber:#D89A2E; --green:#5C8A4A;
+  --wash:#EEF0E4; --surface-soft:#FAF8F2; --on-dark:#D9E4CE; --on-dark-2:#9FB08C;
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --mono:ui-monospace,Menlo,Consolas,"SF Mono",monospace;
-  --shadow:0 8px 26px rgba(20,40,28,.10);
+  --shadow:0 6px 20px rgba(18,58,38,.08);
   --ease-out:cubic-bezier(.16,1,.3,1);
   --dur-fast:120ms; --dur-base:200ms;
 }
@@ -16,6 +18,8 @@ button{font-family:inherit;cursor:pointer;transition:transform var(--dur-fast) v
 button:active{transform:scale(.97)}
 a{color:inherit;text-decoration:none}
 .mono{font-family:var(--mono)}
+.hero-stats .hs b,.im b,.kpi .kv,.plan .price,.result .big,.res-hero .rv,.creditbox .accu,.rc .v,.bc .bv{
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 h1,h2,h3{font-family:var(--serif);letter-spacing:-.01em;margin:0}
 .wrap{max-width:1180px;margin:0 auto;padding:0 26px}
 
@@ -116,9 +120,9 @@ section.view.show{display:block}
   border-radius:14px;padding:13px 16px;box-shadow:var(--shadow);margin-bottom:18px}
 .toolbar .grp{display:flex;align-items:center;gap:8px}
 .toolbar label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-.toolbar select{padding:8px 11px;border:1px solid var(--hair);border-radius:9px;font-size:13.5px;font-family:inherit;background:#fafcf8;min-width:180px;transition:outline-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out)}
+.toolbar select{padding:8px 11px;border:1px solid var(--hair);border-radius:9px;font-size:13.5px;font-family:inherit;background:var(--surface-soft);min-width:180px;transition:outline-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out)}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{font-size:12px;border:1px solid var(--hair);background:#fafcf8;border-radius:20px;padding:5px 12px;color:var(--muted);transition:background-color var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out)}
+.chip{font-size:12px;border:1px solid var(--hair);background:var(--surface-soft);border-radius:20px;padding:5px 12px;color:var(--muted);transition:background-color var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out)}
 .chip.on{background:var(--forest);color:#fff;border-color:var(--forest)}
 .live-pill{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--green)}
 .live-pill i{width:8px;height:8px;border-radius:50%;background:var(--green);animation:blink 1.6s infinite}
@@ -137,13 +141,13 @@ section.view.show{display:block}
 .srow .sc{width:11px;height:11px;border-radius:3px;flex:0 0 auto}.srow .sn{flex:1;font-size:12.5px}
 .srow .sv{font-family:var(--serif);font-size:14px}.srow .sp{font-size:11px;color:var(--muted);width:36px;text-align:right}
 .hot{display:flex;align-items:center;gap:10px;margin:10px 0}
-.hot .hn{width:120px;font-size:12.5px;font-weight:600}.hot .bar{flex:1;height:9px;background:#eef3ea;border-radius:6px;overflow:hidden}
+.hot .hn{width:120px;font-size:12.5px;font-weight:600}.hot .bar{flex:1;height:9px;background:var(--wash);border-radius:6px;overflow:hidden}
 .hot .bar i{display:block;height:100%;border-radius:6px}.hot .hv{width:42px;text-align:right;font-size:11px}
 
 /* tables */
 table.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
 table.tbl th{text-align:left;color:var(--muted);font-weight:600;font-size:11px;padding:9px 10px;border-bottom:2px solid var(--hair)}
-table.tbl td{padding:10px;border-bottom:1px solid #eef3ea}
+table.tbl td{padding:10px;border-bottom:1px solid var(--wash)}
 table.tbl tr:last-child td{border-bottom:none}
 .num{text-align:center;font-family:var(--serif);font-size:13.5px}
 .prio{font-size:9.5px;font-weight:700;color:#fff;padding:2px 8px;border-radius:20px}
@@ -223,6 +227,20 @@ footer .legal{border-top:1px solid rgba(255,255,255,.12);margin-top:24px;padding
 .dash-tabs{display:inline-flex;gap:4px;background:#fff;border:1px solid var(--hair);border-radius:10px;padding:4px;margin-bottom:16px;box-shadow:var(--shadow)}
 .dash-tabs button{border:none;background:none;padding:8px 18px;border-radius:7px;font-weight:600;font-size:13px;color:var(--muted);cursor:pointer;font-family:inherit}
 .dash-tabs button.on{background:var(--forest);color:#fff}
+
+/* ledger signature: hairline ruled-paper motif — spec §6 */
+.ledger-rule{position:relative}
+.ledger-rule:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--hair)}
+.ledger-underline{border-bottom:2px double var(--gold);padding-bottom:2px;display:inline-block}
+.ledger-tick{width:6px;height:6px;border-radius:50%;background:var(--forest);display:inline-block;flex:0 0 auto}
+
+/* progressive-disclosure primitive used across marketing + data screens — spec §8 */
+.disclose{border:1px solid var(--hair);border-radius:12px;overflow:hidden;background:var(--card);box-shadow:var(--shadow);margin-top:16px}
+.disclose summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:700;font-size:13.5px;color:var(--forest);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.disclose summary::-webkit-details-marker{display:none}
+.disclose summary:after{content:"View details";font-weight:600;font-size:12px;color:var(--muted);white-space:nowrap}
+.disclose[open] summary:after{content:"Hide details"}
+.disclose .disclose-body{padding:0 18px 18px}
 
 /* reduced motion: gentler, non-vestibular equivalents - never silence, only soften */
 @media (prefers-reduced-motion: reduce){
