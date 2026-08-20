@@ -6,7 +6,7 @@ const scopeAbs=(g,r)=>({s1:Math.round(g*r[0]),s2:Math.round(g*r[1]),s3:Math.roun
 const MIX=[["Enteric CH₄",35,"r"],["Feed",25,"a"],["Manure",12,"a"],["Energy",10,"g"],["Fuel",9,"g"],["Transport",7,"g"]];
 const BEEF=[["Enteric CH₄",52,"r"],["Feed",14,"a"],["Fuel",12,"a"],["Transport",9,"g"],["Manure",8,"g"],["Energy",5,"g"]];
 const LOT=[["Feed",38,"r"],["Enteric CH₄",30,"r"],["Manure",14,"a"],["Transport",10,"a"],["Energy",5,"g"],["Fuel",3,"g"]];
-const COL={r:"#d14a3f",a:"#df9b26",g:"#4e9d52"}, SCOL=["#2c5f2d","#6ba644","#b8881e"];
+const COL={r:"#C23333",a:"#D89A2E",g:"#5C8A4A"}, SCOL=["#123A26","#5C8A4A","#A87A2A"];
 
 let FARMS = [];
 const STEPS=[["Farm data capture","Herd, feed, manure, fuel, energy, fertiliser, transport, weather & pasture."],
@@ -127,7 +127,7 @@ function lineChart(series,opt={}){
   const M=["J","F","M","A","M","J","J","A","S","O","N","D"];
   const X=i=>pl+(W-pl-pr)*i/11, Y=v=>pt+(H-pt-pb)*(1-(v-mn)/(mx-mn));
   let grid="",lab="";
-  for(let g=0;g<=4;g++){const v=mn+(mx-mn)*g/4,y=Y(v);grid+=`<line x1="${pl}" y1="${y}" x2="${W-pr}" y2="${y}" stroke="#eef3ea"/>`;
+  for(let g=0;g<=4;g++){const v=mn+(mx-mn)*g/4,y=Y(v);grid+=`<line x1="${pl}" y1="${y}" x2="${W-pr}" y2="${y}" stroke="#EEF0E4"/>`;
     lab+=`<text x="${pl-6}" y="${y+3}" text-anchor="end" font-size="9" fill="#9aa89c">${Math.round(v)}</text>`;}
   const xl=M.map((m,i)=>`<text x="${X(i)}" y="${H-8}" text-anchor="middle" font-size="9" fill="#9aa89c">${m}</text>`).join("");
   const paths=series.map(s=>`<path d="${s.v.map((v,i)=>(i?'L':'M')+X(i)+' '+Y(v)).join(' ')}" fill="none" stroke="${s.c}" stroke-width="${s.w||2.6}" ${s.dash?'stroke-dasharray="5 4"':''}/>`).join("");
@@ -138,33 +138,33 @@ function donut(scope){
   const t=scope.s1+scope.s2+scope.s3,seg=[scope.s1,scope.s2,scope.s3],R=52,C=2*Math.PI*R;let off=0,p="";
   seg.forEach((v,i)=>{const l=C*v/t;p+=`<circle cx="70" cy="70" r="${R}" fill="none" stroke="${SCOL[i]}" stroke-width="20" stroke-dasharray="${l} ${C-l}" stroke-dashoffset="${-off}" transform="rotate(-90 70 70)"/>`;off+=l;});
   return `<svg viewBox="0 0 140 140" width="148" height="148">${p}<circle cx="70" cy="70" r="40" fill="#fff"/>
-   <text x="70" y="66" text-anchor="middle" font-family="var(--serif)" font-size="22" fill="#16201a">${(t/1000).toFixed(2)}k</text>
+   <text x="70" y="66" text-anchor="middle" font-family="var(--serif)" font-size="22" fill="#1B211C">${(t/1000).toFixed(2)}k</text>
    <text x="70" y="84" text-anchor="middle" font-size="9" fill="#5d6c61">tCO₂-e</text></svg>`;
 }
 function ring(net,gross){
   const pct=Math.min(1,net/gross),R=58,C=2*Math.PI*R,l=C*pct;
-  return `<svg viewBox="0 0 150 150" width="150" height="150"><circle cx="75" cy="75" r="${R}" fill="none" stroke="#eef3ea" stroke-width="14"/>
-   <circle cx="75" cy="75" r="${R}" fill="none" stroke="#2c5f2d" stroke-width="14" stroke-linecap="round" stroke-dasharray="${l} ${C-l}" transform="rotate(-90 75 75)"/>
-   <text x="75" y="70" text-anchor="middle" font-family="var(--serif)" font-size="29" fill="#16201a">${net.toLocaleString()}</text>
+  return `<svg viewBox="0 0 150 150" width="150" height="150"><circle cx="75" cy="75" r="${R}" fill="none" stroke="#EEF0E4" stroke-width="14"/>
+   <circle cx="75" cy="75" r="${R}" fill="none" stroke="#123A26" stroke-width="14" stroke-linecap="round" stroke-dasharray="${l} ${C-l}" transform="rotate(-90 75 75)"/>
+   <text x="75" y="70" text-anchor="middle" font-family="var(--serif)" font-size="29" fill="#1B211C">${net.toLocaleString()}</text>
    <text x="75" y="90" text-anchor="middle" font-size="10" fill="#5d6c61">t CO₂-e net/yr</text></svg>`;
 }
 function gauge(pct){
   const R=46,C=Math.PI*R,l=C*pct/100;
-  return `<svg viewBox="0 0 120 74" width="150"><path d="M14 64 A46 46 0 0 1 106 64" fill="none" stroke="#eef3ea" stroke-width="13" stroke-linecap="round"/>
-   <path d="M14 64 A46 46 0 0 1 106 64" fill="none" stroke="#4e9d52" stroke-width="13" stroke-linecap="round" stroke-dasharray="${l} ${C-l}"/>
-   <text x="60" y="58" text-anchor="middle" font-family="var(--serif)" font-size="24" fill="#16201a">${pct}%</text></svg>`;
+  return `<svg viewBox="0 0 120 74" width="150"><path d="M14 64 A46 46 0 0 1 106 64" fill="none" stroke="#EEF0E4" stroke-width="13" stroke-linecap="round"/>
+   <path d="M14 64 A46 46 0 0 1 106 64" fill="none" stroke="#5C8A4A" stroke-width="13" stroke-linecap="round" stroke-dasharray="${l} ${C-l}"/>
+   <text x="60" y="58" text-anchor="middle" font-family="var(--serif)" font-size="24" fill="#1B211C">${pct}%</text></svg>`;
 }
 /* Australia network map (stylised silhouette + farm dots) */
 function ausMap(){
   const path="M104 196 L120 168 L150 150 L168 120 L182 96 L196 120 L214 110 L226 86 L240 70 L252 96 L268 88 L286 110 L330 104 L386 104 L430 116 L470 104 L496 120 L520 150 L540 150 L560 178 L572 214 L560 250 L526 268 L500 262 L484 286 L470 300 L452 322 L430 352 L398 372 L356 380 L312 376 L280 360 L250 346 L220 354 L190 344 L162 312 L138 270 L118 232 Z";
   const proj=([lat,lon])=>{const x=(lon-113)/(154-113)*(560-110)+110, y=(lat+10)/(-44+10)*(380-70)+70;return [x,y];};
   let dots="";
-  FARMS.forEach((f,i)=>{const[x,y]=proj(f.mx);const c=f.hot[0][1]>=30?"#d14a3f":(f.hot[0][1]>=20?"#df9b26":"#4e9d52");
+  FARMS.forEach((f,i)=>{const[x,y]=proj(f.mx);const c=f.hot[0][1]>=30?"#C23333":(f.hot[0][1]>=20?"#D89A2E":"#5C8A4A");
     dots+=`<g class="dotpulse" style="animation-delay:${i*0.25}s"><circle cx="${x}" cy="${y}" r="11" fill="${c}" opacity=".22"/><circle cx="${x}" cy="${y}" r="5.5" fill="${c}" stroke="#fff" stroke-width="1.5"/></g>`;});
   // Tasmania blob
   return `<svg viewBox="0 0 600 410" width="100%">
-    <path d="${path}" fill="#1f4a2c" stroke="#3a6e44" stroke-width="2"/>
-    <ellipse cx="430" cy="392" rx="18" ry="13" fill="#1f4a2c" stroke="#3a6e44" stroke-width="2"/>
+    <path d="${path}" fill="#123A26" stroke="#3E6B4A" stroke-width="2"/>
+    <ellipse cx="430" cy="392" rx="18" ry="13" fill="#123A26" stroke="#3E6B4A" stroke-width="2"/>
     ${dots}
   </svg>`;
 }
@@ -185,11 +185,4 @@ async function boot(){
   $('im-farms').textContent=FARMS.length; $('im-net').textContent=(net/1000).toFixed(1)+'k'; $('im-cut').textContent=(cut/1000).toFixed(1)+'k'; $('im-rev').textContent='$'+Math.round(accu*38/1000)+'k';
   refreshLocks();
 }
-function renderHow(){
-  document.getElementById('stepgrid').innerHTML=STEPS.map((s,i)=>`<div class="step"><div class="num">${i+1}</div><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join("");
-  document.getElementById('layers').innerHTML=LAYERS.map((l,i)=>`<div class="panel" style="display:flex;align-items:center;gap:16px;margin-bottom:8px;padding:13px 18px">
-    <div style="width:34px;height:34px;border-radius:50%;background:${i===6?'#b8881e':'#2c5f2d'};color:#fff;display:grid;place-items:center;font-family:var(--serif);font-weight:700">${i+1}</div>
-    <div style="font-family:var(--serif);font-weight:700;width:280px">${l[0]}</div><div style="color:var(--muted);font-size:12.5px">${l[1]}</div></div>`).join("");
-}
-
 /* =================== DASHBOARD =================== */

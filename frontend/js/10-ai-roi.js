@@ -2,7 +2,7 @@
 document.head.insertAdjacentHTML('beforeend',`<style>
 .rx-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
 .rx-out{background:var(--pasture);color:#fff;border-radius:16px;padding:20px 22px}
-.rx-out .big{font-family:var(--serif);font-size:40px;color:#e9c768;line-height:1}
+.rx-out .big{font-family:var(--serif);font-size:40px;color:#D9A857;line-height:1}
 .rx-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 18px}
 .rx-c{background:#fff;border:1px solid var(--hair);border-radius:12px;padding:14px;text-align:center;box-shadow:var(--shadow)}
 .rx-c .v{font-family:var(--serif);font-size:23px;color:var(--forest)}
@@ -10,7 +10,7 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 .rx-c.gold .v{color:var(--gold)}.rx-c.bad .v{color:var(--red)}
 .rx-t{width:100%;border-collapse:collapse;font-size:12.5px}
 .rx-t th{text-align:left;font-size:11px;color:var(--muted);font-weight:600;padding:8px;border-bottom:2px solid var(--hair)}
-.rx-t td{padding:8px;border-bottom:1px solid #eef3ea;vertical-align:top}
+.rx-t td{padding:8px;border-bottom:1px solid #EEF0E4;vertical-align:top}
 .rx-t td.n{text-align:right;font-variant-numeric:tabular-nums}
 .rx-t tr.pick td{background:#f2f8ef}
 .rx-pill{font-size:9.5px;font-weight:700;color:#fff;padding:2px 7px;border-radius:10px}
@@ -128,7 +128,7 @@ window.renderROI=function(){
     <td class="n" style="color:${i.opex<0?'var(--red)':'inherit'}">${i.opex<0?'−$'+fmt(-i.opex):'$'+fmt(i.opex)}</td>
     <td class="n"><b>$${fmt(i.benefit)}</b></td>
     <td class="n">${isFinite(i.pay)?i.pay.toFixed(1)+' yr':'—'}</td>
-    <td style="text-align:center"><span class="rx-pill" style="background:${i.pick?'#4e9d52':'#9aa89c'}">${i.pick?'FUNDED':'not funded'}</span></td></tr>`).join('');
+    <td style="text-align:center"><span class="rx-pill" style="background:${i.pick?'#5C8A4A':'#9aa89c'}">${i.pick?'FUNDED':'not funded'}</span></td></tr>`).join('');
   const V = INDUSTRY==='farm'
    ? [['Carbon intensity',f.ci,1.20,f.unit,'Emissions per unit of product sold.','Processors and banks ask for this, not your total — it compares a big farm and a small farm fairly.','Cut emissions or lift productivity; both push it down.']
      ,['Net emissions',f.net,2000,'t CO₂-e / yr','Gross emissions minus what your land absorbs.','This is what a net-zero target is measured against.','Reduce sources first, then increase sequestration.']
@@ -146,24 +146,24 @@ window.renderROI=function(){
       <td class="rx-w"><b style="color:var(--ink)">What to do:</b> ${v[6]}</td>
       <td class="n"><b>${val}</b><div class="rx-w">${v[3]}</div></td>
       <td class="n">${v[2]?(+v[2]).toFixed(2):'—'}<div class="rx-w">benchmark</div></td>
-      <td style="text-align:center"><span class="rx-pill" style="background:${good?'#4e9d52':'#d14a3f'}">${good?'GOOD':'ACT'}</span></td></tr>`;}).join('');
+      <td style="text-align:center"><span class="rx-pill" style="background:${good?'#5C8A4A':'#C23333'}">${good?'GOOD':'ACT'}</span></td></tr>`;}).join('');
   document.getElementById('rx-out').innerHTML=`
   <div class="rx-grid">
     <div class="rx-out">
-      <div style="font-size:11px;color:#bcd9ad;letter-spacing:.1em">RETURN ON $${fmt(spent)} INVESTED</div>
+      <div style="font-size:11px;color:#9FB08C;letter-spacing:.1em">RETURN ON $${fmt(spent)} INVESTED</div>
       <div class="big">${roi>0?'+':''}${Math.round(roi)}%</div>
-      <div style="font-size:12.5px;color:#cfe3c6">Total return over ${yrs} yrs · net gain $${fmt(gain)} · <b style="color:#fff">${Math.round(aroi)}%/yr</b></div>
+      <div style="font-size:12.5px;color:#D9E4CE">Total return over ${yrs} yrs · net gain $${fmt(gain)} · <b style="color:#fff">${Math.round(aroi)}%/yr</b></div>
       <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:12px">
-        <div style="background:rgba(255,255,255,.08);border-radius:9px;padding:7px 11px;font-size:12px;color:#dbe9d2">Payback <b style="color:#fff">${payback?payback.toFixed(1):'—'} yr</b></div>
-        <div style="background:rgba(255,255,255,.08);border-radius:9px;padding:7px 11px;font-size:12px;color:#dbe9d2">Annual benefit <b style="color:#e9c768">$${fmt(benefit)}</b></div>
-        <div style="background:rgba(255,255,255,.08);border-radius:9px;padding:7px 11px;font-size:12px;color:#dbe9d2">${P.length} actions funded</div>
+        <div style="background:rgba(255,255,255,.08);border-radius:9px;padding:7px 11px;font-size:12px;color:#D9E4CE">Payback <b style="color:#fff">${payback?payback.toFixed(1):'—'} yr</b></div>
+        <div style="background:rgba(255,255,255,.08);border-radius:9px;padding:7px 11px;font-size:12px;color:#D9E4CE">Annual benefit <b style="color:#D9A857">$${fmt(benefit)}</b></div>
+        <div style="background:rgba(255,255,255,.08);border-radius:9px;padding:7px 11px;font-size:12px;color:#D9E4CE">${P.length} actions funded</div>
       </div>
     </div>
     <div class="panel"><h3>Outcome of these recommendations</h3><div class="ph">${f.name} · what actually changes if you invest</div>
-      <div class="hot"><div class="hn">Net emissions</div><div class="bar"><i style="width:${Math.max(0,100-cutPct)}%;background:#2c5f2d"></i></div><div class="hv">${fmt(f.net)} → <b>${fmt(netAfter)}</b> t</div></div>
-      <div class="hot"><div class="hn">Carbon intensity</div><div class="bar"><i style="width:${f.ci?Math.min(100,ciAfter/f.ci*100):0}%;background:#6ba644"></i></div><div class="hv">${(+f.ci).toFixed(2)} → <b>${ciAfter.toFixed(2)}</b></div></div>
-      <div class="hot"><div class="hn">Carbon cut</div><div class="bar"><i style="width:${Math.min(100,cutPct)}%;background:#b8881e"></i></div><div class="hv"><b>${tCut.toFixed(0)} t</b> · ${cutPct.toFixed(0)}%</div></div>
-      ${f.tgt?`<div style="font-size:12.5px;margin-top:10px;color:${ciAfter<=f.tgt?'#4e9d52':'#d14a3f'}"><b>${ciAfter<=f.tgt?'✓ Clears':'✗ Still misses'}</b> the ${(+f.tgt).toFixed(2)} target after this investment.</div>`:''}
+      <div class="hot"><div class="hn">Net emissions</div><div class="bar"><i style="width:${Math.max(0,100-cutPct)}%;background:#123A26"></i></div><div class="hv">${fmt(f.net)} → <b>${fmt(netAfter)}</b> t</div></div>
+      <div class="hot"><div class="hn">Carbon intensity</div><div class="bar"><i style="width:${f.ci?Math.min(100,ciAfter/f.ci*100):0}%;background:#5C8A4A"></i></div><div class="hv">${(+f.ci).toFixed(2)} → <b>${ciAfter.toFixed(2)}</b></div></div>
+      <div class="hot"><div class="hn">Carbon cut</div><div class="bar"><i style="width:${Math.min(100,cutPct)}%;background:#A87A2A"></i></div><div class="hv"><b>${tCut.toFixed(0)} t</b> · ${cutPct.toFixed(0)}%</div></div>
+      ${f.tgt?`<div style="font-size:12.5px;margin-top:10px;color:${ciAfter<=f.tgt?'#5C8A4A':'#C23333'}"><b>${ciAfter<=f.tgt?'✓ Clears':'✗ Still misses'}</b> the ${(+f.tgt).toFixed(2)} target after this investment.</div>`:''}
     </div>
   </div>
   <div class="rx-cards">

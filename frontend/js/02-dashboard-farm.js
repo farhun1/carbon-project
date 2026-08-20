@@ -17,7 +17,7 @@ function initGisMap(){
   try{
     _gis=L.map(el,{scrollWheelZoom:false}).setView([-27.5,146],4);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:12}).addTo(_gis);
-    FARMS.forEach(f=>{const c=f.hot[0][1]>=30?'#d14a3f':(f.hot[0][1]>=20?'#df9b26':'#4e9d52');
+    FARMS.forEach(f=>{const c=f.hot[0][1]>=30?'#C23333':(f.hot[0][1]>=20?'#D89A2E':'#5C8A4A');
       L.circleMarker([f.mx[0],f.mx[1]],{radius:9,color:'#fff',weight:2,fillColor:c,fillOpacity:0.9}).addTo(_gis)
        .bindPopup('<b>'+f.name+'</b><br>'+f.region+' · '+f.type+'<br>Net '+(f.net/1000).toFixed(2)+'k tCO₂-e/yr · NDVI '+f.ndvi.toFixed(2)+'<br>'+f.paddocks+' paddocks · '+f.accu+' ACCUs/yr');});
     setTimeout(()=>_gis.invalidateSize(),300);
@@ -53,9 +53,9 @@ function renderDash(){
   const hot=f.hot.map(h=>`<div class="hot"><div class="hn">${h[0]}</div><div class="bar"><i style="width:${h[1]*2.2}%;background:${COL[h[2]]}"></i></div><div class="hv">${h[1]}%</div></div>`).join("");
   document.getElementById('dash-content').innerHTML=`
    <div class="note-banner"><b>${f.pilot?'Pilot dataset.':'Illustrative farm.'}</b> ${f.pilot?'Riverdale uses your supplied dataset (synthetic placeholders).':'Demo figures for network preview.'} · <span class="mono">${f.id}</span> · ${f.type} · ${f.head} head · ${f.area.toLocaleString()} ha</div>
-   <div class="kpibar">${kpi.map((k,i)=>`<div class="kpi"><div class="kl">${k[0]}</div><div class="kv" style="color:${i>=4?'#b8881e':'#16201a'}">${k[1]}</div><div class="ks">${k[2]}</div></div>`).join("")}</div>
+   <div class="kpibar">${kpi.map((k,i)=>`<div class="kpi"><div class="kl">${k[0]}</div><div class="kv" style="color:${i>=4?'#A87A2A':'#1B211C'}">${k[1]}</div><div class="ks">${k[2]}</div></div>`).join("")}</div>
    <div class="grid-d">
-     <div class="panel"><h3>Monthly emissions</h3><div class="ph">Actual vs target · tCO₂-e</div>${lineChart([{v:act,c:'#2c5f2d',w:3},{v:tgt,c:'#6ba644',dash:1}])}<div class="legend"><span><i style="background:#2c5f2d"></i>Actual</span><span><i style="background:#6ba644"></i>Target</span></div></div>
+     <div class="panel"><h3>Monthly emissions</h3><div class="ph">Actual vs target · tCO₂-e</div>${lineChart([{v:act,c:'#123A26',w:3},{v:tgt,c:'#5C8A4A',dash:1}])}<div class="legend"><span><i style="background:#123A26"></i>Actual</span><span><i style="background:#5C8A4A"></i>Target</span></div></div>
      <div class="panel"><h3>Emissions by scope</h3><div class="ph">Gross CO₂-e split</div><div style="display:flex;gap:14px;align-items:center"><div>${donut(sc)}</div><div style="flex:1">${scopeRows}</div></div></div>
    </div>
    <div class="grid-d" style="grid-template-columns:1fr 1fr">
@@ -85,17 +85,17 @@ function renderAI(){
   document.getElementById('ai-content').innerHTML=`
    <div class="kpibar" style="grid-template-columns:repeat(4,1fr)">
      <div class="kpi"><div class="kl">Forecast confidence</div><div class="kv">${f.conf}%</div><div class="ks">avg model confidence</div></div>
-     <div class="kpi"><div class="kl">Anomaly days</div><div class="kv" style="color:#4e9d52">0</div><div class="ks">all readings normal range</div></div>
+     <div class="kpi"><div class="kl">Anomaly days</div><div class="kv" style="color:#5C8A4A">0</div><div class="ks">all readings normal range</div></div>
      <div class="kpi"><div class="kl">Forecast horizon</div><div class="kv">30–60</div><div class="ks">days ahead</div></div>
-     <div class="kpi"><div class="kl">Reduction potential</div><div class="kv" style="color:#b8881e">${totalCut} t</div><div class="ks">across recommended actions</div></div>
+     <div class="kpi"><div class="kl">Reduction potential</div><div class="kv" style="color:#A87A2A">${totalCut} t</div><div class="ks">across recommended actions</div></div>
    </div>
    <div class="grid-d">
-     <div class="panel"><h3>Emission forecast</h3><div class="ph">Actual vs AI-predicted net · tCO₂-e · Prophet/LSTM</div>${lineChart([{v:act,c:'#2c5f2d',w:3},{v:pred,c:'#b8881e',dash:1}])}<div class="legend"><span><i style="background:#2c5f2d"></i>Actual</span><span><i style="background:#b8881e"></i>AI predicted</span></div></div>
+     <div class="panel"><h3>Emission forecast</h3><div class="ph">Actual vs AI-predicted net · tCO₂-e · Prophet/LSTM</div>${lineChart([{v:act,c:'#123A26',w:3},{v:pred,c:'#A87A2A',dash:1}])}<div class="legend"><span><i style="background:#123A26"></i>Actual</span><span><i style="background:#A87A2A"></i>AI predicted</span></div></div>
      <div class="panel"><h3>Detection & root cause</h3><div class="ph">Isolation Forest · LSTM · SHAP</div>
        <div style="display:flex;gap:14px;align-items:center;margin-bottom:6px">${gauge(f.conf)}<div style="font-size:13px;color:var(--muted)">Model confidence on this farm's forecast</div></div>
-       <div class="srow"><span class="sc" style="background:#4e9d52"></span><span class="sn">Anomaly status</span><span class="sv" style="color:#4e9d52;font-size:13px">Normal range</span></div>
-       <div class="srow"><span class="sc" style="background:#df9b26"></span><span class="sn">Top emission driver</span><span class="sv" style="font-size:13px">${f.hot[0][0]}</span></div>
-       <div class="srow"><span class="sc" style="background:#6ba644"></span><span class="sn">NDVI / weather risk</span><span class="sv" style="font-size:13px">${f.ndvi<0.45?'Elevated':'Low'}</span></div>
+       <div class="srow"><span class="sc" style="background:#5C8A4A"></span><span class="sn">Anomaly status</span><span class="sv" style="color:#5C8A4A;font-size:13px">Normal range</span></div>
+       <div class="srow"><span class="sc" style="background:#D89A2E"></span><span class="sn">Top emission driver</span><span class="sv" style="font-size:13px">${f.hot[0][0]}</span></div>
+       <div class="srow"><span class="sc" style="background:#5C8A4A"></span><span class="sn">NDVI / weather risk</span><span class="sv" style="font-size:13px">${f.ndvi<0.45?'Elevated':'Low'}</span></div>
      </div>
    </div>
    <div class="panel"><h3>AI-recommended interventions</h3><div class="ph">Ranked by impact · estimated cut & payback · ${f.name}</div>
@@ -125,7 +125,7 @@ function renderCredit(){
        </div>
      </div>
      <div class="creditbox">
-       <div style="font-size:12px;color:#bcd9ad;letter-spacing:.1em">EST. ACCUs / YEAR</div>
+       <div style="font-size:12px;color:#9FB08C;letter-spacing:.1em">EST. ACCUs / YEAR</div>
        <div class="accu" id="cr-accu">217</div>
        <div class="rev" id="cr-rev">≈ $8,246 carbon revenue / year</div>
        <div class="meta" id="cr-meta">+ operational savings on fuel, feed & energy</div>
@@ -133,7 +133,7 @@ function renderCredit(){
    </div>
    <div class="sec-head" style="margin-top:30px"><span class="kicker">The economic loop</span><h3 class="h-lead" style="font-size:22px">Reductions → verified ACCUs → revenue</h3></div>
    <div class="steps" style="grid-template-columns:repeat(5,1fr)">
-     ${[["Baseline","3-yr NGER baseline per head"],["Intervene","Apply AI-recommended action"],["Verify","Platform quantifies the reduction"],["Register","Submit project to the CER"],["Earn","ACCUs sold · paid to the farm"]].map((s,i)=>`<div class="step"><div class="num" style="background:${i===4?'#b8881e':'#2c5f2d'}">${i+1}</div><h3 style="font-size:13.5px">${s[0]}</h3><p style="font-size:11.5px">${s[1]}</p></div>`).join("")}
+     ${[["Baseline","3-yr NGER baseline per head"],["Intervene","Apply AI-recommended action"],["Verify","Platform quantifies the reduction"],["Register","Submit project to the CER"],["Earn","ACCUs sold · paid to the farm"]].map((s,i)=>`<div class="step"><div class="num" style="background:${i===4?'#A87A2A':'#123A26'}">${i+1}</div><h3 style="font-size:13.5px">${s[0]}</h3><p style="font-size:11.5px">${s[1]}</p></div>`).join("")}
    </div>`;
   updCredit();
 }
@@ -186,7 +186,7 @@ async function calcInput(){
      <div><div class="big">${fmt(net)}</div><div class="rl">t CO₂-e / year (net)</div></div>
      <div>
        <div class="rl"><b style="color:#fff">${$('i-name').value}</b> · ${$('i-state').value} · ${type} · ${head} head</div>
-       <div class="rl" style="margin-top:6px">Gross <b style="color:#fff">${fmt(gross)} t</b> · Sequestered <b style="color:#e9c768">−${fmt(seq)} t</b> · Intensity <b style="color:#e9c768">${intensity.toFixed(2)}</b> kg CO₂-e / L</div>
+       <div class="rl" style="margin-top:6px">Gross <b style="color:#fff">${fmt(gross)} t</b> · Sequestered <b style="color:#D9A857">−${fmt(seq)} t</b> · Intensity <b style="color:#D9A857">${intensity.toFixed(2)}</b> kg CO₂-e / L</div>
        <div class="split">
          <div class="s">Scope 1 <b>${fmt(s1)} t</b></div>
          <div class="s">Scope 2 <b>${fmt(s2)} t</b></div>
@@ -216,8 +216,8 @@ async function calcInput(){
    <div class="panel" style="margin-top:16px">
      <h3>Transparent data &amp; factors</h3><div class="ph">Every source is traceable to an activity and an NGER/IPCC-aligned factor · indicative</div>
      <table class="factbl"><tr><th>Source</th><th>Activity</th><th>Factor · basis</th><th class="n">t CO₂-e</th></tr>
-       ${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="n" style="color:${r[3]<0?'#4e9d52':'#16201a'}">${r[3]<0?'−':''}${fmt(Math.abs(r[3]))}</td></tr>`).join('')}
-       <tr style="background:#faf9f8"><td><b>Net</b></td><td></td><td></td><td class="n"><b>${fmt(net)}</b></td></tr>
+       ${rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="n" style="color:${r[3]<0?'#5C8A4A':'#1B211C'}">${r[3]<0?'−':''}${fmt(Math.abs(r[3]))}</td></tr>`).join('')}
+       <tr style="background:#FAF8F2"><td><b>Net</b></td><td></td><td></td><td class="n"><b>${fmt(net)}</b></td></tr>
      </table>
    </div>
 

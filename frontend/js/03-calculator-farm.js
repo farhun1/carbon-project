@@ -96,7 +96,7 @@ async function runAdvanced(){
      <div><div class="rv">${fmt(r.net)}</div><div class="rl">t CO₂-e / year (net)</div></div>
      <div>
        <div class="rl"><b style="color:#fff">${$('a-name').value}</b> · ${$('a-state').value} · ${$('a-year').value} · ${fmt(r.headTot)} head · ${fmt(n('a-area'))} ha</div>
-       <div class="rl" style="margin-top:6px">Gross <b style="color:#fff">${fmt(r.gross)} t</b> · Sequestered <b style="color:#e9c768">−${fmt(r.seq)} t</b> · Intensity <b style="color:#e9c768">${intensity.toFixed(2)}</b> ${iUnit}</div>
+       <div class="rl" style="margin-top:6px">Gross <b style="color:#fff">${fmt(r.gross)} t</b> · Sequestered <b style="color:#D9A857">−${fmt(r.seq)} t</b> · Intensity <b style="color:#D9A857">${intensity.toFixed(2)}</b> ${iUnit}</div>
        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
          <span class="chip" style="background:rgba(255,255,255,.1);color:#fff;border-color:transparent">Scope 1 <b>${fmt(r.s1)} t</b></span>
          <span class="chip" style="background:rgba(255,255,255,.1);color:#fff;border-color:transparent">Scope 2 <b>${fmt(r.s2)} t</b></span>
@@ -128,10 +128,10 @@ async function runAdvanced(){
      <h3>Full emissions inventory</h3><div class="ph">Every source, by scope · engine: ${r.engine}</div>
      <table class="factbl"><tr><th>Source</th><th>Scope</th><th class="n">t CO₂-e</th><th class="n">Share</th></tr>
      ${rows.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td>
-       <td class="n" style="color:${x[2]<0?'#4e9d52':'#16201a'}">${x[2]<0?'−':''}${fmt(Math.abs(x[2]))}</td>
+       <td class="n" style="color:${x[2]<0?'#5C8A4A':'#1B211C'}">${x[2]<0?'−':''}${fmt(Math.abs(x[2]))}</td>
        <td class="n">${r.gross>0?((Math.abs(x[2])/r.gross)*100).toFixed(1):0}%</td></tr>`).join('')}
-     <tr style="background:#faf9f8"><td><b>Gross</b></td><td></td><td class="n"><b>${fmt(r.gross)}</b></td><td class="n">100%</td></tr>
-     <tr style="background:#faf9f8"><td><b>Net (after removals)</b></td><td></td><td class="n"><b>${fmt(r.net)}</b></td><td class="n"></td></tr>
+     <tr style="background:#FAF8F2"><td><b>Gross</b></td><td></td><td class="n"><b>${fmt(r.gross)}</b></td><td class="n">100%</td></tr>
+     <tr style="background:#FAF8F2"><td><b>Net (after removals)</b></td><td></td><td class="n"><b>${fmt(r.net)}</b></td><td class="n"></td></tr>
      </table>
      <p style="font-size:11.5px;color:var(--muted);margin-top:10px"><b>Indicative.</b> Calculated by the LCCIP engine with NGER/IPCC-aligned factors. Designed to run on the <b>AIA Environmental Accounting Platform</b> (the industry-owned national engine) once API access is connected — the results panel will then show <b>Engine: AIA EAP</b>. Real ACCUs require an approved CER method, baseline and independent verification.</p>
    </div>`;

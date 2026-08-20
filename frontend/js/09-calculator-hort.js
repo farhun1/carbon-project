@@ -70,7 +70,7 @@ async function hRunAdvanced(){
      <div><div class="rv">${fmt(r.net)}</div><div class="rl">t CO₂-e / year (net)</div></div>
      <div>
        <div class="rl"><b style="color:#fff">${$('ha-name').value}</b> · ${$('ha-state').value} · ${$('ha-year').value} · ${hents.length} block(s) · ${fmt(area)} ha</div>
-       <div class="rl" style="margin-top:6px">Gross <b style="color:#fff">${fmt(r.gross)} t</b> · Removals <b style="color:#e9c768">−${fmt(r.seq)} t</b> · Intensity <b style="color:#e9c768">${ci.toFixed(3)}</b> kg CO₂-e / kg</div>
+       <div class="rl" style="margin-top:6px">Gross <b style="color:#fff">${fmt(r.gross)} t</b> · Removals <b style="color:#D9A857">−${fmt(r.seq)} t</b> · Intensity <b style="color:#D9A857">${ci.toFixed(3)}</b> kg CO₂-e / kg</div>
        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
          <span class="chip" style="background:rgba(255,255,255,.1);color:#fff;border-color:transparent">Scope 1 <b>${fmt(r.s1)} t</b></span>
          <span class="chip" style="background:rgba(255,255,255,.1);color:#fff;border-color:transparent">Scope 2 <b>${fmt(r.s2)} t</b></span>
@@ -91,8 +91,8 @@ async function hRunAdvanced(){
    <div class="panel" style="margin-top:16px;box-shadow:none;border:1px solid var(--hair)">
      <h3>Full emissions inventory</h3><div class="ph">Every source, by scope · engine: ${r.engine}</div>
      <table class="factbl"><tr><th>Source</th><th>Scope</th><th class="n">t CO₂-e</th><th class="n">Share</th></tr>
-     ${r.rows.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td class="n" style="color:${x[2]<0?'#4e9d52':'#16201a'}">${x[2]<0?'−':''}${fmt(Math.abs(x[2]))}</td><td class="n">${r.gross>0?(Math.abs(x[2])/r.gross*100).toFixed(1):0}%</td></tr>`).join('')}
-     <tr style="background:#faf9f8"><td><b>Net</b></td><td></td><td class="n"><b>${fmt(r.net)}</b></td><td class="n"></td></tr></table>
+     ${r.rows.map(x=>`<tr><td>${x[0]}</td><td>${x[1]}</td><td class="n" style="color:${x[2]<0?'#5C8A4A':'#1B211C'}">${x[2]<0?'−':''}${fmt(Math.abs(x[2]))}</td><td class="n">${r.gross>0?(Math.abs(x[2])/r.gross*100).toFixed(1):0}%</td></tr>`).join('')}
+     <tr style="background:#FAF8F2"><td><b>Net</b></td><td></td><td class="n"><b>${fmt(r.net)}</b></td><td class="n"></td></tr></table>
      <p style="font-size:11.5px;color:var(--muted);margin-top:10px"><b>Indicative.</b> Calculated by the LCCIP engine with NGER/IPCC-aligned factors, structured to run on the <b>AIA EAP</b> national engine once connected. Real ACCUs require an approved CER method, baseline and independent verification.</p>
    </div>`;
 }

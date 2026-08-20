@@ -33,13 +33,9 @@ function hAusMap(){
     const over=f.ci>f.tgt, c=over?'#A8352B':'#4C7A4A';
     dots+=`<g class="dotpulse" style="animation-delay:${i*0.15}s"><circle cx="${x}" cy="${y}" r="9" fill="${c}" opacity=".22"/><circle cx="${x}" cy="${y}" r="4.5" fill="${c}" stroke="#fff" stroke-width="1.4"/></g>`;
   });
-  return `<svg viewBox="0 0 600 410" width="100%"><path d="${path}" fill="#1f4a2c" stroke="#3a6e44" stroke-width="2"/>
-   <ellipse cx="430" cy="392" rx="18" ry="13" fill="#1f4a2c" stroke="#3a6e44" stroke-width="2"/>${dots}</svg>`;
+  return `<svg viewBox="0 0 600 410" width="100%"><path d="${path}" fill="#123A26" stroke="#3E6B4A" stroke-width="2"/>
+   <ellipse cx="430" cy="392" rx="18" ry="13" fill="#123A26" stroke="#3E6B4A" stroke-width="2"/>${dots}</svg>`;
 }
-function renderHHow(){
-  document.getElementById('h-stepgrid').innerHTML=HSTEPS.map((s,i)=>`<div class="step"><div class="num">${i+1}</div><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join('');
-}
-
 let HDATA = { srcNames: [], rows: [] };
 
 /* ================= HORTICULTURE DASHBOARD — full 7-page replica ================= */
