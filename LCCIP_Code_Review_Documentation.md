@@ -1,5 +1,5 @@
 # Code Review Documentation
-## LCCIP · Sustain Pro — Carbon Intelligence Platform (Cattle & Horticulture)
+## LCCIP · Sustenora — Carbon Intelligence Platform (Cattle & Horticulture)
 
 
 
@@ -7,7 +7,7 @@
 
 ## 1. Purpose and Scope
 
-This document reviews the `index.html` file of the LCCIP ("Sustain Pro") prototype — a single-page application that models life-cycle carbon accounting, AI-driven emission forecasting, and Australian Carbon Credit Unit (ACCU) monetisation for Australian cattle farms and horticulture operations.
+This document reviews the `index.html` file of the LCCIP ("Sustenora") prototype — a single-page application that models life-cycle carbon accounting, AI-driven emission forecasting, and Australian Carbon Credit Unit (ACCU) monetisation for Australian cattle farms and horticulture operations.
 
 The review covers:
 - Overall architecture and technology choices

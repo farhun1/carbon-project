@@ -14,7 +14,7 @@ const STEPS=[["Farm data capture","Herd, feed, manure, fuel, energy, fertiliser,
 ["LCA modelling engine","Cradle-to-farm-gate · IPCC/NGER factors · CH₄, N₂O, CO₂ → CO₂-eq."],
 ["Emissions reporting","Scope 1/2/3, total emissions, product carbon intensity, source breakdown."],
 ["AI analytics engine","Detects anomalies, forecasts spikes, finds hotspots, explains root causes."],
-["Sustain Pro dashboard","KPI cards, trends, hotspot maps, scope panels, alerts & scenarios."],
+["Sustenora dashboard","KPI cards, trends, hotspot maps, scope panels, alerts & scenarios."],
 ["Intervention engine","Threshold breached → targeted, farm-specific action recommended."],
 ["ACCU monetisation","Verified reductions → potential ACCUs, revenue and financial impact."],
 ["Continuous improvement","Results feed the next cycle — ongoing monitoring and net-zero tracking."]];
@@ -23,7 +23,7 @@ const LAYERS=[["Farm operational data","Animal count · diesel · water · energ
 ["LCA modelling engine","OpenLCA / Brightway2 · IPCC Tier 2 · NGER factors → CO₂-eq"],
 ["Emissions reporting & validation","Scope 1/2/3 · scenario modelling · supply-chain sharing"],
 ["AI analytics & data warehouse","Anomaly detection · hotspot ID · root-cause · 3-month forecast"],
-["Sustain Pro dashboard","Real-time KPIs · trends · hotspot heatmaps · alerts"],
+["Sustenora dashboard","Real-time KPIs · trends · hotspot heatmaps · alerts"],
 ["Intervention & ACCU monetisation","Action plans · ACCU registration & revenue · net-zero tracker"]];
 
 let subscribed=false;
