@@ -18,7 +18,7 @@
 .ch-card p{color:#bfd9b1;font-size:13px;margin:0 0 14px;line-height:1.5}
 .ch-card .st{display:flex;gap:16px;border-top:1px solid rgba(255,255,255,.12);padding-top:12px}
 .ch-card .st div b{font-family:var(--serif);font-size:17px;color:#fff;display:block}
-.ch-card .st div span{font-size:10.5px;color:#9cc18c}
+.ch-card .st div span{font-size:10.5px;color:var(--on-dark-2)}
 .ind-switch{display:inline-flex;align-items:center;gap:6px;background:var(--mint);border:1px solid var(--hair);border-radius:20px;padding:4px;margin-right:8px}
 .ind-switch button{border:none;background:none;padding:5px 12px;border-radius:16px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit}
 .ind-switch button.on{background:var(--forest);color:#fff}

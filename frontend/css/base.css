@@ -97,7 +97,7 @@ section.view.show{display:block}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .dotpulse{animation:pulse 2.4s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
-.mapcard .cap{color:#bcd9ad;font-size:11px;margin-top:6px;text-align:center}
+.mapcard .cap{color:var(--on-dark-2);font-size:11px;margin-top:6px;text-align:center}
 
 /* generic cards / grids */
 .cards{display:grid;gap:16px}
@@ -156,13 +156,13 @@ table.tbl tr:last-child td{border-bottom:none}
 .form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .fld{display:flex;flex-direction:column;gap:5px}
 .fld label{font-size:12px;font-weight:600;color:var(--muted)}
-.fld input,.fld select{padding:10px 11px;border:1px solid var(--hair);border-radius:9px;font-size:14px;font-family:inherit;background:#fafcf8;transition:outline-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out)}
+.fld input,.fld select{padding:10px 11px;border:1px solid var(--hair);border-radius:9px;font-size:14px;font-family:inherit;background:var(--surface-soft);transition:outline-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out)}
 .fld input:focus,.fld select:focus{outline:2px solid var(--moss);border-color:transparent}
 .result{background:var(--pasture);color:#fff;border-radius:16px;padding:20px 22px;display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center}
-.result .big{font-family:var(--serif);font-size:42px;color:#e9c768;line-height:1;letter-spacing:-.02em}
-.result .rl{font-size:13px;color:#cfe3c6;line-height:1.5}
+.result .big{font-family:var(--serif);font-size:42px;color:var(--gold-bright);line-height:1;letter-spacing:-.02em}
+.result .rl{font-size:13px;color:var(--on-dark);line-height:1.5}
 .split{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.split .s{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:7px 11px;font-size:12px;color:#dbe9d2}
+.split .s{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:7px 11px;font-size:12px;color:var(--on-dark)}
 .split .s b{color:#fff;font-family:var(--serif)}
 
 /* carbon credit calc */
@@ -170,9 +170,9 @@ table.tbl tr:last-child td{border-bottom:none}
 .slider{width:100%}
 input[type=range]{width:100%;accent-color:var(--forest)}
 .creditbox{background:var(--pasture);color:#fff;border-radius:18px;padding:26px;text-align:center}
-.creditbox .accu{font-family:var(--serif);font-size:54px;color:#e9c768;line-height:1;letter-spacing:-.03em}
+.creditbox .accu{font-family:var(--serif);font-size:54px;color:var(--gold-bright);line-height:1;letter-spacing:-.03em}
 .creditbox .rev{font-size:18px;margin-top:8px}
-.creditbox .meta{font-size:12px;color:#bcd9ad;margin-top:8px}
+.creditbox .meta{font-size:12px;color:var(--on-dark-2);margin-top:8px}
 
 /* pricing */
 .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
@@ -210,11 +210,11 @@ input[type=range]{width:100%;accent-color:var(--forest)}
 .note-banner{display:flex;gap:10px;align-items:center;background:#fcf4e4;border:1px solid #ecd9ad;color:#7a5a12;border-radius:11px;padding:10px 14px;font-size:12.5px;margin-bottom:20px}
 .gate{background:var(--card);border:1px dashed var(--moss);border-radius:18px;padding:46px;text-align:center;box-shadow:var(--shadow)}
 .gate h3{font-size:22px;margin-bottom:8px}.gate p{color:var(--muted);max-width:460px;margin:0 auto 18px}
-footer{background:var(--pasture);color:#cfe3c6;padding:34px 0 26px;margin-top:30px}
+footer{background:var(--pasture);color:var(--on-dark);padding:34px 0 26px;margin-top:30px}
 footer .fcols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:24px}
-footer b{color:#fff}footer a{display:block;color:#bcd9ad;font-size:13px;padding:4px 0}footer a:hover{color:#fff}
+footer b{color:#fff}footer a{display:block;color:var(--on-dark-2);font-size:13px;padding:4px 0}footer a:hover{color:#fff}
 footer .fbrand{font-family:var(--serif);font-size:20px;color:#fff}
-footer .legal{border-top:1px solid rgba(255,255,255,.12);margin-top:24px;padding-top:16px;font-size:11.5px;color:#8fae84}
+footer .legal{border-top:1px solid rgba(255,255,255,.12);margin-top:24px;padding-top:16px;font-size:11.5px;color:var(--on-dark-2)}
 
 @media(max-width:960px){
   .hero{grid-template-columns:1fr}.kpibar{grid-template-columns:repeat(3,1fr)}.grid-d{grid-template-columns:1fr}

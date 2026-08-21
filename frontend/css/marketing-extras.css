@@ -20,8 +20,8 @@
 .factbl td{padding:6px 8px;border-bottom:1px solid #eef3ea}
 .factbl td.n{text-align:right;font-variant-numeric:tabular-nums}
 .accueq{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--pasture);color:#fff;border-radius:12px;padding:16px 18px;margin-top:6px}
-.accueq .b{font-family:var(--serif);font-size:18px}.accueq .g{color:#e9c768;font-family:var(--serif);font-size:22px;letter-spacing:-.015em}
-.accueq .op{color:#9cc18c}
+.accueq .b{font-family:var(--serif);font-size:18px}.accueq .g{color:var(--gold-bright);font-family:var(--serif);font-size:22px;letter-spacing:-.015em}
+.accueq .op{color:var(--on-dark-2)}
 .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .compare .col{border-radius:12px;padding:16px;border:1px solid var(--hair)}
 .compare .col.bad{background:#FBEFEF;border-color:rgba(194,51,51,.22)}
