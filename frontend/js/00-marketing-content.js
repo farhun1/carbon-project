@@ -92,6 +92,46 @@ const INDUSTRY_CONTENT = {
       ],
       disclaimer: 'Demo prototype · contact details illustrative.',
     },
+    methods: {
+      kicker: 'Methods & standards',
+      h1: 'How our carbon is calculated — and how it becomes ACCUs',
+      sub: 'Transparent, NGER/IPCC-aligned, built to plug into the real Australian carbon-credit scheme.',
+      mechanismEq: 'Total emissions <span class="op">=</span> Σ (&nbsp;<b>activity</b> <span class="op">×</span> <b>emission factor</b>&nbsp;)',
+      gases: [
+        {sym:'CO₂', mult:'×1', src:'diesel, electricity', color:'var(--muted)'},
+        {sym:'CH₄', mult:'×28', src:'cattle &amp; manure', color:'var(--red)'},
+        {sym:'N₂O', mult:'×265', src:'fertiliser &amp; manure', color:'var(--amber)'},
+      ],
+      gasNote: 'Methane dominates cattle carbon — a little counts as a lot of CO₂-e.',
+      boundaryTitle: 'Cradle-to-farm-gate LCA · Scopes 1·2·3',
+      boundaryNote: 'We count on-farm and <b>embedded</b> supply-chain emissions, then express them per unit of product (kg CO₂-e / L milk or / kg beef). Sorted into <b>Scope 1</b> (direct), <b>Scope 2</b> (energy) and <b>Scope 3</b> (feed &amp; transport).',
+      processTitle: 'From reduction to credit — the real process',
+      process: [
+        {title:'Approved method', body:'Register under a CER-approved method (e.g. beef herd, soil carbon).'},
+        {title:'Baseline', body:'Establish an approved baseline with NGER factors.'},
+        {title:'Reduce &amp; measure', body:'Apply interventions · measure project emissions.'},
+        {title:'Independent audit', body:'Third-party verification of the reduction.'},
+        {title:'CER issues ACCUs', gold:true, body:'1 ACCU per verified tonne · sell or inset.'},
+      ],
+      accuEquation: '<span class="b">ACCUs</span><span class="op">=</span><span class="b">( Baseline − Project )</span><span class="op">×</span><span class="b">(1 − risk buffer)</span><span class="op">·</span><span class="g">Revenue = ACCUs × ~$38</span>',
+      factorTableSummary: 'Emission factors we use',
+      factorTable: [
+        ['Enteric methane','2.0–3.1 t CO₂-e / head','IPCC Tier 2 (by system)'],
+        ['Manure','0.55 t CO₂-e / head','IPCC / NGER'],
+        ['Diesel','2.68 kg CO₂-e / L','NGER (National Greenhouse Accounts)'],
+        ['Electricity','0.66 kg CO₂-e / kWh','NGER grid factor'],
+        ['Feed (embedded)','0.6 t CO₂-e / t','Life-cycle inventory (indicative)'],
+        ['Fertiliser (N₂O)','5.5 kg CO₂-e / kg N','IPCC N₂O'],
+        ['Land — trees / shelterbelt','−6.0 t CO₂-e / ha / yr','Sequestration (indicative)'],
+        ['Land — pasture / soil','−0.5 t CO₂-e / ha / yr','Soil carbon (indicative)'],
+        ['Land-use change (clearing)','+120 t CO₂-e / ha','LULUCF (indicative)'],
+      ],
+      factorNote: '<b>Note:</b> factors shown are NGER/IPCC-aligned and indicative for demonstration. Production uses the current published NGER edition and method-specific equations, verified before any credit is issued.',
+      compareSummary: "Why it's more than a calculator",
+      compareBad: ['On-farm emissions only — stops at the fence','Ignores embedded feed &amp; fertiliser emissions','Gives one lump total','No land / vegetation carbon','No credit pathway'],
+      compareGood: ['Cradle-to-farm-gate boundary (stated)','Counts embedded Scope 3 (feed, transport)','Reports intensity per litre / per kg','Includes land sequestration &amp; land-use change','Shapes reductions into ACCUs (baseline − project)'],
+      honestBanner: '<b>Honest status.</b> LCCIP produces audit-ready, NGER/IPCC-aligned data to support carbon projects. It does not itself issue ACCUs — certification requires an approved CER method, baseline and independent verification.',
+    },
   },
   hort: {
     home: {
@@ -176,6 +216,36 @@ const INDUSTRY_CONTENT = {
       ],
       disclaimer: 'Demo prototype · contact details illustrative.',
     },
+    methods: {
+      kicker: 'Methods & standards',
+      h1: 'How horticulture carbon is calculated',
+      sub: 'Transparent, NGER/IPCC-aligned, cradle-to-farm-gate. This is the page we show to retailers, exporters and auditors.',
+      mechanismEq: 'Net emissions <span class="op">=</span> Σ (&nbsp;<b>activity</b> <span class="op">×</span> <b>emission factor</b>&nbsp;) <span class="op">−</span> <b>soil &amp; biomass removals</b>',
+      gases: [
+        {sym:'CO₂', mult:'×1', src:'diesel, electricity, lime &amp; urea', color:'var(--muted)'},
+        {sym:'CH₄', mult:'×28', src:'organic waste breakdown', color:'var(--red)'},
+        {sym:'N₂O', mult:'×265', src:'nitrogen fertiliser in soil', color:'var(--amber)'},
+      ],
+      gasNote: "Soil N₂O is horticulture's hidden giant — 17% of network emissions from a gas 265× stronger than CO₂.",
+      boundaryTitle: 'Boundary &amp; functional unit',
+      boundaryNote: '<b>Cradle-to-farm-gate.</b> 12 sources across Scope 1 (fuel, soil N₂O, refrigerant), Scope 2 (grid electricity) and Scope 3 (packaging, fertiliser upstream, freight, water, chemicals, planting materials, waste). Removals are reported <b>separately</b>, not netted into scopes. Output: <b>kg CO₂-e per kg marketable yield</b>.',
+      processTitle: 'What we align to',
+      process: [
+        {title:'NGA 2025', body:'Australian National Greenhouse Accounts factors.'},
+        {title:'IPCC 2019', body:'Refinement — soil N₂O, GWP values.'},
+        {title:'GHG Protocol', body:'Scope 1 · 2 · 3 boundary rules.'},
+        {title:'ISO 14067', body:'Product carbon footprint / LCA.'},
+        {title:'Retailer Scope 3', gold:true, body:'Disclosure-ready per kg sold.'},
+      ],
+      accuEquation: null,
+      factorTableSummary: 'Factor provenance — what you can defend',
+      factorTable: null,
+      factorNote: '<b>Honest status.</b> 111 factors: NGA 2025 and IPCC 2019 where available, proxies flagged. 67 are proxies requiring replacement before formal reporting. Removals require site-specific measurement (soil sampling or biomass modelling) to be creditable.',
+      compareSummary: "Why it's more than a calculator",
+      compareBad: ['On-farm emissions only — stops at the gate','Ignores embedded packaging, fertiliser &amp; freight','One lump total for the whole business','No removals, no yield context','No honesty about factor quality'],
+      compareGood: ['Stated boundary · 12 life-cycle sources','Scope 3 = 60% of the footprint, counted','<b>kg CO₂-e per kg sold</b> — the functional unit','Soil &amp; biomass removals reported separately','Every factor graded: official vs proxy'],
+      honestBanner: '<b>Indicative demonstration.</b> Figures use NGER/IPCC-aligned factors with proxies flagged. Production replaces proxy factors with published values and requires site-specific measurement for removals.',
+    },
   },
 };
 
@@ -255,4 +325,38 @@ function renderMarketingContact(industry){
       <p style="font-size:12px;margin-top:18px">${c.disclaimer}</p>
     </div>
   </div>`;
+}
+
+function renderMarketingMethods(industry){
+  const c = INDUSTRY_CONTENT[industry].methods;
+  const el = document.querySelector(`section.view[data-view="${industry==='farm'?'methods':'h-methods'}"]`);
+  if(!el) return;
+  const factorBlock = c.factorTable
+    ? `<table class="factbl"><tr><th>Source</th><th>Factor</th><th>Basis / standard</th></tr>
+       ${c.factorTable.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</table>`
+    : `<div id="h-meth-factors"></div>`;
+  el.innerHTML = `
+  <div class="sec-head"><span class="kicker">${c.kicker}</span><h2 class="h-lead">${c.h1}</h2><p class="sub">${c.sub}</p></div>
+  <div class="eqbox" style="margin-bottom:14px">${c.mechanismEq}</div>
+  <div class="cards c2" style="margin-bottom:8px">
+    <div class="tile"><h3>Three gases → one unit (CO₂-e)</h3>
+      <div style="margin-top:8px">${c.gases.map(g=>`<span class="gaschip"><i style="background:${g.color}">${g.sym}</i> ${g.mult} — ${g.src}</span><br>`).join('')}</div>
+      <p style="font-size:12px;color:var(--muted);margin-top:8px">${c.gasNote}</p></div>
+    <div class="tile"><h3>${c.boundaryTitle}</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin:6px 0 0">${c.boundaryNote}</p></div>
+  </div>
+  <div class="sec-head" style="margin-top:26px"><span class="kicker">${c.processTitle}</span></div>
+  <div class="factor-flow">${c.process.map((p,i)=>`<div class="fx${p.gold?' gold':''}"><div class="n">${i+1}</div><b>${p.title}</b><span>${p.body}</span></div>`).join('')}</div>
+  ${c.accuEquation ? `<div class="accueq" style="margin-top:14px">${c.accuEquation}</div>` : ''}
+  <details class="disclose" style="margin-top:26px"><summary>${c.factorTableSummary}</summary>
+    <div class="disclose-body">${factorBlock}
+      <p style="font-size:11.5px;color:var(--muted);margin-top:10px">${c.factorNote}</p></div>
+  </details>
+  <details class="disclose"><summary>${c.compareSummary}</summary>
+    <div class="disclose-body compare">
+      <div class="col bad"><h4>A normal footprint calculator</h4><ul>${c.compareBad.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      <div class="col good"><h4>LCCIP — life-cycle assessment</h4><ul>${c.compareGood.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    </div>
+  </details>
+  <div class="note-banner" style="margin-top:24px">${c.honestBanner}</div>`;
 }
