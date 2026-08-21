@@ -85,63 +85,10 @@
 <main class="wrap" id="main">
 
 <!-- ============ HOME ============ -->
-<section class="view show" data-view="home">
-  <div class="hero">
-    <div>
-      <span class="kicker">AI-enabled life-cycle carbon intelligence</span>
-      <h1>See the carbon position of <span class="accent">any Australian cattle farm</span> — live.</h1>
-      <p class="lead">LCCIP connects farm operational data, life-cycle assessment, AI forecasting and ACCU monetisation into one platform. Subscribe to monitor emissions, predict hotspots and turn reductions into carbon revenue across the national herd.</p>
-      <div class="hero-cta">
-        <button class="btn-lg btn-primary" onclick="openModal()">Subscribe to the network</button>
-        <button class="btn-lg btn-ghost" onclick="go('how')">See how it works</button>
-      </div>
-      <div class="hero-stats">
-        <div class="hs"><b id="hs-farms">7</b><span>farms connected</span></div>
-        <div class="hs"><b id="hs-net">27.0k</b><span>tCO₂-e/yr monitored</span></div>
-        <div class="hs"><b id="hs-accu">3,090</b><span>ACCU potential/yr</span></div>
-      </div>
-    </div>
-    <div class="mapcard">
-      <div class="ml"><b>Live farm network · Australia</b><span class="live"><i></i>LIVE</span></div>
-      <div id="ausmap"></div>
-      <div class="cap">Each dot is a connected farm streaming carbon data · select one in the dashboard</div>
-    </div>
-  </div>
-
-  <div class="trust-strip">
-    <span class="ts">Aligned to NGER</span><span class="ts">IPCC Tier 2 factors</span><span class="ts">Clean Energy Regulator · ACCU pathway</span><span class="ts">Audit-ready data</span><span class="ts">Cradle-to-farm-gate LCA</span>
-  </div>
-  <div class="sec-head" style="margin-top:24px"><span class="kicker">The workflow</span><h2 class="h-lead">Baseline → Reduce → Verify → Earn</h2></div>
-  <div class="flow4">
-    <div class="fs"><div class="n">1</div><h4>Baseline</h4><p>Establish emissions with NGER / IPCC factors, cradle-to-farm-gate.</p></div>
-    <div class="fs"><div class="n">2</div><h4>Reduce</h4><p>AI-ranked interventions cut emissions against the baseline.</p></div>
-    <div class="fs"><div class="n">3</div><h4>Verify</h4><p>Audit-ready data supports independent verification.</p></div>
-    <div class="fs"><div class="n">4</div><h4>Earn</h4><p>Verified reductions become ACCUs under an approved method.</p></div>
-  </div>
-
-  <div class="sec-head" style="margin-top:34px"><span class="kicker">Why LCCIP</span><h2 class="h-lead">From carbon reporting to carbon revenue</h2></div>
-  <div class="cards c4">
-    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div><h3>Monitor</h3><p>Real-time Scope 1·2·3 emissions and product carbon intensity for every farm.</p></div>
-    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Predict</h3><p>AI forecasts emission risk 30–60 days out and flags hotspots before they grow.</p></div>
-    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12c1 1 1 2 1 3h6c0-1 0-2 1-3a7 7 0 00-4-12z"/></svg></div><h3>Reduce</h3><p>Farm-specific intervention plans, ranked by impact, cost and payback.</p></div>
-    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 113 4M12 7v2m0 6v2"/></svg></div><h3>Monetise</h3><p>Verified reductions become ACCUs — carbon revenue paid back to the farm.</p></div>
-  </div>
-
-  <div class="sec-head" style="margin-top:40px"><span class="kicker">Plans</span><h2 class="h-lead">Subscribe to see any farm</h2><p class="sub">Network access lets banks, processors and advisors open any connected farm in Australia and view its full carbon profile.</p></div>
-  <div class="pricing">
-    <div class="plan"><h3>Producer</h3><div class="price">$0<span>/mo</span></div><ul><li>Your own farm dashboard</li><li>Data input & LCA</li><li>AI recommendations</li><li>ACCU eligibility</li></ul><button class="btn-lg btn-ghost" onclick="openModal()">Start free</button></div>
-    <div class="plan feat"><div class="tag">MOST POPULAR</div><h3>Network</h3><div class="price">$149<span>/mo</span></div><ul><li>View any farm in Australia</li><li>Portfolio & region rollups</li><li>Scope 3 supply-chain data</li><li>Forecasts & hotspot alerts</li></ul><button class="btn-lg btn-primary" onclick="openModal()">Subscribe</button></div>
-    <div class="plan"><h3>Enterprise</h3><div class="price">Custom</div><ul><li>API & data export</li><li>White-label dashboards</li><li>ACCU project management</li><li>Dedicated support</li></ul><button class="btn-lg btn-ghost" onclick="go('contact')">Contact sales</button></div>
-  </div>
-</section>
+<section class="view show" data-view="home"></section>
 
 <!-- ============ HOW IT WORKS ============ -->
-<section class="view" data-view="how">
-  <div class="sec-head"><span class="kicker">How it works</span><h2 class="h-lead">Nine steps — from farm data to carbon revenue and back</h2><p class="sub">The same pipeline runs behind every farm in the network, continuously.</p></div>
-  <div class="steps" id="stepgrid"></div>
-  <div class="sec-head" style="margin-top:40px"><span class="kicker">Under the hood</span><h2 class="h-lead">A 7-layer platform</h2></div>
-  <div id="layers"></div>
-</section>
+<section class="view" data-view="how"></section>
 
 <!-- ============ DASHBOARD ============ -->
 <section class="view" data-view="dashboard">
@@ -426,114 +373,13 @@
 </section>
 
 <!-- ============ ABOUT / IMPACT ============ -->
-<section class="view" data-view="about">
-  <div class="sec-head"><span class="kicker">About / impact</span><h2 class="h-lead">The missing intelligence layer for farm carbon</h2>
-    <p class="sub">Ruminati helps farms <i>report</i> emissions. Pairtree helps <i>integrate</i> farm data. LCCIP is the layer neither has fully built — turning that data into live intelligence, AI-driven action and carbon revenue across the national herd.</p></div>
-  <div class="impact">
-    <div class="im"><b id="im-farms">7</b><span>farms connected</span></div>
-    <div class="im"><b id="im-net">27.0k</b><span>tCO₂-e/yr monitored</span></div>
-    <div class="im"><b id="im-cut">2.4k</b><span>tCO₂-e/yr reduction potential</span></div>
-    <div class="im"><b id="im-rev">$117k</b><span>carbon revenue potential/yr</span></div>
-  </div>
-  <div class="cards c3">
-    <div class="tile"><h3>Our mission</h3><p>Make every Australian cattle farm carbon-intelligent and carbon-profitable — measuring to recognised standards, predicting hotspots, prescribing action, and converting reductions to ACCU value.</p></div>
-    <div class="tile"><h3>The gap we fill</h3><p>No single platform connected operational data, LCA modelling, AI forecasting and ACCU monetisation for cattle farms. LCCIP unifies the full decision cycle.</p></div>
-    <div class="tile"><h3>Why it matters</h3><p>Cattle farming is one of Australia's largest emission sources. Farm-level intelligence unlocks Scope 3 supply-chain trust, net-zero progress and new farm income.</p></div>
-  </div>
-</section>
+<section class="view" data-view="about"></section>
 
 <!-- ============ METHODS & STANDARDS ============ -->
-<section class="view" data-view="methods">
-  <div class="sec-head"><span class="kicker">Methods &amp; standards</span><h2 class="h-lead">How our carbon is calculated — and how it becomes ACCUs</h2>
-    <p class="sub">Transparent, NGER / IPCC-aligned, and built to plug into the real Australian carbon-credit scheme. This page is what we show to auditors, processors and the Clean Energy Regulator.</p></div>
-
-  <div class="sec-head" style="margin-top:8px"><span class="kicker">Mechanism</span><h2 class="h-lead" style="font-size:22px">The carbon emission mechanism</h2></div>
-  <div class="eqbox" style="margin-bottom:14px">Total emissions <span class="op">=</span> Σ (&nbsp;<b>activity</b> <span class="op">×</span> <b>emission factor</b>&nbsp;)</div>
-  <div class="cards c2" style="margin-bottom:8px">
-    <div class="tile"><h3>Three gases → one unit (CO₂-e)</h3>
-      <div style="margin-top:8px">
-        <span class="gaschip"><i style="background:#586b5e">CO₂</i> ×1 &nbsp;— diesel, electricity</span><br>
-        <span class="gaschip"><i style="background:#d14a3f">CH₄</i> ×28 — cattle &amp; manure</span><br>
-        <span class="gaschip"><i style="background:#df9b26">N₂O</i> ×265 — fertiliser &amp; manure</span>
-      </div>
-      <p style="font-size:12px;color:var(--muted);margin-top:8px">Methane dominates cattle carbon — a little counts as a lot of CO₂-e.</p></div>
-    <div class="tile"><h3>Cradle-to-farm-gate LCA · Scopes 1·2·3</h3>
-      <p style="font-size:12.5px;color:var(--muted);margin:6px 0 0">We count on-farm and <b>embedded</b> supply-chain emissions, then express them per unit of product (kg CO₂-e / L milk or / kg beef). Sorted into <b>Scope 1</b> (direct), <b>Scope 2</b> (energy) and <b>Scope 3</b> (feed &amp; transport) — the standard used by processors and lenders.</p></div>
-  </div>
-
-  <div class="sec-head" style="margin-top:26px"><span class="kicker">ACCU pathway</span><h2 class="h-lead" style="font-size:22px">From reduction to credit — the real process</h2></div>
-  <div class="factor-flow">
-    <div class="fx"><div class="n">1</div><b>Approved method</b><span>Register under a CER-approved method (e.g. beef herd, soil carbon)</span></div>
-    <div class="fx"><div class="n">2</div><b>Baseline</b><span>Establish an approved baseline with NGER factors</span></div>
-    <div class="fx"><div class="n">3</div><b>Reduce &amp; measure</b><span>Apply interventions · measure project emissions</span></div>
-    <div class="fx"><div class="n">4</div><b>Independent audit</b><span>Third-party verification of the reduction</span></div>
-    <div class="fx gold"><div class="n">5</div><b>CER issues ACCUs</b><span>1 ACCU per verified tonne · sell or inset</span></div>
-  </div>
-  <div class="accueq" style="margin-top:14px">
-    <span class="b">ACCUs</span><span class="op">=</span>
-    <span class="b">( Baseline − Project )</span><span class="op">×</span>
-    <span class="b">(1 − risk buffer)</span><span class="op">·</span>
-    <span class="g">Revenue = ACCUs × ~$38</span>
-  </div>
-
-  <div class="sec-head" style="margin-top:26px"><span class="kicker">Transparency</span><h2 class="h-lead" style="font-size:22px">Emission factors we use</h2></div>
-  <div class="panel">
-    <table class="factbl"><tr><th>Source</th><th>Factor</th><th>Basis / standard</th></tr>
-      <tr><td>Enteric methane</td><td>2.0–3.1 t CO₂-e / head</td><td>IPCC Tier 2 (by system)</td></tr>
-      <tr><td>Manure</td><td>0.55 t CO₂-e / head</td><td>IPCC / NGER</td></tr>
-      <tr><td>Diesel</td><td>2.68 kg CO₂-e / L</td><td>NGER (National Greenhouse Accounts)</td></tr>
-      <tr><td>Electricity</td><td>0.66 kg CO₂-e / kWh</td><td>NGER grid factor</td></tr>
-      <tr><td>Feed (embedded)</td><td>0.6 t CO₂-e / t</td><td>Life-cycle inventory (indicative)</td></tr>
-      <tr><td>Fertiliser (N₂O)</td><td>5.5 kg CO₂-e / kg N</td><td>IPCC N₂O</td></tr>
-      <tr><td>Land — trees / shelterbelt</td><td>−6.0 t CO₂-e / ha / yr</td><td>Sequestration (indicative)</td></tr>
-      <tr><td>Land — pasture / soil</td><td>−0.5 t CO₂-e / ha / yr</td><td>Soil carbon (indicative)</td></tr>
-      <tr><td>Land-use change (clearing)</td><td>+120 t CO₂-e / ha</td><td>LULUCF (indicative)</td></tr>
-    </table>
-    <p style="font-size:11.5px;color:var(--muted);margin-top:10px"><b>Note:</b> factors shown are NGER/IPCC-aligned and indicative for demonstration. Production uses the current published NGER edition and method-specific equations, verified before any credit is issued.</p>
-  </div>
-
-  <div class="sec-head" style="margin-top:26px"><span class="kicker">Why it's more than a calculator</span><h2 class="h-lead" style="font-size:22px">Normal calculator vs LCCIP (LCA)</h2></div>
-  <div class="compare">
-    <div class="col bad"><h4>A normal footprint calculator</h4><ul>
-      <li>On-farm emissions only — stops at the fence</li>
-      <li>Ignores embedded feed &amp; fertiliser emissions</li>
-      <li>Gives one lump total</li>
-      <li>No land / vegetation carbon</li>
-      <li>No credit pathway</li></ul></div>
-    <div class="col good"><h4>LCCIP — life-cycle assessment</h4><ul>
-      <li>Cradle-to-farm-gate boundary (stated)</li>
-      <li>Counts embedded Scope 3 (feed, transport)</li>
-      <li>Reports intensity per litre / per kg</li>
-      <li>Includes land sequestration &amp; land-use change</li>
-      <li>Shapes reductions into ACCUs (baseline − project)</li></ul></div>
-  </div>
-
-  <div class="note-banner" style="margin-top:24px"><b>Honest status.</b> LCCIP produces audit-ready, NGER/IPCC-aligned data to support carbon projects. It does not itself issue ACCUs — certification requires an approved CER method, baseline and independent verification.</div>
-</section>
+<section class="view" data-view="methods"></section>
 
 <!-- ============ CONTACT ============ -->
-<section class="view" data-view="contact">
-  <div class="sec-head"><span class="kicker">Contact</span><h2 class="h-lead">Talk to us about a pilot</h2></div>
-  <div class="contact-grid">
-    <div class="panel">
-      <div class="form-grid" style="grid-template-columns:1fr 1fr">
-        <div class="fld"><label>Name</label><input id="c-name" placeholder="Your name"></div>
-        <div class="fld"><label>Organisation</label><input id="c-org" placeholder="Farm / company"></div>
-        <div class="fld"><label>Email</label><input id="c-email" type="email" placeholder="you@org.com.au"></div>
-        <div class="fld"><label>Role</label><select id="c-role"><option>Producer</option><option>Processor</option><option>Bank / lender</option><option>Advisor</option><option>Researcher</option></select></div>
-      </div>
-      <div class="fld" style="margin-top:16px"><label>Message</label><input id="c-message" style="height:90px" placeholder="Tell us about your farm or network…"></div>
-      <button class="btn-lg btn-primary" style="margin-top:16px" onclick="submitLead('farm')">Send message</button>
-    </div>
-    <div class="contact-info">
-      <p><b>Pilot program</b><br>Now onboarding cattle farms in QLD, NSW, VIC, WA, TAS &amp; SA.</p>
-      <p><b>Email</b><br>hello@lccip.au</p>
-      <p><b>Partnerships</b><br>Processors, banks and advisors needing Scope 3 data.</p>
-      <p><b>Research</b><br>Academic collaboration to publish and strengthen the framework.</p>
-      <p style="font-size:12px;margin-top:18px">Demo prototype · contact details illustrative.</p>
-    </div>
-  </div>
-</section>
+<section class="view" data-view="contact"></section>
 
 
 <!-- ================== HORTICULTURE VIEWS ================== -->
