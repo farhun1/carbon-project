@@ -46,14 +46,18 @@ function setRegion(r){regionFilter=r;
 function renderDash(){
   const f=FARMS.find(x=>x.id===document.getElementById('farmsel').value)||FARMS[0];
   const sc=scopeAbs(f.gross,f.scopeR), act=monthly(f.net,f.real), tgt=target(act), rev=Math.round(f.accu*38).toLocaleString();
-  const kpi=[["Gross emissions",(f.gross/1000).toFixed(2)+"k t","CO₂-e this year"],["Net emissions",(f.net/1000).toFixed(2)+"k t","after sequestration"],
+  const kpiAll=[["Gross emissions",(f.gross/1000).toFixed(2)+"k t","CO₂-e this year"],["Net emissions",(f.net/1000).toFixed(2)+"k t","after sequestration"],
     ["Carbon intensity",f.intensity,f.unit],["Net-zero progress",f.nz+"%","2040 target"],["Potential ACCUs",f.accu,"per year"],["Carbon revenue","$"+(f.accu*38/1000).toFixed(0)+"k","at $38/ACCU"]];
+  const kpi=kpiAll.slice(0,4), kpiMore=kpiAll.slice(4);
   const scopeRows=[["Scope 1 — direct",sc.s1,0],["Scope 2 — energy",sc.s2,1],["Scope 3 — feed & transport",sc.s3,2]]
     .map(r=>`<div class="srow"><span class="sc" style="background:${SCOL[r[2]]}"></span><span class="sn">${r[0]}</span><span class="sv">${r[1].toLocaleString()}</span><span class="sp">${Math.round(r[1]/f.gross*100)}%</span></div>`).join("");
   const hot=f.hot.map(h=>`<div class="hot"><div class="hn">${h[0]}</div><div class="bar"><i style="width:${h[1]*2.2}%;background:${COL[h[2]]}"></i></div><div class="hv">${h[1]}%</div></div>`).join("");
   document.getElementById('dash-content').innerHTML=`
    <div class="note-banner"><b>${f.pilot?'Pilot dataset.':'Illustrative farm.'}</b> ${f.pilot?'Riverdale uses your supplied dataset (synthetic placeholders).':'Demo figures for network preview.'} · <span class="mono">${f.id}</span> · ${f.type} · ${f.head} head · ${f.area.toLocaleString()} ha</div>
-   <div class="kpibar">${kpi.map((k,i)=>`<div class="kpi"><div class="kl">${k[0]}</div><div class="kv" style="color:${i>=4?'#A87A2A':'#1B211C'}">${k[1]}</div><div class="ks">${k[2]}</div></div>`).join("")}</div>
+   <div class="kpibar" style="grid-template-columns:repeat(4,1fr)">${kpi.map(k=>`<div class="kpi"><div class="kl">${k[0]}</div><div class="kv">${k[1]}</div><div class="ks">${k[2]}</div></div>`).join("")}</div>
+   <details class="disclose"><summary>2 more figures — ACCU potential &amp; carbon revenue</summary>
+     <div class="disclose-body kpibar" style="grid-template-columns:repeat(2,1fr);margin-top:12px">${kpiMore.map(k=>`<div class="kpi"><div class="kl">${k[0]}</div><div class="kv" style="color:#A87A2A">${k[1]}</div><div class="ks">${k[2]}</div></div>`).join("")}</div>
+   </details>
    <div class="grid-d">
      <div class="panel"><h3>Monthly emissions</h3><div class="ph">Actual vs target · tCO₂-e</div>${lineChart([{v:act,c:'#123A26',w:3},{v:tgt,c:'#5C8A4A',dash:1}])}<div class="legend"><span><i style="background:#123A26"></i>Actual</span><span><i style="background:#5C8A4A"></i>Target</span></div></div>
      <div class="panel"><h3>Emissions by scope</h3><div class="ph">Gross CO₂-e split</div><div style="display:flex;gap:14px;align-items:center"><div>${donut(sc)}</div><div style="flex:1">${scopeRows}</div></div></div>
