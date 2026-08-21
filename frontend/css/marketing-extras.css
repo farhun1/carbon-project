@@ -17,7 +17,7 @@
 .bench .bc .bref{font-size:10.5px;color:var(--gold);margin-top:4px}
 .factbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
 .factbl th{text-align:left;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:1px solid var(--hair)}
-.factbl td{padding:6px 8px;border-bottom:1px solid #eef3ea}
+.factbl td{padding:6px 8px;border-bottom:1px solid var(--wash)}
 .factbl td.n{text-align:right;font-variant-numeric:tabular-nums}
 .accueq{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--pasture);color:#fff;border-radius:12px;padding:16px 18px;margin-top:6px}
 .accueq .b{font-family:var(--serif);font-size:18px}.accueq .g{color:var(--gold-bright);font-family:var(--serif);font-size:22px;letter-spacing:-.015em}
@@ -31,7 +31,7 @@
 .compare .col li{font-size:12.5px;margin:6px 0;list-style:none;padding-left:22px;position:relative;color:var(--ink)}
 .compare .col.bad li:before{content:"✕";position:absolute;left:0;color:var(--red);font-weight:700}
 .compare .col.good li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
-#gismap{background:#eef3ea}
+#gismap{background:var(--wash)}
 .gis-fallback{height:340px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;text-align:center;padding:24px}
 .leaflet-container{font-family:var(--sans)}
 .factor-flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}

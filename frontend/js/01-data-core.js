@@ -139,14 +139,14 @@ function donut(scope){
   seg.forEach((v,i)=>{const l=C*v/t;p+=`<circle cx="70" cy="70" r="${R}" fill="none" stroke="${SCOL[i]}" stroke-width="20" stroke-dasharray="${l} ${C-l}" stroke-dashoffset="${-off}" transform="rotate(-90 70 70)"/>`;off+=l;});
   return `<svg viewBox="0 0 140 140" width="148" height="148">${p}<circle cx="70" cy="70" r="40" fill="#fff"/>
    <text x="70" y="66" text-anchor="middle" font-family="var(--serif)" font-size="22" fill="#1B211C">${(t/1000).toFixed(2)}k</text>
-   <text x="70" y="84" text-anchor="middle" font-size="9" fill="#5d6c61">tCO₂-e</text></svg>`;
+   <text x="70" y="84" text-anchor="middle" font-size="9" fill="#6B655D">tCO₂-e</text></svg>`;
 }
 function ring(net,gross){
   const pct=Math.min(1,net/gross),R=58,C=2*Math.PI*R,l=C*pct;
   return `<svg viewBox="0 0 150 150" width="150" height="150"><circle cx="75" cy="75" r="${R}" fill="none" stroke="#EEF0E4" stroke-width="14"/>
    <circle cx="75" cy="75" r="${R}" fill="none" stroke="#123A26" stroke-width="14" stroke-linecap="round" stroke-dasharray="${l} ${C-l}" transform="rotate(-90 75 75)"/>
    <text x="75" y="70" text-anchor="middle" font-family="var(--serif)" font-size="29" fill="#1B211C">${net.toLocaleString()}</text>
-   <text x="75" y="90" text-anchor="middle" font-size="10" fill="#5d6c61">t CO₂-e net/yr</text></svg>`;
+   <text x="75" y="90" text-anchor="middle" font-size="10" fill="#6B655D">t CO₂-e net/yr</text></svg>`;
 }
 function gauge(pct){
   const R=46,C=Math.PI*R,l=C*pct/100;

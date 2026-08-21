@@ -6,7 +6,7 @@ function renderHMethods(){
     'Australian/IPCC GWP basis':'#D89A2E','Check reporting-year factor':'#D89A2E','Proxy - replace':'#C23333'};
   const tot=F.length;
   el.innerHTML=Object.entries(stat).sort((a,b)=>b[1]-a[1]).map(([k,v])=>
-    `<div class="hot"><div class="hn" style="width:200px">${k}</div><div class="bar"><i style="width:${v/tot*100}%;background:${SC[k]||'#5d6c61'}"></i></div><div class="hv">${v} · ${(v/tot*100).toFixed(0)}%</div></div>`).join('');
+    `<div class="hot"><div class="hn" style="width:200px">${k}</div><div class="bar"><i style="width:${v/tot*100}%;background:${SC[k]||'#6B655D'}"></i></div><div class="hv">${v} · ${(v/tot*100).toFixed(0)}%</div></div>`).join('');
 }
 
 /* ---- horticulture AI ---- */

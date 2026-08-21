@@ -85,8 +85,8 @@ function renderAI(){
   const f=FARMS.find(x=>x.id===document.getElementById('aifarmsel').value)||FARMS[0];
   const act=monthly(f.net,f.real), pred=f.pred?f.pred.slice():act.map(v=>+(v*1.01).toFixed(1));
   const intvRows=f.intv.map(r=>`<tr><td>${r[0]}</td><td class="num">${r[1]}</td><td class="num">${r[2]}</td><td style="text-align:center"><span class="prio" style="background:${COL[r[4]]}">${r[3]}</span></td></tr>`);
-  const intv=intvRows.slice(0,5).join("");
-  const intvMore=intvRows.slice(5).join("");
+  const intv=intvRows.slice(0,3).join("");
+  const intvMore=intvRows.slice(3).join("");
   const totalCut=f.intv.reduce((a,r)=>a+r[1],0);
   document.getElementById('ai-content').innerHTML=`
    <div class="kpibar" style="grid-template-columns:repeat(4,1fr)">
@@ -106,7 +106,7 @@ function renderAI(){
    </div>
    <div class="panel"><h3>AI-recommended interventions</h3><div class="ph">Ranked by impact · estimated cut & payback · ${f.name}</div>
      <table class="tbl"><tr><th>Action</th><th style="text-align:center">Cut t/yr</th><th style="text-align:center">Payback</th><th style="text-align:center">Priority</th></tr>${intv}</table>
-     ${intvMore?`<details class="disclose"><summary>${f.intv.length-5} more interventions</summary><div class="disclose-body"><table class="tbl">${intvMore}</table></div></details>`:''}
+     ${intvMore?`<details class="disclose"><summary>${f.intv.length-3} more intervention${f.intv.length-3===1?'':'s'}</summary><div class="disclose-body"><table class="tbl">${intvMore}</table></div></details>`:''}
    </div>`;
 }
 

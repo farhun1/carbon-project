@@ -24,7 +24,7 @@ h1,h2,h3{font-family:var(--serif);letter-spacing:-.01em;margin:0}
 .wrap{max-width:1180px;margin:0 auto;padding:0 26px}
 
 /* nav */
-header{position:sticky;top:0;z-index:30;background:rgba(244,247,241,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--hair)}
+header{position:sticky;top:0;z-index:30;background:rgba(245,242,234,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--hair)}
 .nav{display:flex;align-items:center;gap:14px;height:62px}
 .brand{display:flex;align-items:center;gap:9px;margin-right:6px}
 .leafmark{width:32px;height:32px;border-radius:50%;background:var(--moss);display:grid;place-items:center;flex:0 0 auto}
@@ -38,7 +38,7 @@ header{position:sticky;top:0;z-index:30;background:rgba(244,247,241,.9);backdrop
 .navlinks button.active{color:var(--forest);background:var(--mint)}
 .navlinks button .lock{font-size:9px;opacity:.6;margin-left:3px}
 .cta{background:var(--forest);color:#fff;border:none;border-radius:9px;padding:9px 15px;font-weight:700;font-size:13px}
-.cta:hover{background:#234c24}
+.cta:hover{background:#0D2C1C}
 
 /* nav: workspace dropdown (groups Dashboard / Data Input / AI / Credits) */
 .nav-drop{position:relative}
@@ -46,7 +46,7 @@ header{position:sticky;top:0;z-index:30;background:rgba(244,247,241,.9);backdrop
 .nav-drop-trigger .care{font-size:10px;transition:transform var(--dur-base) var(--ease-out)}
 .nav-drop.open .nav-drop-trigger .care{transform:rotate(180deg)}
 .nav-drop-menu{position:absolute;top:calc(100% + 8px);left:0;min-width:200px;z-index:31;
-  background:rgba(244,247,241,.94);backdrop-filter:blur(16px) saturate(180%);border:1px solid var(--hair);
+  background:rgba(245,242,234,.94);backdrop-filter:blur(16px) saturate(180%);border:1px solid var(--hair);
   border-radius:12px;box-shadow:var(--shadow);padding:6px;display:flex;flex-direction:column;gap:1px;
   transform-origin:top left;opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);
   transition:opacity var(--dur-base) var(--ease-out),transform var(--dur-base) var(--ease-out),visibility 0s linear var(--dur-base)}
@@ -57,7 +57,7 @@ header{position:sticky;top:0;z-index:30;background:rgba(244,247,241,.9);backdrop
 .menu-btn{display:none;border:none;background:none;width:36px;height:36px;border-radius:8px;color:var(--forest);cursor:pointer;place-items:center}
 .menu-btn:hover{background:var(--mint)}
 .menu-btn svg{width:20px;height:20px}
-.mobile-menu{position:fixed;top:62px;left:0;right:0;z-index:29;background:rgba(244,247,241,.97);
+.mobile-menu{position:fixed;top:62px;left:0;right:0;z-index:29;background:rgba(245,242,234,.97);
   backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--hair);box-shadow:var(--shadow);
   display:flex;flex-direction:column;gap:2px;padding:0 10px;max-height:0;overflow:hidden;opacity:0;
   transition:max-height var(--dur-base) var(--ease-out),opacity var(--dur-base) var(--ease-out),padding var(--dur-base) var(--ease-out)}
@@ -67,7 +67,7 @@ header{position:sticky;top:0;z-index:30;background:rgba(244,247,241,.9);backdrop
 .mobile-menu button:hover{background:var(--mint);color:var(--forest)}
 .mobile-menu button.active{color:var(--forest);background:var(--mint)}
 .mobile-menu .mm-cta{margin-top:4px;background:var(--forest);color:#fff;text-align:center}
-.mobile-menu .mm-cta:hover{background:#234c24;color:#fff}
+.mobile-menu .mm-cta:hover{background:#0D2C1C;color:#fff}
 
 /* sections */
 section.view{display:none;padding:40px 0 64px;animation:fade .3s ease}
@@ -84,7 +84,7 @@ section.view.show{display:block}
 .hero p.lead{font-size:16.5px;color:var(--muted);margin:18px 0 22px;max-width:520px}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap}
 .btn-lg{padding:13px 22px;border-radius:11px;font-weight:700;font-size:15px;border:none}
-.btn-primary{background:var(--forest);color:#fff}.btn-primary:hover{background:#234c24}
+.btn-primary{background:var(--forest);color:#fff}.btn-primary:hover{background:#0D2C1C}
 .btn-ghost{background:#fff;color:var(--forest);border:1.5px solid var(--hair)}.btn-ghost:hover{border-color:var(--moss)}
 .hero-stats{display:flex;gap:26px;margin-top:26px}
 .hero-stats .hs b{font-family:var(--serif);font-size:25px;display:block;color:var(--ink);letter-spacing:-.015em}

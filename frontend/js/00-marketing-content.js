@@ -32,8 +32,15 @@ const INDUSTRY_CONTENT = {
         {title:'Verify', body:'Every figure traces to a source and a factor — audit-ready from day one.'},
         {title:'Earn', gold:true, body:'Verified reductions become ACCUs under an approved method — revenue paid to the farm.'},
       ],
-      pricingTeaser: 'Producer access is free. Network access opens every connected farm in Australia.',
-      pricingLinkLabel: 'See plans ↓',
+      pricing: {
+        anchorId: 'pricing-farm',
+        teaser: 'Producer access is free. Network access opens every connected farm in Australia.',
+        plans: [
+          {name:'Producer', price:'$0', priceUnit:'/mo', features:['Your own farm dashboard','Data input & LCA','AI recommendations','ACCU eligibility'], ctaLabel:'Start free', ctaAction:'openModal()', ghost:true},
+          {name:'Network', price:'$149', priceUnit:'/mo', featured:true, features:['View any farm in Australia','Portfolio & region rollups','Scope 3 supply-chain data','Forecasts & hotspot alerts'], ctaLabel:'Subscribe', ctaAction:'openModal()'},
+          {name:'Enterprise', price:'Custom', priceUnit:'', features:['API & data export','White-label dashboards','ACCU project management','Dedicated support'], ctaLabel:'Contact sales', ctaAction:"go('contact')", ghost:true},
+        ],
+      },
     },
     how: {
       kicker: 'How it works',
@@ -157,8 +164,15 @@ const INDUSTRY_CONTENT = {
         {title:'Verify', body:'Every factor graded by provenance, so you know what you can defend.'},
         {title:'Report', gold:true, body:'Retailer- and auditor-ready Scope 3 disclosure per kilogram sold.'},
       ],
-      pricingTeaser: 'Grower access is free. Network access opens every connected grower in Australia.',
-      pricingLinkLabel: 'See plans ↓',
+      pricing: {
+        anchorId: 'pricing-hort',
+        teaser: 'Grower access is free. Network access opens every connected grower in Australia.',
+        plans: [
+          {name:'Grower', price:'$0', priceUnit:'/mo', features:['Your own crop dashboard','Data input & LCA','Intensity vs target','AI recommendations'], ctaLabel:'Start free', ctaAction:'openModal()', ghost:true},
+          {name:'Network', price:'$149', priceUnit:'/mo', featured:true, features:['View any grower in Australia','Crop & state benchmarking','Scope 3 supply-chain data','Abatement modelling'], ctaLabel:'Subscribe', ctaAction:'openModal()'},
+          {name:'Enterprise', price:'Custom', priceUnit:'', features:['API & data export','Retailer Scope 3 reporting','Packaging optimisation','Dedicated support'], ctaLabel:'Contact sales', ctaAction:"go('h-contact')", ghost:true},
+        ],
+      },
     },
     how: {
       kicker: 'How it works',
@@ -273,8 +287,12 @@ function renderMarketingHome(industry){
   <div class="trust-strip">${c.trust.map(t=>`<span class="ts">${t}</span>`).join('')}</div>
   <div class="sec-head" style="margin-top:24px"><span class="kicker">${c.bandKicker}</span><h2 class="h-lead">${c.bandLead}</h2></div>
   <div class="flow4">${c.band.map((b,i)=>`<div class="fs${b.gold?' gold':''}"><div class="n">${i+1}</div><h4>${b.title}</h4><p>${b.body}</p></div>`).join('')}</div>
-  <p class="sub" style="margin-top:18px">${c.pricingTeaser} <a href="#pricing" style="color:var(--forest);font-weight:700">${c.pricingLinkLabel}</a></p>
-  <div id="pricing"></div>`;
+  <p class="sub" style="margin-top:18px">${c.pricing.teaser} <a href="#${c.pricing.anchorId}" style="color:var(--forest);font-weight:700">See plans ↓</a></p>
+  <div class="pricing" id="${c.pricing.anchorId}">${c.pricing.plans.map(p=>`
+    <div class="plan${p.featured?' feat':''}">${p.featured?'<div class="tag">MOST POPULAR</div>':''}<h3>${p.name}</h3><div class="price">${p.price}<span>${p.priceUnit}</span></div>
+      <ul>${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+      <button class="btn-lg ${p.ghost?'btn-ghost':'btn-primary'}" onclick="${p.ctaAction}">${p.ctaLabel}</button>
+    </div>`).join('')}</div>`;
 }
 
 function renderMarketingHow(industry){
