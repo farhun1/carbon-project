@@ -57,6 +57,41 @@ const INDUSTRY_CONTENT = {
         {title:'Carbon intensity is the output', body:'Net emissions ÷ production = kg CO₂-e per litre milk or per kg liveweight — compared against an industry benchmark.'},
       ],
     },
+    about: {
+      kicker: 'About / impact',
+      h1: 'The missing intelligence layer for farm carbon',
+      sub: 'Ruminati helps farms <i>report</i> emissions. Pairtree helps <i>integrate</i> farm data. LCCIP turns that data into live intelligence, AI-driven action and carbon revenue.',
+      impactStats: [
+        {id:'im-farms', value:'7', label:'farms connected'},
+        {id:'im-net', value:'27.0k', label:'tCO₂-e/yr monitored'},
+        {id:'im-cut', value:'2.4k', label:'tCO₂-e/yr reduction potential'},
+        {id:'im-rev', value:'$117k', label:'carbon revenue potential/yr', gold:true},
+      ],
+      cards: [
+        {title:'Our mission', body:'Make every Australian cattle farm carbon-intelligent and carbon-profitable.'},
+        {title:'The gap we fill', body:'One platform for operational data, LCA, AI forecasting and ACCU monetisation.'},
+        {title:'Why it matters', body:"Cattle farming is one of Australia's largest emission sources — farm-level intelligence unlocks Scope 3 trust and new income."},
+      ],
+    },
+    contact: {
+      kicker: 'Contact',
+      h1: 'Talk to us about a pilot',
+      fields: [
+        {id:'c-name', label:'Name', placeholder:'Your name'},
+        {id:'c-org', label:'Organisation', placeholder:'Farm / company'},
+        {id:'c-email', label:'Email', type:'email', placeholder:'you@org.com.au'},
+      ],
+      roleField: {id:'c-role', label:'Role', options:['Producer','Processor','Bank / lender','Advisor','Researcher']},
+      messageField: {id:'c-message', label:'Message', placeholder:'Tell us about your farm or network…'},
+      submitAction: "submitLead('farm')",
+      info: [
+        {title:'Pilot program', body:'Now onboarding cattle farms in QLD, NSW, VIC, WA, TAS &amp; SA.'},
+        {title:'Email', body:'hello@lccip.au'},
+        {title:'Partnerships', body:'Processors, banks and advisors needing Scope 3 data.'},
+        {title:'Research', body:'Academic collaboration to publish and strengthen the framework.'},
+      ],
+      disclaimer: 'Demo prototype · contact details illustrative.',
+    },
   },
   hort: {
     home: {
@@ -107,6 +142,40 @@ const INDUSTRY_CONTENT = {
         {title:'Carbon intensity is the output', body:'Emissions ÷ marketable yield = kg CO₂-e per kg sold — compared against a crop-specific target.'},
       ],
     },
+    about: {
+      kicker: 'About / impact',
+      h1: 'Carbon intelligence for Australian horticulture',
+      sub: 'Retailers and exporters now demand farm-level Scope 3 data. LCCIP gives growers a defensible number, and a plan to lower it.',
+      impactStats: [
+        {value:'12', label:'growers connected'},
+        {value:'3.9k', label:'tCO₂-e/yr gross'},
+        {value:'677 t', label:'removals captured'},
+        {value:'111', label:'emission factors'},
+      ],
+      cards: [
+        {title:'Our mission', body:'Give every Australian grower a defensible carbon number, and the intelligence to reduce it.'},
+        {title:'Honest by design', body:'We grade every factor by confidence — only 10 of 111 are Australian official, and we show which numbers are proxies.'},
+        {title:'Why it matters', body:"Horticulture's footprint is 60% Scope 3 — packaging, fertiliser and freight. That's where the reductions are."},
+      ],
+    },
+    contact: {
+      kicker: 'Contact',
+      h1: 'Talk to us about a horticulture pilot',
+      fields: [
+        {id:'hc-name', label:'Name', placeholder:'Your name'},
+        {id:'hc-org', label:'Organisation', placeholder:'Farm / packer / retailer'},
+        {id:'hc-email', label:'Email', type:'email', placeholder:'you@org.com.au'},
+      ],
+      roleField: {id:'hc-crop', label:'Crop', freeText:true, placeholder:'e.g. apples, table grapes'},
+      messageField: {id:'hc-message', label:'Message', placeholder:'Tell us about your operation…'},
+      submitAction: "submitLead('hort')",
+      info: [
+        {title:'Pilot program', body:'Onboarding growers across NSW, VIC, QLD, SA, WA &amp; TAS.'},
+        {title:'Email', body:'hort@lccip.au'},
+        {title:'Retail &amp; export', body:'Scope 3 reporting for packers, retailers and exporters.'},
+      ],
+      disclaimer: 'Demo prototype · contact details illustrative.',
+    },
   },
 };
 
@@ -151,4 +220,39 @@ function renderMarketingHow(industry){
       <div class="cards c2">${c.detailTiles.map(t=>`<div class="tile"><h3>${t.title}</h3><p style="font-size:12.5px;color:var(--muted);margin-top:6px">${t.body}</p></div>`).join('')}</div>
     </div>
   </details>`;
+}
+
+function renderMarketingAbout(industry){
+  const c = INDUSTRY_CONTENT[industry].about;
+  const el = document.querySelector(`section.view[data-view="${industry==='farm'?'about':'h-about'}"]`);
+  if(!el) return;
+  el.innerHTML = `
+  <div class="sec-head"><span class="kicker">${c.kicker}</span><h2 class="h-lead">${c.h1}</h2><p class="sub">${c.sub}</p></div>
+  <div class="impact ledger-rule">${c.impactStats.map(s=>`<div class="im"><b${s.id?` id="${s.id}"`:''}${s.gold?' class="ledger-underline" style="color:var(--gold)"':''}>${s.value}</b><span>${s.label}</span></div>`).join('')}</div>
+  <div class="cards c3">${c.cards.map(card=>`<div class="tile"><h3>${card.title}</h3><p>${card.body}</p></div>`).join('')}</div>`;
+}
+
+function renderMarketingContact(industry){
+  const c = INDUSTRY_CONTENT[industry].contact;
+  const el = document.querySelector(`section.view[data-view="${industry==='farm'?'contact':'h-contact'}"]`);
+  if(!el) return;
+  const roleFieldHtml = c.roleField.freeText
+    ? `<div class="fld"><label>${c.roleField.label}</label><input id="${c.roleField.id}" placeholder="${c.roleField.placeholder}"></div>`
+    : `<div class="fld"><label>${c.roleField.label}</label><select id="${c.roleField.id}">${c.roleField.options.map(o=>`<option>${o}</option>`).join('')}</select></div>`;
+  el.innerHTML = `
+  <div class="sec-head"><span class="kicker">${c.kicker}</span><h2 class="h-lead">${c.h1}</h2></div>
+  <div class="contact-grid">
+    <div class="panel">
+      <div class="form-grid" style="grid-template-columns:1fr 1fr">
+        ${c.fields.map(f=>`<div class="fld"><label>${f.label}</label><input id="${f.id}" type="${f.type||'text'}" placeholder="${f.placeholder}"></div>`).join('')}
+        ${roleFieldHtml}
+      </div>
+      <div class="fld" style="margin-top:16px"><label>${c.messageField.label}</label><input id="${c.messageField.id}" style="height:90px" placeholder="${c.messageField.placeholder}"></div>
+      <button class="btn-lg btn-primary" style="margin-top:16px" onclick="${c.submitAction}">Send message</button>
+    </div>
+    <div class="contact-info">
+      ${c.info.map(i=>`<p><b>${i.title}</b><br>${i.body}</p>`).join('')}
+      <p style="font-size:12px;margin-top:18px">${c.disclaimer}</p>
+    </div>
+  </div>`;
 }
