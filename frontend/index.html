@@ -383,94 +383,9 @@
 
 
 <!-- ================== HORTICULTURE VIEWS ================== -->
-<section class="view" data-view="h-home">
-  <div class="hero">
-    <div>
-      <span class="kicker">Horticulture · life-cycle carbon intelligence</span>
-      <h1>The carbon in <span class="accent">every crop you grow</span> — measured.</h1>
-      <p class="lead">Orchards, vineyards, protected cropping and open field. LCCIP tracks emissions from soil to shelf — packaging, energy, soil N₂O, freight and water — and turns them into a defensible carbon intensity per kilogram sold.</p>
-      <div class="hero-cta">
-        <button class="btn-lg btn-primary" onclick="openModal()">Subscribe to the network</button>
-        <button class="btn-lg btn-ghost" onclick="go('h-how')">See how it works</button>
-      </div>
-      <div class="hero-stats">
-        <div class="hs"><b id="hh-farms">12</b><span>growers connected</span></div>
-        <div class="hs"><b id="hh-net">3.2k</b><span>tCO₂-e/yr net</span></div>
-        <div class="hs"><b id="hh-ci">0.48</b><span>avg kg CO₂-e / kg</span></div>
-      </div>
-    </div>
-    <div class="mapcard">
-      <div class="ml"><b>Grower network · Australia</b><span class="live"><i></i>LIVE</span></div>
-      <div id="hausmap"></div>
-      <div class="cap">12 growers · 6 states · tomatoes to almonds</div>
-    </div>
-  </div>
+<section class="view" data-view="h-home"></section>
 
-  <div class="trust-strip">
-    <span class="ts">NGER · IPCC factors</span><span class="ts">111-factor library</span><span class="ts">Scope 1·2·3</span><span class="ts">Cradle-to-farm-gate LCA</span><span class="ts">Data-confidence rated</span>
-  </div>
-
-  <div class="sec-head" style="margin-top:26px"><span class="kicker">The workflow</span><h2 class="h-lead">Baseline → Reduce → Verify → Report</h2></div>
-  <div class="flow4">
-    <div class="fs"><div class="n">1</div><h4>Baseline</h4><p>Cradle-to-farm-gate LCA with NGER / IPCC factors — 12 sources, Scope 1·2·3.</p></div>
-    <div class="fs"><div class="n">2</div><h4>Reduce</h4><p>Abatement levers ranked by tonnes saved — packaging, nitrogen, energy, freight.</p></div>
-    <div class="fs"><div class="n">3</div><h4>Verify</h4><p>Every factor graded by provenance, so you know exactly what you can defend.</p></div>
-    <div class="fs"><div class="n">4</div><h4>Report</h4><p>Retailer- and auditor-ready Scope 3 disclosure per kilogram sold.</p></div>
-  </div>
-
-  <div class="sec-head" style="margin-top:34px"><span class="kicker">Why LCCIP</span><h2 class="h-lead">A life-cycle assessment — not just a footprint</h2>
-    <p class="sub">A normal calculator counts what happens on your block. LCCIP measures the carbon in your <b>product</b>, across a stated cradle-to-farm-gate boundary, per kilogram sold.</p></div>
-  <div class="compare" style="margin-bottom:8px">
-    <div class="col bad"><h4>A normal footprint calculator</h4><ul>
-      <li>On-farm emissions only — stops at the gate</li>
-      <li>Ignores embedded packaging, fertiliser &amp; freight</li>
-      <li>One lump total for the whole business</li>
-      <li>No removals, no yield context</li>
-      <li>No honesty about factor quality</li></ul></div>
-    <div class="col good"><h4>LCCIP — cradle-to-farm-gate LCA</h4><ul>
-      <li>Stated boundary · 12 life-cycle sources</li>
-      <li>Scope 3 = 60% of the footprint, counted</li>
-      <li><b>kg CO₂-e per kg sold</b> — the functional unit</li>
-      <li>Soil &amp; biomass removals reported separately</li>
-      <li>Every factor graded: official vs proxy</li></ul></div>
-  </div>
-
-  <div class="cards c3" style="margin-top:18px">
-    <div class="tile"><h3>Functional unit</h3><p>Emissions ÷ marketable yield. That single number — kg CO₂-e per kg — is what retailers, exporters and auditors actually ask for.</p></div>
-    <div class="tile"><h3>System boundary</h3><p>Cradle-to-farm-gate: from fertiliser manufacture and seedling propagation through to the packed pallet leaving your shed.</p></div>
-    <div class="tile"><h3>Data confidence</h3><p>Only 10 of our 111 factors are Australian official. We show you which tonnes rest on proxies — so you know what you can defend.</p></div>
-  </div>
-
-  <div class="sec-head" style="margin-top:34px"><span class="kicker">Why horticulture is different</span><h2 class="h-lead">Your footprint is mostly <i>upstream</i></h2>
-    <p class="sub">Unlike livestock, horticulture's biggest emissions aren't from the paddock — they're in packaging, fertiliser and freight. Scope 3 is <b>60%</b> of the network total.</p></div>
-  <div class="cards c4">
-    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M3 8l9-5 9 5v8l-9 5-9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></div><h3>Packaging</h3><p>The single largest source — 22% of network emissions. Plastic and cardboard, per kg sold.</p></div>
-    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M12 22V12"/><path d="M5 12h14"/><path d="M7 12a5 5 0 0110 0"/></svg></div><h3>Soil N₂O</h3><p>17% — nitrogen fertiliser releases a gas 265× more potent than CO₂.</p></div>
-    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><h3>Energy &amp; fuel</h3><p>23% combined — protected cropping is electricity-hungry; orchards burn diesel.</p></div>
-    <div class="tile"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2c5f2d" stroke-width="2"><path d="M3 17h13v-6H3z"/><path d="M16 13h3l2 3v1h-5z"/><circle cx="6.5" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg></div><h3>Freight &amp; water</h3><p>Cold chain, road freight and irrigation — the hidden cost of getting produce to market.</p></div>
-  </div>
-
-  <div class="sec-head" style="margin-top:40px"><span class="kicker">Plans</span><h2 class="h-lead">Subscribe to see any grower</h2></div>
-  <div class="pricing">
-    <div class="plan"><h3>Grower</h3><div class="price">$0<span>/mo</span></div><ul><li>Your own crop dashboard</li><li>Data input &amp; LCA</li><li>Intensity vs target</li><li>AI recommendations</li></ul><button class="btn-lg btn-ghost" onclick="openModal()">Start free</button></div>
-    <div class="plan feat"><div class="tag">MOST POPULAR</div><h3>Network</h3><div class="price">$149<span>/mo</span></div><ul><li>View any grower in Australia</li><li>Crop &amp; state benchmarking</li><li>Scope 3 supply-chain data</li><li>Abatement modelling</li></ul><button class="btn-lg btn-primary" onclick="openModal()">Subscribe</button></div>
-    <div class="plan"><h3>Enterprise</h3><div class="price">Custom</div><ul><li>API &amp; data export</li><li>Retailer Scope 3 reporting</li><li>Packaging optimisation</li><li>Dedicated support</li></ul><button class="btn-lg btn-ghost" onclick="go('h-contact')">Contact sales</button></div>
-  </div>
-</section>
-
-<section class="view" data-view="h-how">
-  <div class="sec-head"><span class="kicker">How it works</span><h2 class="h-lead">From crop inputs to a defensible carbon number</h2>
-    <p class="sub">The same LCCIP pipeline, tuned for horticulture — with a 111-factor library and honest data-confidence grading.</p></div>
-  <div class="steps" id="h-stepgrid"></div>
-  <div class="sec-head" style="margin-top:40px"><span class="kicker">Under the hood</span><h2 class="h-lead">The horticulture emission model</h2></div>
-  <div class="eqbox" style="margin-bottom:14px">Net emissions <span class="op">=</span> Σ (&nbsp;<b>activity</b> <span class="op">×</span> <b>emission factor</b>&nbsp;) <span class="op">−</span> <b>soil &amp; biomass removals</b></div>
-  <div class="cards c2">
-    <div class="tile"><h3>12 emission sources tracked</h3>
-      <p style="font-size:12.5px;color:var(--muted);margin-top:6px">Fuel · electricity · soil N₂O · fertiliser (upstream) · lime &amp; urea · chemicals · packaging · transport · waste · refrigeration · water · planting materials — each mapped to Scope 1, 2 or 3.</p></div>
-    <div class="tile"><h3>Carbon intensity is the output</h3>
-      <p style="font-size:12.5px;color:var(--muted);margin-top:6px">Emissions ÷ marketable yield = <b>kg CO₂-e per kg sold</b> — compared against a crop-specific target so growers know if they're over or under.</p></div>
-  </div>
-</section>
+<section class="view" data-view="h-how"></section>
 
 <section class="view" data-view="h-dash">
   <div class="sec-head"><span class="kicker">Sustenora · horticulture</span><h2 class="h-lead">Farm-gate carbon ledger</h2></div>
@@ -616,78 +531,11 @@
   </div>
 </section>
 
-<section class="view" data-view="h-methods">
-  <div class="sec-head"><span class="kicker">Methods &amp; standards</span><h2 class="h-lead">How horticulture carbon is calculated</h2>
-    <p class="sub">Transparent, NGER / IPCC-aligned, cradle-to-farm-gate. This is the page we show to retailers, exporters and auditors.</p></div>
+<section class="view" data-view="h-methods"></section>
 
-  <div class="sec-head" style="margin-top:8px"><span class="kicker">Mechanism</span><h2 class="h-lead" style="font-size:22px">The emission mechanism</h2></div>
-  <div class="eqbox" style="margin-bottom:14px">Net emissions <span class="op">=</span> Σ (&nbsp;<b>activity</b> <span class="op">×</span> <b>emission factor</b>&nbsp;) <span class="op">−</span> <b>soil &amp; biomass removals</b></div>
-  <div class="cards c2" style="margin-bottom:8px">
-    <div class="tile"><h3>Three gases → one unit</h3>
-      <div style="margin-top:8px">
-        <span class="gaschip"><i style="background:#586b5e">CO₂</i> ×1 — diesel, electricity, lime &amp; urea</span><br>
-        <span class="gaschip"><i style="background:#d14a3f">CH₄</i> ×28 — organic waste breakdown</span><br>
-        <span class="gaschip"><i style="background:#df9b26">N₂O</i> ×265 — nitrogen fertiliser in soil</span>
-      </div>
-      <p style="font-size:12px;color:var(--muted);margin-top:8px">Soil N₂O is horticulture's hidden giant — 17% of network emissions from a gas 265× stronger than CO₂.</p></div>
-    <div class="tile"><h3>Boundary &amp; functional unit</h3>
-      <p style="font-size:12.5px;color:var(--muted);margin:6px 0 0"><b>Cradle-to-farm-gate.</b> 12 sources across Scope 1 (fuel, soil N₂O, refrigerant), Scope 2 (grid electricity) and Scope 3 (packaging, fertiliser upstream, freight, water, chemicals, planting materials, waste). Removals are reported <b>separately</b>, not netted into scopes. Output: <b>kg CO₂-e per kg marketable yield</b>.</p></div>
-  </div>
+<section class="view" data-view="h-about"></section>
 
-  <div class="sec-head" style="margin-top:26px"><span class="kicker">Transparency</span><h2 class="h-lead" style="font-size:22px">Factor provenance — what you can defend</h2></div>
-  <div class="panel">
-    <div id="h-meth-factors"></div>
-    <p style="font-size:11.5px;color:var(--muted);margin-top:10px"><b>Honest status.</b> 111 factors: NGA 2025 and IPCC 2019 where available, proxies flagged. 67 are proxies requiring replacement before formal reporting. Removals require site-specific measurement (soil sampling or biomass modelling) to be creditable.</p>
-  </div>
-
-  <div class="sec-head" style="margin-top:26px"><span class="kicker">Standards</span><h2 class="h-lead" style="font-size:22px">What we align to</h2></div>
-  <div class="factor-flow">
-    <div class="fx"><div class="n">1</div><b>NGA 2025</b><span>Australian National Greenhouse Accounts factors</span></div>
-    <div class="fx"><div class="n">2</div><b>IPCC 2019</b><span>Refinement — soil N₂O, GWP values</span></div>
-    <div class="fx"><div class="n">3</div><b>GHG Protocol</b><span>Scope 1 · 2 · 3 boundary rules</span></div>
-    <div class="fx"><div class="n">4</div><b>ISO 14067</b><span>Product carbon footprint / LCA</span></div>
-    <div class="fx gold"><div class="n">5</div><b>Retailer Scope 3</b><span>Disclosure-ready per kg sold</span></div>
-  </div>
-  <div class="note-banner" style="margin-top:20px"><b>Indicative demonstration.</b> Figures use NGER/IPCC-aligned factors with proxies flagged. Production replaces proxy factors with published values and requires site-specific measurement for removals.</div>
-</section>
-
-<section class="view" data-view="h-about">
-  <div class="sec-head"><span class="kicker">About / impact</span><h2 class="h-lead">Carbon intelligence for Australian horticulture</h2>
-    <p class="sub">Retailers and exporters now demand farm-level Scope 3 data. LCCIP gives growers a defensible number — and a plan to lower it.</p></div>
-  <div class="impact">
-    <div class="im"><b>12</b><span>growers connected</span></div>
-    <div class="im"><b>3.9k</b><span>tCO₂-e/yr gross</span></div>
-    <div class="im"><b>677 t</b><span>removals captured</span></div>
-    <div class="im"><b>111</b><span>emission factors</span></div>
-  </div>
-  <div class="cards c3">
-    <div class="tile"><h3>Our mission</h3><p>Give every Australian grower a carbon number they can defend to a retailer, an auditor or an export market — and the intelligence to reduce it.</p></div>
-    <div class="tile"><h3>Honest by design</h3><p>We grade every factor by confidence. Of 111 factors, only 10 are Australian official — we show you exactly which numbers are solid and which are proxies to replace.</p></div>
-    <div class="tile"><h3>Why it matters</h3><p>Horticulture's footprint is 60% Scope 3 — packaging, fertiliser and freight. That's where the reductions (and the supply-chain pressure) actually are.</p></div>
-  </div>
-</section>
-
-<section class="view" data-view="h-contact">
-  <div class="sec-head"><span class="kicker">Contact</span><h2 class="h-lead">Talk to us about a horticulture pilot</h2></div>
-  <div class="contact-grid">
-    <div class="panel">
-      <div class="form-grid" style="grid-template-columns:1fr 1fr">
-        <div class="fld"><label>Name</label><input id="hc-name" placeholder="Your name"></div>
-        <div class="fld"><label>Organisation</label><input id="hc-org" placeholder="Farm / packer / retailer"></div>
-        <div class="fld"><label>Email</label><input id="hc-email" type="email" placeholder="you@org.com.au"></div>
-        <div class="fld"><label>Crop</label><input id="hc-crop" placeholder="e.g. apples, table grapes"></div>
-      </div>
-      <div class="fld" style="margin-top:16px"><label>Message</label><input id="hc-message" style="height:90px" placeholder="Tell us about your operation…"></div>
-      <button class="btn-lg btn-primary" style="margin-top:16px" onclick="submitLead('hort')">Send message</button>
-    </div>
-    <div class="contact-info">
-      <p><b>Pilot program</b><br>Onboarding growers across NSW, VIC, QLD, SA, WA &amp; TAS.</p>
-      <p><b>Email</b><br>hort@lccip.au</p>
-      <p><b>Retail &amp; export</b><br>Scope 3 reporting for packers, retailers and exporters.</p>
-      <p style="font-size:12px;margin-top:18px">Demo prototype · contact details illustrative.</p>
-    </div>
-  </div>
-</section>
+<section class="view" data-view="h-contact"></section>
 </main>
 
 <footer>
@@ -702,6 +550,7 @@
   </div>
 </footer>
 
+<script src="js/00-marketing-content.js"></script>
 <script src="js/01-data-core.js"></script>
 <script src="js/02-dashboard-farm.js"></script>
 <script src="js/03-calculator-farm.js"></script>
