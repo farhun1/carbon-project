@@ -141,17 +141,19 @@
   <div class="page" id="p1">
     <div class="page-label"><span class="pn">1</span><h2>Executive Carbon Intelligence Dashboard</h2><span class="ln"></span></div>
     <div class="grid" id="kpis" style="grid-template-columns:repeat(6,1fr)"></div>
-    <div class="grid" style="grid-template-columns:1fr 2fr;margin-top:12px">
-      <div class="pbtile"><div class="tile-h"><h3>Emissions by Scope (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-donut"></div>
-        <div class="pblegend"><span><i style="background:var(--c1)"></i>Scope 1 · 1,343</span><span><i style="background:var(--c2)"></i>Scope 2 · 234</span><span><i style="background:var(--c3)"></i>Scope 3 · 755</span></div></div>
-      <div class="pbtile"><div class="tile-h"><h3>Net Emissions vs Target by Month (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-line"></div>
-        <div class="pblegend"><span><i style="background:var(--c1)"></i>Actual net</span><span><i style="background:var(--c2)"></i>Target</span></div></div>
-    </div>
-    <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:12px">
-      <div class="pbtile"><div class="tile-h"><h3>Scope Mix by Month (100% stacked)</h3><span class="dots">⋯</span></div><div id="v-stack"></div>
-        <div class="pblegend"><span><i style="background:var(--c1)"></i>Scope 1</span><span><i style="background:var(--c2)"></i>Scope 2</span><span><i style="background:var(--c3)"></i>Scope 3</span></div></div>
-      <div class="pbtile"><div class="tile-h"><h3>Emissions by Sector (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-bar"></div></div>
-    </div>
+    <div class="pbtile" style="margin-top:12px"><div class="tile-h"><h3>Emissions by Scope (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-donut"></div>
+      <div class="pblegend"><span><i style="background:var(--c1)"></i>Scope 1 · 1,343</span><span><i style="background:var(--c2)"></i>Scope 2 · 234</span><span><i style="background:var(--c3)"></i>Scope 3 · 755</span></div></div>
+    <details><summary>3 more charts — trend, scope mix and sector breakdown</summary>
+      <div class="grid" style="grid-template-columns:1fr;margin-top:8px">
+        <div class="pbtile"><div class="tile-h"><h3>Net Emissions vs Target by Month (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-line"></div>
+          <div class="pblegend"><span><i style="background:var(--c1)"></i>Actual net</span><span><i style="background:var(--c2)"></i>Target</span></div></div>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:12px">
+        <div class="pbtile"><div class="tile-h"><h3>Scope Mix by Month (100% stacked)</h3><span class="dots">⋯</span></div><div id="v-stack"></div>
+          <div class="pblegend"><span><i style="background:var(--c1)"></i>Scope 1</span><span><i style="background:var(--c2)"></i>Scope 2</span><span><i style="background:var(--c3)"></i>Scope 3</span></div></div>
+        <div class="pbtile"><div class="tile-h"><h3>Emissions by Sector (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-bar"></div></div>
+      </div>
+    </details>
   </div>
 
   <!-- ===== PAGE 2: LCA ===== -->
@@ -179,11 +181,13 @@
         <div class="pbtile pbkpi"><div class="v gold">564 t</div><div class="l">Reduction Potential / yr</div></div>
       </div>
     </div>
-    <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:12px">
-      <div class="pbtile"><div class="tile-h"><h3>Hotspot Detection by Sector (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-hot"></div>
-        <div class="pblegend"><span><i style="background:var(--red)"></i>Red</span><span><i style="background:var(--amber)"></i>Amber</span><span><i style="background:var(--green)"></i>Green</span></div></div>
-      <div class="pbtile"><div class="tile-h"><h3>Root-Cause &amp; Risk Summary</h3><span class="dots">⋯</span></div><div id="v-rc"></div></div>
-    </div>
+    <details style="margin-top:12px"><summary>Hotspot detection and root-cause detail</summary>
+      <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:8px">
+        <div class="pbtile"><div class="tile-h"><h3>Hotspot Detection by Sector (tCO₂-e)</h3><span class="dots">⋯</span></div><div id="v-hot"></div>
+          <div class="pblegend"><span><i style="background:var(--red)"></i>Red</span><span><i style="background:var(--amber)"></i>Amber</span><span><i style="background:var(--green)"></i>Green</span></div></div>
+        <div class="pbtile"><div class="tile-h"><h3>Root-Cause &amp; Risk Summary</h3><span class="dots">⋯</span></div><div id="v-rc"></div></div>
+      </div>
+    </details>
   </div>
 
   <!-- ===== PAGE 4: INTERVENTION ===== -->

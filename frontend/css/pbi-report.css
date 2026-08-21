@@ -65,3 +65,9 @@ table.t tr:hover td{background:#fbfbfa}
 .foot{padding:14px 20px 26px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);background:#fff}
 
 @media(max-width:900px){.tabs{font-size:11px}}
+
+.pbi details{margin-top:8px}
+.pbi details summary{list-style:none;cursor:pointer;padding:8px 4px;font-size:11.5px;font-weight:600;color:var(--c1);display:flex;align-items:center;gap:6px}
+.pbi details summary::-webkit-details-marker{display:none}
+.pbi details summary:before{content:"▸";font-size:10px}
+.pbi details[open] summary:before{content:"▾"}
