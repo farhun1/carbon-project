@@ -82,9 +82,7 @@ go = function(v){
   if(v==='dashboard') renderDashView();
   if(v==='ai') renderAIView();
   if(v==='credit') renderCreditView();
-  if(v==='how') renderHow();
   if(v==='h-home') hBoot();
-  if(v==='h-how') renderHHow();
   if(v==='h-dash') renderHDashView();
   if(v==='h-ai') renderHAIView();
   if(v==='h-methods') renderHMethods();
