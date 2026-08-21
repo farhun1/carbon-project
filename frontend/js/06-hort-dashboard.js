@@ -55,14 +55,18 @@ function renderHDash(){
   if(!rows.length){el.innerHTML='<div class="hnote">No rows match these filters.</div>';return;}
   const g=s.g,pct=v=>g?Math.round(v/g*100):0;
   const hi=fa.filter(f=>f.pri==='High').length;
-  const kpis=`<div class="hkpis">
+  const kpis=`<div class="hkpis" style="grid-template-columns:repeat(4,1fr)">
     <div class="hkpi"><div class="l">Gross</div><div class="v">${hf(T(s.g))}</div><div class="d">t CO₂-e · S1 ${pct(s.s1)}% · S2 ${pct(s.s2)}% · S3 ${pct(s.s3)}%</div></div>
     <div class="hkpi"><div class="l">Removals</div><div class="v" style="color:#3C6140">−${hf(T(s.rm))}</div><div class="d">t CO₂-e · ${pct(s.rm)}% of gross</div></div>
     <div class="hkpi accent"><div class="l">Net</div><div class="v">${hf(T(s.n))}</div><div class="d">t CO₂-e · gross less removals</div></div>
     <div class="hkpi"><div class="l">Carbon intensity</div><div class="v">${s.ci.toFixed(3)}</div><div class="d">kg CO₂-e / kg · target ${s.tgt.toFixed(3)}</div></div>
-    <div class="hkpi"><div class="l">Marketable yield</div><div class="v">${hf(s.yld/1000)}</div><div class="d">tonnes · ${hf(fa.reduce((a,f)=>a+f.ha,0))} ha in scope</div></div>
-    <div class="hkpi"><div class="l">High-priority farms</div><div class="v" style="color:${hi?'#A8352B':'#4C7A4A'}">${hi}<span style="font-size:14px;color:#6E7569"> / ${fa.length}</span></div><div class="d">&gt;15% over target</div></div>
-  </div>`;
+  </div>
+  <details class="disclose"><summary>2 more figures — yield &amp; high-priority farms</summary>
+    <div class="disclose-body hkpis" style="grid-template-columns:repeat(2,1fr);margin-top:12px">
+      <div class="hkpi"><div class="l">Marketable yield</div><div class="v">${hf(s.yld/1000)}</div><div class="d">tonnes · ${hf(fa.reduce((a,f)=>a+f.ha,0))} ha in scope</div></div>
+      <div class="hkpi"><div class="l">High-priority farms</div><div class="v" style="color:${hi?'#A8352B':'#4C7A4A'}">${hi}<span style="font-size:14px;color:#6E7569"> / ${fa.length}</span></div><div class="d">&gt;15% over target</div></div>
+    </div>
+  </details>`;
   const srcT=SN.map((n,i)=>[n,T(s.src[i]),HSCOL[i]]).sort((a,b)=>b[1]-a[1]);
   let b='', post=[];
 
