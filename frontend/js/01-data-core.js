@@ -29,7 +29,7 @@ const LAYERS=[["Farm operational data","Animal count · diesel · water · energ
 let subscribed=false;
 
 /* =================== ROUTER =================== */
-const GATED=["dashboard","ai","credit"];
+const GATED=["dashboard","ai","credit","scenario"];
 // NOTE: redefined in js/04-industry-router.js once it loads (adds the Workspace
 // dropdown + mobile-menu handling); this copy only runs if called before that script
 // executes, which the current boot sequence never does.

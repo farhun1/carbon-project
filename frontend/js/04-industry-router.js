@@ -4,9 +4,9 @@ let HFARMS = [];
 let INDUSTRY='farm';
 // 3rd element 'workspace' groups the app-flow steps (Baseline -> Reduce -> Verify -> Earn)
 // under one dropdown instead of listing them as flat top-level links.
-const FARM_NAV=[['home','Home'],['how','How It Works'],['dashboard','Dashboard','workspace'],['input','Farm Data Input','workspace'],['ai','AI Recommendations','workspace'],['credit','Carbon Credits','workspace'],['methods','Methods & Standards'],['about','About / Impact'],['contact','Contact']];
-const HORT_NAV=[['h-home','Home'],['h-how','How It Works'],['h-dash','Dashboard','workspace'],['h-input','Grower Data Input','workspace'],['h-ai','AI Recommendations','workspace'],['h-methods','Methods & Standards'],['h-about','About / Impact'],['h-contact','Contact']];
-const HGATED=['h-dash','h-ai'];
+const FARM_NAV=[['home','Home'],['how','How It Works'],['dashboard','Dashboard','workspace'],['input','Farm Data Input','workspace'],['ai','AI Recommendations','workspace'],['scenario','What-if Scenario','workspace'],['credit','Carbon Credits','workspace'],['methods','Methods & Standards'],['about','About / Impact'],['contact','Contact']];
+const HORT_NAV=[['h-home','Home'],['h-how','How It Works'],['h-dash','Dashboard','workspace'],['h-input','Grower Data Input','workspace'],['h-ai','AI Recommendations','workspace'],['h-scenario','What-if Scenario','workspace'],['h-methods','Methods & Standards'],['h-about','About / Impact'],['h-contact','Contact']];
+const HGATED=['h-dash','h-ai','h-scenario'];
 // leaf nav items only - excludes the Workspace dropdown trigger, which has no data-v
 // and must not be rewritten by refreshLocks()'s innerHTML replace.
 const NAV_LEAF_SEL='#navlinks button:not(.nav-drop-trigger), #mobileMenu button';
@@ -81,10 +81,12 @@ go = function(v){
   window.scrollTo({top:0,behavior:'smooth'});
   if(v==='dashboard') renderDashView();
   if(v==='ai') renderAIView();
+  if(v==='scenario') renderScenarioView('farm');
   if(v==='credit') renderCreditView();
   if(v==='h-home') hBoot();
   if(v==='h-dash') renderHDashView();
   if(v==='h-ai') renderHAIView();
+  if(v==='h-scenario') renderScenarioView('hort');
   if(v==='h-methods') renderHMethods();
 };
 
