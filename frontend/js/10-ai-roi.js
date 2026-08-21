@@ -15,7 +15,11 @@ document.head.insertAdjacentHTML('beforeend',`<style>
 .rx-t tr.pick td{background:#f2f8ef}
 .rx-pill{font-size:9.5px;font-weight:700;color:#fff;padding:2px 7px;border-radius:10px}
 .rx-w{font-size:11.5px;color:var(--muted)}
-@media(max-width:900px){.rx-grid,.rx-cards{grid-template-columns:1fr}}
+@media(max-width:900px){
+  .rx-grid,.rx-cards{grid-template-columns:1fr}
+  .rx-t{display:block;overflow-x:auto}
+  .rx-t th,.rx-t td{white-space:nowrap}
+}
 </style>`);
 document.getElementById('main').insertAdjacentHTML('beforeend',`
 <div id="roi-template" style="display:none">

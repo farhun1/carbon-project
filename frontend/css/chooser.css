@@ -1,25 +1,4 @@
-/* ===== INDUSTRY CHOOSER ===== */
-#chooser{position:fixed;inset:0;z-index:80;background:radial-gradient(900px 500px at 75% -10%,#1B4A30 0%,transparent 60%),linear-gradient(160deg,#123A26,#0B2417);display:flex;align-items:center;justify-content:center;padding:24px}
-#chooser.hide{display:none}
-.ch-inner{max-width:900px;width:100%;text-align:center;color:#fff}
-.ch-brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:22px}
-.ch-brand .leafmark{width:40px;height:40px}
-.ch-brand b{font-family:var(--serif);font-size:22px;color:#fff}
-.ch-brand span{display:block;font-size:10px;letter-spacing:.18em;color:var(--moss);font-weight:700;text-transform:uppercase;text-align:left}
-.ch-inner h1{font-family:var(--serif);font-size:36px;margin:0 0 8px}
-.ch-inner p.s{color:#D9E4CE;font-size:15px;margin:0 0 30px}
-.ch-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.ch-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:28px 24px;cursor:pointer;transition:background-color var(--dur-base) var(--ease-out),border-color var(--dur-base) var(--ease-out),transform var(--dur-base) var(--ease-out);text-align:left}
-.ch-card:hover{background:rgba(92,138,74,.18);border-color:var(--moss);transform:translateY(-3px)}
-.ch-card:active{transform:translateY(-1px) scale(.98);transition-duration:var(--dur-fast)}
-.ch-card .ic{width:56px;height:56px;border-radius:14px;background:var(--moss);display:grid;place-items:center;margin-bottom:16px}
-.ch-card .ic svg{width:30px;height:30px}
-.ch-card h3{font-family:var(--serif);font-size:23px;color:#fff;margin:0 0 6px}
-.ch-card p{color:#bfd9b1;font-size:13px;margin:0 0 14px;line-height:1.5}
-.ch-card .st{display:flex;gap:16px;border-top:1px solid rgba(255,255,255,.12);padding-top:12px}
-.ch-card .st div b{font-family:var(--serif);font-size:17px;color:#fff;display:block}
-.ch-card .st div span{font-size:10.5px;color:var(--on-dark-2)}
+/* ===== INDUSTRY SWITCH (header pill) ===== */
 .ind-switch{display:inline-flex;align-items:center;gap:6px;background:var(--mint);border:1px solid var(--hair);border-radius:20px;padding:4px;margin-right:8px}
 .ind-switch button{border:none;background:none;padding:5px 12px;border-radius:16px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit}
 .ind-switch button.on{background:var(--forest);color:#fff}
-@media(max-width:760px){.ch-cards{grid-template-columns:1fr}}

@@ -11,10 +11,8 @@ const HGATED=['h-dash','h-ai','h-scenario'];
 // and must not be rewritten by refreshLocks()'s innerHTML replace.
 const NAV_LEAF_SEL='#navlinks button:not(.nav-drop-trigger), #mobileMenu button';
 
-function backToLanding(){document.getElementById('chooser').classList.remove('hide');window.scrollTo({top:0});}
 function pickIndustry(ind){
   INDUSTRY=ind;
-  document.getElementById('chooser').classList.add('hide');
   document.getElementById('sw-farm').classList.toggle('on',ind==='farm');
   document.getElementById('sw-hort').classList.toggle('on',ind==='hort');
   buildNav();

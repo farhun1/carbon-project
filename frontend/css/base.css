@@ -217,10 +217,21 @@ footer .fbrand{font-family:var(--serif);font-size:20px;color:#fff}
 footer .legal{border-top:1px solid rgba(255,255,255,.12);margin-top:24px;padding-top:16px;font-size:11.5px;color:var(--on-dark-2)}
 
 @media(max-width:960px){
-  .hero{grid-template-columns:1fr}.kpibar{grid-template-columns:repeat(3,1fr)}.grid-d{grid-template-columns:1fr}
-  .c3,.c4,.steps,.pricing,.impact{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr 1fr}
+  .hero{grid-template-columns:1fr}
+  /* !important: kpibar/grid-d/steps get their column count set inline by JS at render
+     time (e.g. style="grid-template-columns:repeat(4,1fr)") - inline styles always beat
+     external stylesheet rules, media queries included, so without !important these three
+     mobile overrides are silently dead and the grids never collapse on a phone. */
+  .kpibar{grid-template-columns:repeat(3,1fr)!important}
+  .grid-d{grid-template-columns:1fr!important}
+  .steps{grid-template-columns:repeat(2,1fr)!important}
+  .c3,.c4,.pricing,.impact{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr 1fr}
   .calc,.contact-grid,.result{grid-template-columns:1fr}.navlinks{display:none}.menu-btn{display:grid;margin-left:auto}
   footer .fcols{grid-template-columns:1fr 1fr}
+  /* wide data tables (Methods & Standards factor tables, calculator/dashboard breakdowns,
+     intervention lists): scroll horizontally instead of squeezing columns unreadably. */
+  table.tbl,table.factbl{display:block;overflow-x:auto}
+  table.tbl th,table.tbl td,table.factbl th,table.factbl td{white-space:nowrap}
 }
 
 /* dashboard view toggle */
@@ -248,8 +259,7 @@ footer .legal{border-top:1px solid rgba(255,255,255,.12);margin-top:24px;padding
   section.view{animation:none}
   section.view.show{animation:fade .001ms}
   .mapcard .ml .live i,.dotpulse,.live-pill i{animation:none;opacity:1}
-  button,.chip,.ch-card,.fld input,.fld select,.toolbar select{transition-duration:.001ms}
-  .ch-card:hover{transform:none}
+  button,.chip,.fld input,.fld select,.toolbar select{transition-duration:.001ms}
   button:active{transform:none}
   .nav-drop-menu,.mobile-menu,.nav-drop-trigger .care{transition-duration:.001ms !important;transition-delay:0s !important}
 }

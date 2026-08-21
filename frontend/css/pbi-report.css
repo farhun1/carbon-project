@@ -64,7 +64,16 @@ table.t tr:hover td{background:#fbfbfa}
 .pblegend i{width:10px;height:10px;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:4px}
 .foot{padding:14px 20px 26px;font-size:11px;color:var(--muted);border-top:1px solid var(--border);background:#fff}
 
-@media(max-width:900px){.tabs{font-size:11px}}
+@media(max-width:900px){
+  .tabs{font-size:11px}
+  /* the report's tile grids (.pbi .grid) get their column count set as an inline style in
+     index.html (e.g. style="grid-template-columns:repeat(6,1fr)") - inline styles beat any
+     external stylesheet rule including media queries, so this needs !important to actually
+     collapse the 13 report-page grids to one column on a phone. */
+  .pbi .grid{grid-template-columns:1fr!important}
+  table.t{display:block;overflow-x:auto}
+  table.t th,table.t td{white-space:nowrap}
+}
 
 .pbi details{margin-top:8px}
 .pbi details summary{list-style:none;cursor:pointer;padding:8px 4px;font-size:11.5px;font-weight:600;color:var(--c1);display:flex;align-items:center;gap:6px}

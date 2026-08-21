@@ -31,7 +31,14 @@
 .hz .lever .ln{width:190px;font-size:12px}
 .hz .lever input[type=range]{flex:1;accent-color:#3C6140}
 .hz .lever .lv{width:86px;text-align:right;font-family:var(--hmono);font-size:11.5px}
-@media(max-width:900px){.hz .hkpis{grid-template-columns:repeat(3,1fr)}.hz .hgrid2,.hz .hgrid3{grid-template-columns:1fr}}
+@media(max-width:900px){
+  /* !important: .hkpis gets its column count set inline by JS at render time, which beats
+     this rule unless forced - see the matching note in base.css for .kpibar/.grid-d/.steps. */
+  .hz .hkpis{grid-template-columns:repeat(3,1fr)!important}
+  .hz .hgrid2,.hz .hgrid3{grid-template-columns:1fr}
+  .hz table.hl{display:block;overflow-x:auto}
+  .hz table.hl th,.hz table.hl td{white-space:nowrap}
+}
 
 .hz .hfilters{display:flex;flex-wrap:wrap;gap:8px;align-items:end;background:var(--hpanel);border:1px solid var(--hrule);border-radius:4px;padding:10px 12px;margin-bottom:12px}
 .hz .hfilters label{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--hmuted);font-weight:700;display:flex;flex-direction:column;gap:3px}
@@ -54,9 +61,6 @@
 .hz .sl-d{font-size:10.5px;color:var(--hmuted);margin-top:3px;line-height:1.35}
 .hz .rst2{background:#fff;border:1px solid var(--hrule);border-radius:3px;padding:6px 11px;font-size:11px;font-weight:700;cursor:pointer;margin-top:6px}
 .hz .boundary{background:#F1EDE1;border:1px solid #DDD3B8;border-radius:4px;padding:9px 11px;font-size:10.5px;color:#6b5a2e;line-height:1.6;margin-bottom:12px}
-.back-land{background:none;border:none;color:var(--muted);font-size:11.5px;font-weight:600;cursor:pointer;padding:6px 8px;border-radius:7px;display:flex;align-items:center;gap:5px}
-.back-land:hover{background:var(--mint);color:var(--forest)}
-
 .hz .mixbar{display:flex;height:12px;border-radius:2px;overflow:hidden;min-width:90px}
 .hz .mixbar span{display:block;height:100%}
 .hz .lgauge{position:relative;height:12px;background:#E4E7DD;border-radius:2px;min-width:90px}

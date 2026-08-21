@@ -6,17 +6,18 @@ middleware set up in the backend plan).
 
 ## Structure
 
-- `index.html` — page shell: industry chooser overlay, header/nav, subscribe modal, all 17
-  `<section class="view" data-view="...">` blocks (9 for the cattle-farm industry, 8 for
-  horticulture), footer. View switching is done by `go(viewName)` toggling a `.show` class —
-  there is no router library.
+- `index.html` — page shell: header/nav (with a Farm/Horticulture switch pill, `.ind-switch`),
+  subscribe modal, all 17 `<section class="view" data-view="...">` blocks (9 for the cattle-farm
+  industry, 8 for horticulture), footer. The site boots straight into the Farm industry's Home view
+  — there is no landing/chooser step. View switching is done by `go(viewName)` toggling a `.show`
+  class — there is no router library.
 - `css/base.css` — design tokens (`:root` variables), reset, nav, page-section layout, forms,
   pricing, modal, footer. Loaded first; every other stylesheet assumes these tokens exist.
 - `css/pbi-report.css` — the `.pbi`-scoped "Power BI report replica" skin (Dashboard → Power BI
   report tab only).
 - `css/calculator.css` — the multi-step wizard UI shared by both industries' "Full property
   assessment" calculators.
-- `css/chooser.css` — the full-screen `#chooser` industry-picker overlay shown on first load.
+- `css/chooser.css` — styles for the header's Farm/Horticulture switch pill (`.ind-switch`).
 - `css/horticulture.css` — the `.hz` "ledger aesthetic" theme used by every `h-*` view.
 - `css/marketing-extras.css` — trust strip, workflow steps, benchmark cards, comparison tables,
   equation boxes used on the marketing/methods pages.
