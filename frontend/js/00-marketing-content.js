@@ -360,3 +360,15 @@ function renderMarketingMethods(industry){
   </details>
   <div class="note-banner" style="margin-top:24px">${c.honestBanner}</div>`;
 }
+
+/* Render both industries' marketing shells immediately — see the Boot-order
+   rule in docs/superpowers/plans/2026-08-20-frontend-redesign.md. This must
+   run before 07-hort-quick-calc.js's boot()/buildNav() calls, which it does
+   simply by being an earlier <script> tag (00 loads before 01-10). */
+['farm','hort'].forEach(ind=>{
+  renderMarketingHome(ind);
+  renderMarketingHow(ind);
+  renderMarketingAbout(ind);
+  renderMarketingMethods(ind);
+  renderMarketingContact(ind);
+});
